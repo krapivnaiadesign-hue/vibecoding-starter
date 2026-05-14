@@ -3,1076 +3,175 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Polina Krapivnaia | Spatial Portfolio</title>
-    <style>
-      :root {
-        --bg: #020202;
-        --panel: rgba(255, 255, 255, 0.045);
-        --panel-strong: rgba(255, 255, 255, 0.08);
-        --text: #f2efe8;
-        --muted: rgba(242, 239, 232, 0.68);
-        --soft: rgba(242, 239, 232, 0.36);
-        --anchor-text: rgba(179, 189, 210, 0.7);
-        --anchor-text-strong: #b3bdd2;
-        --anchor-chip: rgba(179, 189, 210, 0.05);
-        --accent-warm: #ef9042;
-        --accent-cool: #8db6ff;
-        --ease: cubic-bezier(0.22, 0.61, 0.08, 1);
-        --slow: 950ms;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        background: var(--bg);
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        overflow: hidden;
-        font-family: Arial, Helvetica, sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.05), transparent 22%),
-          radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.02), transparent 20%),
-          linear-gradient(180deg, #050505, #020202 46%, #010101);
-      }
-
-      button,
-      input,
-      textarea,
-      select {
-        font: inherit;
-      }
-
-      .portfolio {
-        min-height: 100vh;
-      }
-
-      .scene {
-        min-height: 100vh;
-        display: flex;
-        gap: clamp(16px, 2.1vw, 30px);
-        padding: clamp(16px, 1.8vw, 26px);
-      }
-
-      .anchor,
-      .projects,
-      .project,
-      .project__detail-scroll {
-        transform: translateZ(0);
-        backface-visibility: hidden;
-      }
-
-      .anchor {
-        position: relative;
-        flex: 0 0 min(53vw, 1019px);
-        min-width: 280px;
-        transition:
-          flex-basis var(--slow) var(--ease),
-          transform var(--slow) var(--ease),
-          filter var(--slow) var(--ease);
-        will-change: flex-basis, transform;
-      }
-
-      .portfolio[data-mode="expanded"] .anchor {
-        flex-basis: min(42vw, 800px);
-        transform: translate3d(-14px, 0, 0) scale(0.99);
-        filter: saturate(0.92);
-      }
-
-      .anchor__surface {
-        position: relative;
-        height: 100%;
-        padding: 0;
-        overflow: hidden;
-        border-radius: 10px;
-        background: #000;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
-        isolation: isolate;
-      }
-
-      .anchor__surface::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.1)),
-          url("./assets/zone-intro-bg.png") 50% 100% / cover no-repeat;
-        filter: blur(9px) grayscale(1);
-        opacity: 0.46;
-        transform: scaleY(-1) rotate(180deg) scale(1.01);
-      }
-
-      .anchor__surface::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(circle at 22% 18%, rgba(179, 189, 210, 0.06), transparent 16%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 36%);
-        opacity: 0.45;
-        pointer-events: none;
-      }
-
-      .anchor__inner {
-        position: relative;
-        z-index: 1;
-        height: 100%;
-        padding: clamp(76px, 5vw, 96px) clamp(44px, 4vw, 70px) clamp(52px, 5vw, 62px)
-          clamp(40px, 4vw, 76px);
-      }
-
-      .anchor__meta {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 0 18px;
-        width: min(100%, 307px);
-        font-size: clamp(13px, 0.95vw, 16px);
-        line-height: 1.25;
-        color: var(--anchor-text);
-        letter-spacing: 0.01em;
-      }
-
-      .anchor__meta dt,
-      .anchor__meta dd {
-        margin: 0;
-      }
-
-      .anchor__statement {
-        width: min(100%, 873px);
-        margin: 34px 0 0;
-        color: var(--anchor-text-strong);
-        font-family: "Arial Narrow", Arial, sans-serif;
-        font-size: clamp(15px, 1vw, 17px);
-        line-height: 1.28;
-        font-style: italic;
-        letter-spacing: 0.18em;
-        text-indent: min(31vw, 307px);
-        text-transform: uppercase;
-        mix-blend-mode: difference;
-      }
-
-      .anchor__contact {
-        display: grid;
-        gap: 4px;
-        width: min(100%, 306px);
-        margin-top: 18px;
-        font-size: clamp(13px, 0.95vw, 16px);
-        line-height: 1.25;
-        color: var(--anchor-text);
-        letter-spacing: 0.01em;
-      }
-
-      .anchor__contact a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .anchor__composition {
-        position: absolute;
-        inset: 0;
-        margin: 0;
-      }
-
-      .anchor__body {
-        position: absolute;
-        inset: 12% 34% 0 6%;
-        background:
-          linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.22)),
-          url("./assets/zone-intro-bg.png") center bottom / cover no-repeat;
-        filter: grayscale(1) brightness(0.35);
-        opacity: 0.78;
-        mix-blend-mode: screen;
-      }
-
-      .anchor__portrait {
-        position: absolute;
-        left: min(37.6%, 383px);
-        top: min(26.95%, 291px);
-        width: min(17.8vw, 181px);
-        min-width: 136px;
-        aspect-ratio: 181 / 187;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
-          url("./assets/zone-intro-bg.png") 49% 12% / 330% auto no-repeat;
-        filter: grayscale(1);
-        opacity: 0.8;
-      }
-
-      .anchor__portrait::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%),
-          radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.24), transparent 15%);
-        mix-blend-mode: lighten;
-      }
-
-      .anchor__nav {
-        position: absolute;
-        left: min(37.4%, 381px);
-        top: min(46.1%, 498px);
-        display: flex;
-        gap: 23px;
-        flex-wrap: wrap;
-      }
-
-      .anchor__link {
-        padding: 2px 12px;
-        background: var(--anchor-chip);
-        color: var(--anchor-text-strong);
-        text-decoration: none;
-        font-size: 14px;
-        font-style: italic;
-        font-weight: 700;
-        line-height: 1.45;
-        text-transform: lowercase;
-      }
-
-      .anchor__footer {
-        position: absolute;
-        left: min(37.6%, 383px);
-        bottom: clamp(42px, 6.5vh, 72px);
-        width: min(17.8vw, 181px);
-        min-width: 136px;
-        display: grid;
-        justify-items: center;
-        gap: 10px;
-        color: var(--anchor-text-strong);
-        text-align: center;
-        font-size: 13px;
-        letter-spacing: 0.03em;
-        text-transform: uppercase;
-      }
-
-      .anchor__footer-mark {
-        width: 25px;
-        height: 25px;
-      }
-
-      .projects {
-        position: relative;
-        flex: 1 1 auto;
-        min-width: 0;
-        transition: transform var(--slow) var(--ease);
-      }
-
-      .portfolio[data-mode="expanded"] .projects {
-        transform: translate3d(-10px, 0, 0);
-      }
-
-      .projects__stack {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .projects__hint {
-        position: absolute;
-        top: 8px;
-        right: 18px;
-        z-index: 3;
-        font-size: 11px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--soft);
-        pointer-events: none;
-        transition: transform var(--slow) var(--ease), opacity var(--slow) var(--ease);
-      }
-
-      .portfolio[data-mode="expanded"] .projects__hint {
-        transform: translate3d(0, -6px, 0);
-        opacity: 0.45;
-      }
-
-      .project {
-        position: relative;
-        flex: 1 1 0;
-        min-height: 0;
-        overflow: hidden;
-        border-radius: 30px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
-          linear-gradient(145deg, rgba(26, 26, 26, 0.96), rgba(9, 9, 9, 0.98));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          0 24px 64px rgba(0, 0, 0, 0.28);
-        transition:
-          flex-grow var(--slow) var(--ease),
-          transform var(--slow) var(--ease),
-          filter var(--slow) var(--ease),
-          background var(--slow) var(--ease);
-        will-change: flex-grow, transform;
-        cursor: pointer;
-      }
-
-      .portfolio[data-mode="expanded"] .project:not(.is-active) {
-        flex-grow: 0.85;
-        filter: saturate(0.9) brightness(0.92);
-      }
-
-      .project.is-active {
-        flex-grow: 6.2;
-        cursor: default;
-      }
-
-      .project::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 20%),
-          linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.015));
-        opacity: 0.55;
-        pointer-events: none;
-      }
-
-      .project__shell {
-        position: relative;
-        z-index: 1;
-        height: 100%;
-        display: grid;
-        grid-template-rows: auto 1fr;
-        gap: 16px;
-        padding: 18px;
-      }
-
-      .project__head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 18px;
-        min-height: 38px;
-      }
-
-      .project__meta {
-        display: flex;
-        gap: 12px;
-        align-items: baseline;
-        min-width: 0;
-      }
-
-      .project__index {
-        font-size: 11px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--soft);
-      }
-
-      .project__title {
-        font-size: clamp(16px, 1.2vw, 20px);
-        letter-spacing: -0.03em;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .project__control {
-        border: 0;
-        padding: 0;
-        background: none;
-        color: var(--muted);
-        font-size: 11px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        cursor: pointer;
-      }
-
-      .project__content {
-        min-height: 0;
-        display: grid;
-        grid-template-rows: auto minmax(0, 0fr);
-        gap: 18px;
-        transition:
-          grid-template-rows var(--slow) var(--ease),
-          gap var(--slow) var(--ease);
-      }
-
-      .project.is-active .project__content {
-        grid-template-rows: auto minmax(0, 1fr);
-        gap: 24px;
-      }
-
-      .project__preview {
-        min-height: clamp(110px, 18vh, 180px);
-        display: grid;
-        align-content: end;
-      }
-
-      .project__detail {
-        min-height: 0;
-        overflow: hidden;
-      }
-
-      .project__detail-scroll {
-        height: 100%;
-        overflow: auto;
-        padding-right: 6px;
-        clip-path: inset(0 0 100% 0 round 22px);
-        transform: translate3d(0, 28px, 0);
-        transition:
-          clip-path var(--slow) var(--ease),
-          transform var(--slow) var(--ease);
-        overscroll-behavior: contain;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
-      }
-
-      .project__detail-scroll::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .project__detail-scroll::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 999px;
-      }
-
-      .project.is-active .project__detail-scroll {
-        clip-path: inset(0 0 0 0 round 22px);
-        transform: translate3d(0, 0, 0);
-      }
-
-      .poster {
-        display: grid;
-        justify-items: start;
-        gap: 0;
-        font-weight: 900;
-        text-transform: uppercase;
-        line-height: 0.9;
-        letter-spacing: -0.055em;
-      }
-
-      .poster__line,
-      .poster__row {
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .poster__row {
-        gap: 0.08em;
-      }
-
-      .poster__image {
-        width: 0.92em;
-        height: 0.92em;
-        display: inline-block;
-        margin: 0 0.06em;
-        background:
-          radial-gradient(circle at 42% 28%, rgba(255, 223, 160, 0.9), transparent 22%),
-          radial-gradient(circle at 72% 75%, rgba(141, 182, 255, 0.65), transparent 24%),
-          linear-gradient(145deg, var(--accent-warm), #8b4a19 48%, #4f6eb7 100%);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      }
-
-      .poster--social {
-        font-size: clamp(30px, 7vw, 110px);
-      }
-
-      .poster--ledger {
-        font-size: clamp(28px, 5.8vw, 92px);
-      }
-
-      .poster--atlas {
-        font-size: clamp(26px, 5vw, 82px);
-      }
-
-      .poster__caption {
-        margin-left: 0.18em;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: 0.23em;
-        font-weight: 500;
-        letter-spacing: -0.02em;
-        text-transform: none;
-      }
-
-      .case {
-        min-height: 0;
-        padding: 8px 8px 8px 2px;
-      }
-
-      .case__hero {
-        display: grid;
-        gap: 18px;
-        padding: 0 0 20px;
-      }
-
-      .case__eyebrow {
-        font-size: 11px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--soft);
-      }
-
-      .case__heading {
-        margin: 0;
-        max-width: 11ch;
-        font-size: clamp(46px, 7vw, 112px);
-        line-height: 0.92;
-        letter-spacing: -0.06em;
-      }
-
-      .case__lede {
-        margin: 0;
-        max-width: 44ch;
-        font-size: clamp(18px, 1.45vw, 24px);
-        line-height: 1.45;
-        color: var(--muted);
-      }
-
-      .case__grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px;
-        margin: 0 0 24px;
-      }
-
-      .case__stat,
-      .case__panel {
-        padding: 18px;
-        border-radius: 24px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
-          rgba(255, 255, 255, 0.02);
-      }
-
-      .case__stat-label {
-        display: block;
-        margin-bottom: 12px;
-        font-size: 11px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--soft);
-      }
-
-      .case__stat strong {
-        display: block;
-        font-size: clamp(24px, 2.4vw, 40px);
-        letter-spacing: -0.05em;
-      }
-
-      .case__section {
-        display: grid;
-        grid-template-columns: 180px minmax(0, 1fr);
-        gap: 18px;
-        padding: 22px 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-      }
-
-      .case__section-label {
-        font-size: 11px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--soft);
-      }
-
-      .case__section-body {
-        display: grid;
-        gap: 16px;
-      }
-
-      .case__section-body p {
-        margin: 0;
-        max-width: 54ch;
-        font-size: clamp(16px, 1.2vw, 21px);
-        line-height: 1.55;
-        color: var(--muted);
-      }
-
-      .case__still {
-        min-height: 180px;
-        border-radius: 24px;
-        overflow: hidden;
-        background:
-          radial-gradient(circle at 24% 20%, rgba(255, 255, 255, 0.14), transparent 22%),
-          linear-gradient(135deg, rgba(239, 144, 66, 0.35), transparent 42%),
-          linear-gradient(210deg, rgba(141, 182, 255, 0.28), transparent 40%),
-          linear-gradient(160deg, #181818, #070707);
-      }
-
-      .case__still--mono {
-        background:
-          radial-gradient(circle at 38% 22%, rgba(255, 255, 255, 0.2), transparent 18%),
-          radial-gradient(ellipse at 56% 66%, rgba(255, 255, 255, 0.12), transparent 20%),
-          linear-gradient(145deg, #353535, #0c0c0c 60%, #020202);
-      }
-
-      .case__list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        display: grid;
-        gap: 10px;
-      }
-
-      .case__list li {
-        color: var(--muted);
-        font-size: clamp(16px, 1.1vw, 19px);
-        line-height: 1.45;
-      }
-
-      @media (max-width: 1080px) {
-        body {
-          overflow: auto;
-        }
-
-        .scene {
-          flex-direction: column;
-          min-height: auto;
-        }
-
-        .anchor {
-          flex-basis: auto;
-          min-width: 0;
-          min-height: 68vh;
-        }
-
-        .portfolio[data-mode="expanded"] .anchor,
-        .portfolio[data-mode="expanded"] .projects {
-          transform: none;
-        }
-
-        .projects {
-          min-height: 72vh;
-        }
-
-        .anchor__composition {
-          inset: auto 0 0 0;
-        }
-
-        .anchor__portrait {
-          left: auto;
-          right: 27%;
-          top: 42%;
-          width: min(20vw, 181px);
-        }
-
-        .anchor__nav {
-          left: auto;
-          right: 12%;
-          top: 65%;
-          gap: 16px;
-        }
-
-        .anchor__footer {
-          left: auto;
-          right: 12%;
-          bottom: 34px;
-        }
-
-        .anchor__statement {
-          text-indent: min(23vw, 220px);
-        }
-
-        .case__grid,
-        .case__section {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 720px) {
-        .scene {
-          padding: 12px;
-          gap: 12px;
-        }
-
-        .anchor__surface,
-        .project {
-          border-radius: 22px;
-        }
-
-        .anchor__inner {
-          padding: 24px 18px 22px;
-        }
-
-        .anchor__meta {
-          grid-template-columns: 1fr;
-          gap: 2px;
-          width: min(100%, 240px);
-        }
-
-        .anchor__statement {
-          width: 100%;
-          margin-top: 18px;
-          font-size: 13px;
-          line-height: 1.45;
-          letter-spacing: 0.12em;
-          text-indent: 0;
-        }
-
-        .anchor__contact {
-          width: min(100%, 260px);
-          margin-top: 14px;
-          font-size: 12px;
-        }
-
-        .anchor__body {
-          inset: 34% 8% 6% 0;
-        }
-
-        .anchor__portrait {
-          top: 48%;
-          right: 16px;
-          width: 104px;
-          min-width: 104px;
-        }
-
-        .anchor__nav {
-          right: 16px;
-          top: calc(48% + 122px);
-          gap: 10px;
-          max-width: 210px;
-        }
-
-        .anchor__link {
-          padding: 2px 8px;
-          font-size: 12px;
-        }
-
-        .anchor__footer {
-          right: 16px;
-          width: 104px;
-          min-width: 104px;
-          bottom: 18px;
-          gap: 8px;
-          font-size: 10px;
-        }
-
-        .projects {
-          min-height: auto;
-        }
-
-        .projects__stack {
-          height: auto;
-          min-height: 70vh;
-        }
-
-        .project {
-          min-height: 160px;
-        }
-
-        .project.is-active {
-          min-height: 78vh;
-        }
-
-        .project__shell {
-          padding: 14px;
-        }
-
-        .project__title {
-          white-space: normal;
-        }
-
-        .poster--social {
-          font-size: clamp(24px, 12vw, 64px);
-        }
-
-        .poster--ledger {
-          font-size: clamp(22px, 11vw, 58px);
-        }
-
-        .poster--atlas {
-          font-size: clamp(22px, 10vw, 54px);
-        }
-
-        .case__heading {
-          font-size: clamp(34px, 13vw, 60px);
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          scroll-behavior: auto !important;
-          animation: none !important;
-          transition-duration: 1ms !important;
-        }
-      }
-    </style>
+    <title>ABOUT | Polina Krapivnaia</title>
   </head>
-  <body class="antialiased">
-    <h1 class="pointer-events-none fixed left-6 top-6 z-[9999] text-6xl font-black text-blue-500">
-      Tailwind работает!
-    </h1>
-    <main class="portfolio" data-mode="intro" data-active-project="none">
-      <section class="scene" aria-label="Cinematic product design portfolio">
-        <aside class="anchor" aria-label="Designer introduction">
-          <div class="anchor__surface" data-name="Zone_Intro">
-            <div class="anchor__inner">
-              <dl class="anchor__meta">
-                <dt>Product Designer:</dt>
-                <dd>Krapivnaia Polina</dd>
-                <dt></dt>
-                <dd>4+ years · Fintech, AI SaaS</dd>
-              </dl>
+  <body class="m-0 min-h-screen overflow-hidden bg-black antialiased">
+    <div class="flex h-svh w-screen items-center justify-center overflow-hidden bg-black">
+      <main
+        id="aboutPage"
+        data-state="intro"
+        data-active-case=""
+        class="relative h-[min(100svh,calc(100vw*9/16))] w-[min(100vw,calc(100svh*16/9))] overflow-hidden rounded-[10px] bg-black text-[#b3bdd2]"
+      >
+        <div
+          id="aboutStage"
+          class="absolute left-0 top-0 h-[1080px] w-[1920px] origin-top-left"
+        >
+          <section
+            id="zoneIntro"
+            aria-label="Zone Intro"
+            class="absolute left-[4px] top-0 z-[30] h-[1080px] w-[1019px] overflow-visible transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+          >
+            <div
+              id="introBackgroundMask"
+              class="absolute left-0 top-0 z-0 h-[1080px] w-[1019px] overflow-hidden pointer-events-none transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+            >
+              <img
+                id="introBackground"
+                src="/assets/about/intro-background.jpg"
+                alt=""
+                class="pointer-events-none absolute left-0 top-0 z-0 h-[1080px] w-[1019px] object-cover opacity-[0.46] [transform:rotate(180deg)_scaleY(-1)] transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+              />
+              <div
+                id="introBackgroundOverlay"
+                class="absolute inset-0 z-[1] bg-black/16"
+              ></div>
+            </div>
 
-              <p class="anchor__statement">
+            <div
+              id="introForeground"
+              class="absolute left-0 top-0 z-[40] h-[1080px] w-[1019px] overflow-visible transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+            >
+              <div
+                id="introMeta"
+                class="absolute left-[76px] top-[96px] z-[40] grid w-[307px] grid-cols-[141px_1fr] text-[16px] leading-[20px] tracking-[0.16px] text-[rgba(179,189,210,0.7)] [font-family:var(--font-meta)] transition-[left] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+              >
+                <span class="font-semibold text-[#b3bdd2]">Product designer:</span>
+                <span class="font-normal text-[rgba(179,189,210,0.7)]">Krapivnaia Polina</span>
+                <span aria-hidden="true"></span>
+                <span class="font-normal text-[rgba(179,189,210,0.7)]">4+ years · Fintech, AI SaaS</span>
+              </div>
+
+              <p
+                id="introStatement"
+                class="pointer-events-none absolute left-[76px] top-[209px] z-[50] m-0 w-[873px] -translate-y-full text-[17px] leading-[22px] font-bold italic tracking-[3.4px] text-[#b3bdd2] [font-family:var(--font-statement)] [mix-blend-mode:difference] [text-indent:307px] transition-[left,width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+              >
                 Я смотрю на дизайн как на построение среды, где человек понимает,
                 действует и движется через форму, пространство, время и отношения
                 между объектами.
               </p>
 
-              <div class="anchor__contact">
-                <span>Mail: &lt; krapivnaiadesign@gmail.com &gt;</span>
-                <span>Location: Serbia, Belgrade / Europe</span>
-              </div>
+              <a
+                id="introMail"
+                href="mailto:krapivnaiadesign@gmail.com"
+                class="absolute left-[76px] top-[241px] z-[40] w-[306px] text-[16px] leading-[20px] tracking-[0.16px] no-underline [font-family:var(--font-meta)] transition-[left] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+              >
+                <span class="font-semibold text-[#b3bdd2]">Mail:</span>
+                <span class="font-normal text-[rgba(179,189,210,0.7)]">
+                  &nbsp;&lt; krapivnaiadesign@gmail.com &gt;
+                </span>
+              </a>
 
-              <div class="anchor__composition" aria-hidden="true">
-                <div class="anchor__body"></div>
-                <div class="anchor__portrait"></div>
-                <nav class="anchor__nav" aria-label="Primary navigation">
-                  <a class="anchor__link" href="#about">About Me</a>
-                  <a class="anchor__link" href="#cv">CV</a>
-                  <a class="anchor__link" href="#linkedin">LinkedIn</a>
-                </nav>
-              </div>
+              <p
+                id="introLocation"
+                class="absolute left-[76px] top-[265px] z-[40] m-0 w-[306px] text-[16px] leading-[20px] tracking-[0.16px] text-[rgba(179,189,210,0.7)] [font-family:var(--font-meta)] transition-[left] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+              >
+                <span class="font-semibold text-[#b3bdd2]">Location:</span>
+                <span class="font-normal text-[rgba(179,189,210,0.7)]">
+                  &nbsp;Serbia, Belgrade / Europe
+                </span>
+              </p>
 
-              <div class="anchor__footer">
+              <video
+                id="introVideo"
+                aria-label="Intro video"
+                class="absolute left-[383px] top-[291px] z-[43] block h-[187px] w-[181px] overflow-hidden object-cover opacity-80 grayscale brightness-[0.75] contrast-[1.05] transition-[left,top,width,height,transform] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+                src="/assets/about/intro-video.mp4"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+              ></video>
+
+              <nav
+                id="introMenu"
+                aria-label="About navigation"
+                class="absolute left-[381px] top-[498px] z-[44] flex items-center gap-[23px] transition-[left,top] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+              >
+                <button
+                  type="button"
+                  class="flex items-center justify-center bg-[rgba(179,189,210,0.05)] px-[12px] py-[2px] text-[14px] leading-[20px] font-normal italic tracking-[-0.14px] whitespace-nowrap text-[#b3bdd2] transition-colors duration-200 ease-out hover:bg-[rgba(179,189,210,0.1)] hover:text-white [font-family:var(--font-menu)]"
+                >
+                  About Me +
+                </button>
+                <a
+                  href="#"
+                  class="flex items-center justify-center bg-[rgba(179,189,210,0.05)] px-[12px] py-[2px] text-[14px] leading-[20px] font-normal italic tracking-[-0.14px] whitespace-nowrap text-[#b3bdd2] no-underline transition-colors duration-200 ease-out hover:bg-[rgba(179,189,210,0.1)] hover:text-white [font-family:var(--font-menu)]"
+                >
+                  CV
+                </a>
+                <a
+                  href="#"
+                  class="flex items-center justify-center bg-[rgba(179,189,210,0.05)] px-[12px] py-[2px] text-[14px] leading-[20px] font-normal italic tracking-[-0.14px] whitespace-nowrap text-[#b3bdd2] no-underline transition-colors duration-200 ease-out hover:bg-[rgba(179,189,210,0.1)] hover:text-white [font-family:var(--font-menu)]"
+                >
+                  LinkedIn
+                </a>
+              </nav>
+
+              <div
+                id="introLabel"
+                class="absolute left-[383px] top-[953px] z-[44] flex w-[181px] flex-col items-center justify-center gap-[8px] opacity-[0.77] [mix-blend-mode:difference] transition-[left,transform] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+              >
                 <img
-                  class="anchor__footer-mark"
-                  src="./assets/zone-intro-mark.svg"
+                  src="/assets/about/bottom-icon.svg"
                   alt=""
+                  class="h-[25px] w-[25px]"
                 />
-                <span>Видеть продукт как систему</span>
+                <p
+                  class="m-0 text-center text-[13px] leading-[15px] italic tracking-[0.39px] text-[#abb7ce] uppercase [font-family:var(--font-label)]"
+                >
+                  видеть продукт как систему
+                </p>
               </div>
             </div>
-          </div>
-        </aside>
+          </section>
 
-        <section class="projects" aria-label="Selected case studies">
-          <div class="projects__hint">click a case to unfold</div>
-          <div class="projects__stack">
-            <article class="project project--social" data-project="social" tabindex="0">
-              <div class="project__shell">
-                <header class="project__head">
-                  <div class="project__meta">
-                    <span class="project__index">Case 01</span>
-                    <strong class="project__title">The Art of Hacking Social</strong>
-                  </div>
-                  <button class="project__control" type="button">Open case</button>
-                </header>
-
-                <div class="project__content">
-                  <div class="project__preview">
-                    <div class="poster poster--social" aria-hidden="true">
-                      <span class="poster__line">THE ART</span>
-                      <span class="poster__row">
-                        <span>*</span>
-                        <span>(</span>
-                        <span class="poster__image"></span>
-                        <span>)</span>
-                        <span class="poster__caption">Showreel</span>
-                      </span>
-                      <span class="poster__line">OF</span>
-                      <span class="poster__line">HACKING SOCIAL</span>
-                    </div>
-                  </div>
-
-                  <div class="project__detail">
-                    <div class="project__detail-scroll">
-                      <div class="case">
-                        <div class="case__hero">
-                          <span class="case__eyebrow">Editorial portfolio / spatial system</span>
-                          <h2 class="case__heading">The Art of Hacking Social</h2>
-                          <p class="case__lede">
-                            An experimental portfolio where the interface behaves like a
-                            composed environment: the intro mass stays present while the
-                            project field unfolds into a dense reading surface.
-                          </p>
-                        </div>
-
-                        <div class="case__grid">
-                          <div class="case__stat">
-                            <span class="case__stat-label">Role</span>
-                            <strong>Concept, motion, UI architecture</strong>
-                          </div>
-                          <div class="case__stat">
-                            <span class="case__stat-label">Intent</span>
-                            <strong>Transform cards into an editorial field</strong>
-                          </div>
-                        </div>
-
-                        <section class="case__section">
-                          <div class="case__section-label">Approach</div>
-                          <div class="case__section-body">
-                            <p>
-                              Instead of page changes, the system redistributes visual weight.
-                              The intro anchor compresses, the case expands, and the remaining
-                              works harden into a secondary stack. The geometry stays continuous.
-                            </p>
-                            <div class="case__still"></div>
-                          </div>
-                        </section>
-
-                        <section class="case__section">
-                          <div class="case__section-label">Reading rhythm</div>
-                          <div class="case__section-body">
-                            <p>
-                              Large headings, generous negative space and cinematic pacing turn
-                              each block into a chapter rather than a widget. The content scrolls
-                              inside the expanded card so the composition remains stable.
-                            </p>
-                            <ul class="case__list">
-                              <li>Continuous transformation instead of modals.</li>
-                              <li>Stable typography during motion.</li>
-                              <li>Monumental preview language preserved in detail mode.</li>
-                            </ul>
-                          </div>
-                        </section>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="project project--ledger" data-project="ledger" tabindex="0">
-              <div class="project__shell">
-                <header class="project__head">
-                  <div class="project__meta">
-                    <span class="project__index">Case 02</span>
-                    <strong class="project__title">Liquid Trust Ledger</strong>
-                  </div>
-                  <button class="project__control" type="button">Open case</button>
-                </header>
-
-                <div class="project__content">
-                  <div class="project__preview">
-                    <div class="poster poster--ledger" aria-hidden="true">
-                      <span class="poster__line">LIQUID</span>
-                      <span class="poster__row">
-                        <span>TRUST</span>
-                        <span class="poster__image"></span>
-                      </span>
-                      <span class="poster__line">LEDGER</span>
-                    </div>
-                  </div>
-
-                  <div class="project__detail">
-                    <div class="project__detail-scroll">
-                      <div class="case">
-                        <div class="case__hero">
-                          <span class="case__eyebrow">Fintech platform / information design</span>
-                          <h2 class="case__heading">Liquid Trust Ledger</h2>
-                          <p class="case__lede">
-                            A financial operations layer designed to make risk legible through
-                            staged density, soft hierarchy and compositional pressure instead of
-                            dashboard clutter.
-                          </p>
-                        </div>
-
-                        <section class="case__section">
-                          <div class="case__section-label">Problem</div>
-                          <div class="case__section-body">
-                            <p>
-                              Compliance-heavy products often flatten meaning into generic tables.
-                              This concept reframes transactional data as a narrative field where
-                              sequence, confidence and anomaly become spatial relationships.
-                            </p>
-                            <div class="case__still case__still--mono"></div>
-                          </div>
-                        </section>
-
-                        <section class="case__section">
-                          <div class="case__section-label">Design system</div>
-                          <div class="case__section-body">
-                            <ul class="case__list">
-                              <li>Quiet monochrome base with strategic color pressure.</li>
-                              <li>Editorial columns instead of dashboard cards.</li>
-                              <li>Motion built from compression, drag and expansion.</li>
-                            </ul>
-                            <p>
-                              The result feels less like software chrome and more like a control
-                              room for attention, where the most critical states gain physical
-                              presence without breaking the atmosphere.
-                            </p>
-                          </div>
-                        </section>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="project project--atlas" data-project="atlas" tabindex="0">
-              <div class="project__shell">
-                <header class="project__head">
-                  <div class="project__meta">
-                    <span class="project__index">Case 03</span>
-                    <strong class="project__title">Signal Atlas for AI teams</strong>
-                  </div>
-                  <button class="project__control" type="button">Open case</button>
-                </header>
-
-                <div class="project__content">
-                  <div class="project__preview">
-                    <div class="poster poster--atlas" aria-hidden="true">
-                      <span class="poster__line">SIGNAL</span>
-                      <span class="poster__row">
-                        <span>ATLAS</span>
-                        <span class="poster__image"></span>
-                      </span>
-                      <span class="poster__line">FOR AI TEAMS</span>
-                    </div>
-                  </div>
-
-                  <div class="project__detail">
-                    <div class="project__detail-scroll">
-                      <div class="case">
-                        <div class="case__hero">
-                          <span class="case__eyebrow">AI collaboration / systems narrative</span>
-                          <h2 class="case__heading">Signal Atlas</h2>
-                          <p class="case__lede">
-                            A concept for teams that need to read prompts, outputs and model
-                            decisions as living material. The interface treats collaboration as a
-                            choreography of fragments rather than a task board.
-                          </p>
-                        </div>
-
-                        <section class="case__section">
-                          <div class="case__section-label">Spatial idea</div>
-                          <div class="case__section-body">
-                            <p>
-                              Conversation clusters, model confidence and human interventions are
-                              stacked into an atlas that can tighten into summaries or unfold into
-                              essays. The same surface supports scanning and deep reading.
-                            </p>
-                            <div class="case__still"></div>
-                          </div>
-                        </section>
-
-                        <section class="case__section">
-                          <div class="case__section-label">Outcome</div>
-                          <div class="case__section-body">
-                            <p>
-                              By prioritizing continuity of space, the product feels more like a
-                              studio wall than a software dashboard. It invites interpretation,
-                              not just execution.
-                            </p>
-                            <ul class="case__list">
-                              <li>Composable information density.</li>
-                              <li>Reduced cognitive snapping between states.</li>
-                              <li>Cinematic interaction language for complex tools.</li>
-                            </ul>
-                          </div>
-                        </section>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
-        </section>
-      </section>
-    </main>
+          <section
+            id="zoneCases"
+            aria-label="Zone Cases"
+            class="absolute right-0 top-1/2 z-[10] h-[1093px] w-[897px] -translate-y-1/2 overflow-hidden transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+          >
+            <div
+              id="casesStack"
+              class="absolute left-1/2 top-1/2 z-[10] flex w-[307px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-[24px] p-[16px] transition-[width,left,top,transform,height,opacity] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+            >
+              <button
+                id="case1"
+                type="button"
+                data-case-card="case-1"
+                class="block h-[180px] w-[180px] shrink-0 rounded-[8px] bg-[#ff7979] transition-[width,height,opacity] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)] hover:scale-[1.02]"
+                aria-label="Open case 1"
+              ></button>
+              <button
+                id="case2"
+                type="button"
+                data-case-card="case-2"
+                class="block h-[180px] w-[180px] shrink-0 rounded-[8px] bg-[#275dff] transition-[width,height,opacity] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)] hover:scale-[1.02]"
+                aria-label="Open case 2"
+              ></button>
+              <button
+                id="case3"
+                type="button"
+                data-case-card="case-3"
+                class="block h-[180px] w-[180px] shrink-0 rounded-[8px] bg-[#45ff73] transition-[width,height,opacity] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)] hover:scale-[1.02]"
+                aria-label="Open case 3"
+              ></button>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
 
     <script type="module" src="/main.js"></script>
   </body>

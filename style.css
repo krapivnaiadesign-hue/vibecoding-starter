@@ -3,5 +3,9 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --font-meta: "Acumin Pro SemiCondensed", "Arial Narrow", Arial, sans-serif;
+    --font-statement: "Suisse Intl", "Arial Narrow", Arial, sans-serif;
+    --font-menu: "Unica77 LL Cyrillic", "Arial Narrow", Arial, sans-serif;
+    --font-label: "BlackGroteskC", Impact, "Arial Narrow", Arial, sans-serif;
   }
 }
