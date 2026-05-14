@@ -276,6 +276,11 @@ function generateEmergencyLongread() {
           alt="Emergency Redesign Hero"
           class="absolute inset-0 w-full h-full object-cover"
         />
+        <div class="absolute right-[52px] top-[134px] w-[291px] flex flex-col items-start">
+          <p class="text-[14px] leading-[18px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.5)] [font-family:var(--font-case)]">
+            <span>* </span><span class="font-bold italic">Future-концепт</span><span> торгового сценария: прототип более глубокой пересборки продукта, который не вошёл в релиз, но стал ориентиром для части архитектурных решений.</span>
+          </p>
+        </div>
       </div>
 
       <!-- Longread body -->
@@ -406,7 +411,9 @@ function generateEmergencyLongread() {
                     <p class="${TEXT_FULL} text-center w-full">Косметический редизайн + точечные фиксы: быстро, но почти не меняет систему.</p>
                   </div>
                   <p class="text-[18px] leading-[21px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]">Fastest / lowest value</p>
-                  <div class="w-[208px] h-[450px] rounded-[24px] overflow-hidden"></div>
+                  <div class="w-[208px] h-[450px] rounded-[24px] overflow-hidden">
+                    <video src="/assets/cases/emergency-redesign/Minimal-Masking.mov" autoplay loop muted playsinline class="w-full h-full object-cover block"></video>
+                  </div>
                 </div>
                 <div class="flex-1 min-w-0 flex flex-col gap-[16px] items-center">
                   <div class="flex flex-col gap-[12px] items-center h-[85px] text-center w-full">
@@ -414,7 +421,9 @@ function generateEmergencyLongread() {
                     <p class="${TEXT_FULL} text-center w-full">Полный пересбор торгового сценария: Сильно для будущего, но рискованно для текущего релиза.</p>
                   </div>
                   <p class="text-[18px] leading-[21px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]">Highest value / too risky now</p>
-                  <div class="w-[204px] h-[439px] rounded-[24px] overflow-hidden"></div>
+                  <div class="w-[204px] h-[439px] rounded-[24px] overflow-hidden">
+                    <video src="/assets/cases/emergency-redesign/Full-redesign.mov" autoplay loop muted playsinline class="w-full h-full object-cover block"></video>
+                  </div>
                 </div>
                 <div class="flex-1 min-w-0 flex flex-col gap-[16px] items-center">
                   <div class="flex flex-col gap-[12px] items-center h-[85px] text-center w-full">
@@ -422,7 +431,9 @@ function generateEmergencyLongread() {
                     <p class="${TEXT_FULL} text-center w-full">Обединение Счетов + Позиций → в единый раздел. Плюс точечное закрытие UX-долга.</p>
                   </div>
                   <p class="text-[18px] leading-[21px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]">Balanced value / shippable</p>
-                  <div class="w-[203px] h-[439px] rounded-[24px] overflow-hidden"></div>
+                  <div class="w-[203px] h-[439px] rounded-[24px] overflow-hidden">
+                    <video src="/assets/cases/emergency-redesign/Structural-adjustment.mov" autoplay loop muted playsinline class="w-full h-full object-cover block"></video>
+                  </div>
                 </div>
               </div>
               <div class="flex items-center justify-center px-[24px] w-full">
