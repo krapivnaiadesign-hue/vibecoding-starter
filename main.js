@@ -166,7 +166,8 @@ function getIntroLayoutKey() {
 
   if (
     viewState === "opening-emergency" ||
-    viewState === "case-open-emergency"
+    viewState === "case-open-emergency" ||
+    viewState === "closing"
   ) {
     return "case-open";
   }
@@ -238,6 +239,7 @@ function applyMotionTransition(element) {
 function initializeAnimatedElements() {
   [
     introMeta,
+    introStatement,
     introMenu,
     introPortrait,
     introContacts,
@@ -269,12 +271,12 @@ function generateEmergencyLongread() {
           id="heroFullImage"
           src="/assets/cases/emergency-redesign/hero-preview.png"
           alt="Emergency Redesign Hero"
-          class="absolute inset-0 w-full h-full object-cover opacity-0 transition-[opacity] duration-[700ms] ease-out"
+          class="absolute inset-0 w-full h-full object-cover"
         />
       </div>
 
       <!-- Longread body -->
-      <div id="longreadSections" class="flex flex-col gap-[120px] items-center w-[1172px] opacity-0 translate-y-[32px] transition-[opacity,transform] duration-[700ms] [transition-delay:200ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]">
+      <div id="longreadSections" class="flex flex-col gap-[120px] items-center w-[1172px]">
 
         <!-- B. Context -->
         <div class="${ROW} w-full">
@@ -589,31 +591,12 @@ function renderPreviewContent() {
   }
 }
 
-function applyHeroImageState() {
+function applyHoverLayerState() {
   const hoverBgLayer = document.querySelector("#hoverBgLayer");
-  const heroImg = casePreviewInner?.querySelector("#heroFullImage");
-  const longreadSections = casePreviewInner?.querySelector("#longreadSections");
-
   const isHover = viewState === "hover-emergency";
-  const isOpenOrClosing =
-    viewState === "opening-emergency" ||
-    viewState === "case-open-emergency" ||
-    viewState === "closing";
 
   if (hoverBgLayer instanceof HTMLElement) {
     hoverBgLayer.style.opacity = isHover ? "1" : "0";
-  }
-
-  if (heroImg instanceof HTMLElement) {
-    heroImg.style.opacity = isOpenOrClosing ? "1" : "0";
-  }
-
-  if (longreadSections instanceof HTMLElement) {
-    const isFullyOpen = viewState === "case-open-emergency" || viewState === "closing";
-    longreadSections.style.opacity = isFullyOpen ? "1" : "0";
-    longreadSections.style.transform = isFullyOpen
-      ? "translateY(0)"
-      : "translateY(32px)";
   }
 }
 
@@ -769,7 +752,7 @@ function renderAboutState() {
   applyCloseButtonState();
   applyCaseItemState();
   renderPreviewContent();
-  applyHeroImageState();
+  applyHoverLayerState();
 }
 
 function resetToOverview() {
@@ -786,6 +769,12 @@ function resetToOverview() {
   hoveredCaseId = null;
   activeCaseId = null;
   viewState = "overview";
+
+  if (casePreviewInner) {
+    casePreviewInner.style.transition = "";
+    casePreviewInner.style.transform = "";
+  }
+
   renderAboutState();
 }
 
@@ -806,17 +795,53 @@ function handleClose() {
     clearTimeout(closeAnimationTimer);
   }
 
-  hoveredCaseId = null;
   viewState = "closing";
-  renderAboutState();
+
+  if (casePreviewInner) {
+    casePreviewInner.style.transition = `transform 600ms ${MOTION_EASING}`;
+    casePreviewInner.style.transform = "translateX(1200px)";
+  }
+
+  applyCloseButtonState();
 
   closeAnimationTimer = window.setTimeout(() => {
+    hoveredCaseId = null;
+
+    aboutPage.dataset.state = viewState;
+    aboutPage.dataset.activeCase = activeCaseId ?? "";
+    aboutPage.dataset.hoveredCase = hoveredCaseId ?? "";
+
+    applyPreviewState();
+    applyCaseItemState();
+    applyHoverLayerState();
+
+    const overviewLayout = introLayouts["overview"];
+    if (zoneIntro && overviewLayout) {
+      zoneIntro.className = `${ZONE_INTRO_BASE_CLASS} ${overviewLayout.zoneWidthClass}`;
+      zoneIntro.style.opacity = overviewLayout.zoneOpacity;
+      if (introMeta) introMeta.className = overviewLayout.metaClass;
+      if (introPortrait) introPortrait.className = overviewLayout.portraitClass;
+      if (introMenu) introMenu.className = overviewLayout.menuClass;
+      if (introContacts) introContacts.className = overviewLayout.contactsClass;
+      if (introStatement) introStatement.className = overviewLayout.statementClass;
+      if (selectedWorkBlock) selectedWorkBlock.className = overviewLayout.selectedWorkBlockClass;
+      if (selectedWorkLabel) selectedWorkLabel.className = overviewLayout.selectedWorkLabelClass;
+    }
+  }, 150);
+
+  window.setTimeout(() => {
     closeAnimationTimer = null;
     activeCaseId = null;
     hoveredCaseId = null;
     viewState = "overview";
+
+    if (casePreviewInner) {
+      casePreviewInner.style.transition = "";
+      casePreviewInner.style.transform = "";
+    }
+
     renderAboutState();
-  }, 900);
+  }, 150 + 900);
 }
 
 function attachCaseEvents() {
@@ -883,7 +908,29 @@ function attachCaseEvents() {
       activeCaseId = caseId;
       hoveredCaseId = caseId;
       viewState = "opening-emergency";
-      renderAboutState();
+
+      aboutPage.dataset.state = viewState;
+      aboutPage.dataset.activeCase = activeCaseId ?? "";
+      aboutPage.dataset.hoveredCase = hoveredCaseId ?? "";
+
+      renderPreviewContent();
+
+      if (casePreviewInner) {
+        casePreviewInner.style.transition = "none";
+        casePreviewInner.style.transform = "translateX(1200px)";
+      }
+
+      applyIntroState();
+      applyPreviewState();
+      applyCloseButtonState();
+      applyCaseItemState();
+      applyHoverLayerState();
+
+      if (casePreviewInner) {
+        casePreviewInner.getBoundingClientRect();
+        casePreviewInner.style.transition = `transform 900ms ${MOTION_EASING}`;
+        casePreviewInner.style.transform = "translateX(0)";
+      }
 
       openAnimationTimer = window.setTimeout(() => {
         openAnimationTimer = null;
@@ -893,6 +940,12 @@ function attachCaseEvents() {
         }
 
         viewState = "case-open-emergency";
+
+        if (casePreviewInner) {
+          casePreviewInner.style.transition = "";
+          casePreviewInner.style.transform = "";
+        }
+
         renderAboutState();
       }, 900);
     });
