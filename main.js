@@ -5,6 +5,7 @@ const STAGE_HEIGHT = 1080;
 const MOTION_EASING = "cubic-bezier(0.77,0,0.175,1)";
 const POSITION_TRANSITION = `left 900ms ${MOTION_EASING}, top 900ms ${MOTION_EASING}, width 900ms ${MOTION_EASING}, height 900ms ${MOTION_EASING}, bottom 900ms ${MOTION_EASING}, opacity 450ms ease, transform 900ms ${MOTION_EASING}`;
 const EMERGENCY_CASE_ID = "emergency-redesign";
+const SLTP_CASE_ID = "stop-loss-take-profit";
 const SELECTED_WORK_LABEL_CLASS =
   "whitespace-nowrap text-[14px] leading-[17px] font-bold italic text-[rgba(179,189,210,0.72)] uppercase [font-family:var(--font-intro)]";
 
@@ -160,13 +161,15 @@ function updateStageScale() {
 }
 
 function getIntroLayoutKey() {
-  if (viewState === "hover-emergency") {
+  if (viewState === "hover-emergency" || viewState === "hover-sltp") {
     return "hover-emergency";
   }
 
   if (
     viewState === "opening-emergency" ||
     viewState === "case-open-emergency" ||
+    viewState === "opening-sltp" ||
+    viewState === "case-open-sltp" ||
     viewState === "closing"
   ) {
     return "case-open";
@@ -354,7 +357,7 @@ function generateEmergencyLongread() {
                 </p>
               </div>
               <div class="w-[339px] h-[64px] rounded-[16px] overflow-hidden">
-                <img src="/assets/cases/emergency-redesign/reframing-message.png" alt="" class="block w-full h-full object-cover" />
+                <img src="/assets/cases/emergency-redesign/guys-img.png" alt="" class="block w-full h-full object-cover" />
               </div>
               <div class="flex flex-col gap-[8px]">
                 <span class="${SMALL_LABEL}">Real problem:</span>
@@ -557,6 +560,374 @@ function generateEmergencyLongread() {
   `;
 }
 
+function generateSLTPLongread() {
+  const LABEL = "shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.48px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
+  const LABEL_WIDE = "shrink-0 w-[231px] text-[16px] leading-[20px] font-bold italic tracking-[0.16px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
+  const TEXT = "text-[18px] leading-[22px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.8)] [font-family:var(--font-case)]";
+  const TEXT_FULL = "text-[18px] leading-[22px] font-medium tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
+  const DETAIL_LABEL = "text-[16px] leading-[20px] tracking-[0.16px] font-bold text-[#b3bdd2] capitalize [font-family:var(--font-case)]";
+  const DETAIL_VALUE = "text-[16px] leading-[20px] tracking-[0.16px] italic text-[#b3bdd2] [font-family:var(--font-case)]";
+  const SMALL_LABEL = "text-[15px] leading-[20px] tracking-[0.15px] font-bold capitalize text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
+  const SMALL_TEXT = "text-[14px] leading-[22px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.5)] [font-family:var(--font-case)]";
+  const QUOTE = "font-bold italic text-[18px] leading-[22px] tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
+  const CAPTION = "font-light italic text-[14px] leading-[15px] tracking-[0.14px] text-[rgba(179,189,210,0.5)] [font-family:var(--font-case)]";
+  const BET_TITLE = "text-[18px] leading-[21px] font-bold italic tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
+  const LIST_TEXT = "text-[18px] leading-[22px] font-normal tracking-[0.18px] text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
+  const CARD_TITLE = "text-[18px] leading-[22px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.8)] [font-family:var(--font-case)]";
+  const CARD_DESC = "text-[14px] leading-[18px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
+  const CARD_FOOTER = "text-[14px] leading-[18px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]";
+  const ROW = "flex items-start justify-between pl-[52px] pr-[154px] box-border";
+
+  return `
+    <div class="sltpLongread flex flex-col gap-[24px] w-[1172px] overflow-hidden">
+
+      <!-- Hero -->
+      <div class="relative w-[1172px] h-[771px] shrink-0 overflow-hidden">
+        <div class="absolute left-[calc(50%+0.5px)] top-[55px] w-[657px] h-[661px] -translate-x-1/2">
+          <img src="/assets/cases/sltp/preview-sltp.png" alt="SLTP Preview" class="w-[81.66%] h-full object-cover block" />
+        </div>
+        <div class="absolute left-[769px] top-[134px] w-[291px] flex flex-col items-start">
+          <p class="${SMALL_TEXT}">* SL/TP — механика автоматического закрытия позиции:<br/>Stop Loss ограничивает потери,<br/>Take Profit фиксирует прибыль.</p>
+        </div>
+      </div>
+
+      <!-- Longread body -->
+      <div class="flex flex-col gap-[120px] items-center w-[1172px] pb-[120px]">
+
+        <!-- Context + Problem -->
+        <div class="flex flex-col gap-[40px] items-start w-full">
+          <!-- Context -->
+          <div class="${ROW} w-full">
+            <span class="${LABEL}">Context</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[28px]">
+              <div class="flex flex-col gap-[16px]">
+                <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                  <span class="font-bold">Роль</span>
+                  <span class="${DETAIL_VALUE}">Product Designer</span>
+                </div>
+                <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                  <span class="font-bold capitalize">Figma</span>
+                  <a href="https://www.figma.com/design/gzd7rk7vdzarXyDEUDzVGf/SL_TP?node-id=233-70776" target="_blank" class="${DETAIL_VALUE} underline cursor-pointer">переход на фигму</a>
+                </div>
+                <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                  <span class="font-bold capitalize">Процесс</span>
+                  <span class="${DETAIL_VALUE}">Research → interaction model → behavior system</span>
+                </div>
+              </div>
+              <p class="${QUOTE}">В результате перевела график из пассивного отображения в инструмент управления позицией</p>
+            </div>
+          </div>
+
+          <!-- Problem -->
+          <div class="${ROW} w-full">
+            <span class="${LABEL}">Problem</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[16px]">
+              <div class="flex flex-col items-start">
+                <p class="${SMALL_TEXT}">* SL/TP — механика автоматического закрытия позиции:<br/>Stop Loss ограничивает потери,<br/>Take Profit фиксирует прибыль.</p>
+              </div>
+              <div class="${TEXT}">
+                <p>SL/TP в нашем приложении настраивались вне графика, поэтому пользователь:</p>
+                <ul class="pl-[27px] list-disc">
+                  <li>не видел уровень в момент действия,</li>
+                  <li>управлял риском через разорванный сценарий,</li>
+                  <li>терял скорость и контроль в активной торговле.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Best practice / Research -->
+        <div class="flex flex-col items-start w-full">
+          <div class="${ROW} w-full">
+            <span class="${LABEL}">Best practice не было</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[32px]">
+              <div class="${TEXT}">
+                <p>Я пошла исследовать конкурентов, изучить фичу и ее потенциал.</p>
+                <a href="https://www.figma.com/design/gzd7rk7vdzarXyDEUDzVGf/SL_TP?node-id=40000053-132980" target="_blank" class="underline cursor-pointer">Figma</a>
+              </div>
+              <div class="flex flex-col gap-[16px]">
+                <p class="${TEXT}">Задача была разобраться</p>
+                <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                  <li>как SL/TP устроен у конкурентов,</li>
+                  <li>какие паттерны реально ускоряют работу,</li>
+                  <li>где текущая фича в продукте уже слабая,</li>
+                  <li>какие расширения вообще бывают у этой механики.</li>
+                  <li>проверила конкурентные сценарии руками, чтобы оценить не только паттерны, но и ощущение контроля: скорость, точность, риск ошибки, поведение при нескольких уровнях.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-[12px] items-start py-[24px] w-full">
+            <div class="flex items-center justify-center w-full h-[424px] overflow-hidden">
+              <img src="/assets/cases/sltp/risk-img.png" alt="Research" class="w-[939px] h-[424px] object-cover rounded-[24px] shadow-[0px_4px_121.5px_0px_rgba(0,0,0,0.25)] block" />
+            </div>
+            <div class="flex items-center justify-center px-[24px] w-full">
+              <span class="${CAPTION}">Кусочки ресерча</span>
+            </div>
+          </div>
+
+          <!-- After research -->
+          <div class="${ROW} w-full">
+            <span class="${LABEL}">After research</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[24px]">
+              <p class="${TEXT}">Ключевая сложность была в проектировании логики взаимодействия</p>
+              <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                <li>скорость vs контроль</li>
+                <li>что происходит напрямую на графике</li>
+                <li>нужны ли доп точки управления</li>
+                <li>как избежать случайных изменений без потери скорости взаимодействия</li>
+                <li>какие действия должны быть мгновенными, а какие — подтверждаемыми</li>
+                <li>и тд</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Interaction Models -->
+        <div class="flex flex-col items-start w-full">
+          <div class="flex flex-col gap-[64px] items-start w-full">
+            <div class="${ROW} w-full">
+              <span class="${LABEL}">3 interaction models.</span>
+              <div class="shrink-0 w-[570px]">
+                <p class="${TEXT}">Ни один существующий паттерн не решает задачу полностью, поэтому дальше я собирала собственные interaction-модели, комбинируя сильные стороны разных подходов.</p>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-[32px] items-center justify-center px-[52px] w-full">
+              <div class="flex gap-[8px] items-start w-full">
+                <!-- Card 1: Inline-only -->
+                <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
+                  <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
+                    <p class="${CARD_TITLE} text-center w-full">Inline-only</p>
+                    <p class="${CARD_DESC} text-center w-full">Управление прямо<br/>на тегах SL/TP.</p>
+                  </div>
+                  <div class="h-[549px] w-[253px]">
+                    <img src="/assets/cases/sltp/inline-only-img.png" alt="Inline-only" class="w-full h-full object-contain block" />
+                  </div>
+                  <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ быстро<br/>− перегружает график</p>
+                </div>
+                <!-- Card 2: Panel-only -->
+                <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
+                  <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
+                    <p class="${CARD_TITLE} text-center w-full">Panel-only</p>
+                    <p class="${CARD_DESC} text-center w-full">Все инструменты в панели управления, отдельно от графика.</p>
+                  </div>
+                  <div class="h-[549px] w-[253px]">
+                    <img src="/assets/cases/sltp/panel-only-img.png" alt="Panel-only" class="w-full h-full object-contain block" />
+                  </div>
+                  <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ чисто<br/>− действие отрывается от уровня</p>
+                </div>
+                <!-- Card 3: Hybrid -->
+                <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
+                  <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
+                    <p class="${CARD_TITLE} text-center w-full">Hybrid</p>
+                    <p class="${CARD_DESC} text-center w-full">Действия в панеле, а на графике только изменение значений.</p>
+                  </div>
+                  <div class="h-[549px] w-[253px]">
+                    <img src="/assets/cases/sltp/hybrid-img.png" alt="Hybrid" class="w-full h-full object-contain block" />
+                  </div>
+                  <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ разделяет управление уровнем и позицией<br/>− требует сложной state-логики</p>
+                </div>
+                <!-- Card 4: Movable Hybrid -->
+                <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
+                  <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
+                    <p class="${CARD_TITLE} text-center w-full">Movable Hybrid</p>
+                    <p class="${CARD_DESC} text-center w-full">Гибридный вариант с подвижной панелью.</p>
+                  </div>
+                  <div class="h-[549px] w-[253px]">
+                    <img src="/assets/cases/sltp/movable-hybrid-img.png" alt="Movable Hybrid" class="w-full h-full object-contain block" />
+                  </div>
+                  <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ гибкость<br/>− лишняя сложность</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-end px-[24px] w-full">
+                <span class="${CAPTION}">Сырые прототипы для защиты каждоый из идей</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final interaction model -->
+        <div class="${ROW} w-full">
+          <span class="shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.16px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]">Final interaction model</span>
+          <div class="shrink-0 w-[570px] flex flex-col gap-[32px] items-start">
+            <div class="flex flex-col gap-[8px] w-full">
+              <p class="${BET_TITLE}">1/ Dual flow</p>
+              <p class="${TEXT_FULL}">После обсуждений с командой, коридорный исследований выбором стали два варианта: inline-only and hybrid</p>
+            </div>
+            <div class="flex flex-col gap-[16px] w-full">
+              <p class="${SMALL_LABEL}">Final decision:</p>
+              <p class="${TEXT_FULL}">В итоге выбрали Hybrid, потому он что лучше разводил управление позицией и управление конкретным уровнем.</p>
+              <p class="text-[15px] leading-[22px] font-medium tracking-[0.15px] text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]">*Оба финальных варианта уже закрывали базовые действия. Разница была не в наличии функций, а в том, насколько логично они были организованы.</p>
+            </div>
+            <div class="flex flex-col gap-[8px] w-full">
+              <p class="${SMALL_LABEL}">Логика разделения:</p>
+              <div class="${TEXT_FULL}">
+                <p class="mb-[8px]"><span>Редактирование и удаление конкретного SL/TP — </span><span class="text-[rgba(179,189,210,0.6)]">через линии на графике.</span></p>
+                <p class="mb-[8px]"><span>Добавление SL/TP на позцию и закрытие позиции — </span><span class="text-[rgba(179,189,210,0.6)]">в панели управления.</span></p>
+                <p><span>Точные настройки — </span><span class="text-[rgba(179,189,210,0.6)]">через шторку.</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Key Decisions -->
+        <div class="${ROW} w-full">
+          <span class="shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.16px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]">3 KEY DECISIONS</span>
+          <div class="shrink-0 w-[570px] flex flex-col gap-[56px]">
+
+            <!-- Decision 1: Dual flow -->
+            <div class="flex flex-col gap-[32px] w-full">
+              <div class="flex flex-col gap-[8px] w-full">
+                <p class="${BET_TITLE}">1/ Dual flow</p>
+                <p class="${TEXT_FULL}">Быстрые действия — на графике.<br/>Точные настройки — в шторке.</p>
+                <p class="${TEXT_FULL}">Точная настройка через шторку не может быть запасным входом. Она должна быть частью flow. И если она становится полноценной частью сценария, её нужно было усилить.</p>
+              </div>
+              <div class="flex flex-col items-start w-full">
+                <div class="w-[570px] h-[398px]">
+                  <img src="/assets/cases/sltp/ui-fixes-1.png" alt="UI fixes" class="w-full h-full object-contain block" />
+                </div>
+                <p class="${TEXT_FULL} mt-[8px]">Также были точечные UI фиксы</p>
+                <div class="w-full h-[394px] rounded-[24px] overflow-hidden mt-[8px]">
+                  <img src="/assets/cases/sltp/ui-fixes-2.png" alt="UI fixes 2" class="w-full h-full object-contain rounded-[24px] block" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Decision 2: Visibility logic -->
+            <div class="flex flex-col gap-[32px] pb-[32px] w-full">
+              <div class="flex flex-col gap-[24px] w-full">
+                <p class="${BET_TITLE}">2/ Visibility logic</p>
+                <p class="${TEXT_FULL}">Вкл/выкл отображения SL/TP планировалось только в Chart settings.</p>
+                <div class="w-[305px] h-[246px]">
+                  <img src="/assets/cases/sltp/visibility-settings.png" alt="Visibility settings" class="w-full h-full object-contain block" />
+                </div>
+                <p class="${TEXT_FULL}">Но ранее сделанный инструмент Рисования на графике — уже мог скрывать позиции на графике.</p>
+              </div>
+              <div class="flex flex-col gap-[8px] w-full">
+                <p class="${SMALL_LABEL}">Конфликт:</p>
+                <p class="${TEXT_FULL}">SL/TP скрыты из шторки инструментов рисования, а toggle в Chart settings включён.</p>
+              </div>
+              <div class="flex flex-col gap-[8px] w-full">
+                <p class="${BET_TITLE}">Решение: развести роли</p>
+                <div class="${TEXT_FULL}">
+                  <p>Chart settings — постоянная видимость.</p>
+                  <p>Drawing tools — временное скрытие.</p>
+                  <p>UI объясняет активное скрытие.</p>
+                </div>
+              </div>
+              <div class="w-[569px] h-[607px] rounded-[24px] overflow-hidden">
+                <img src="/assets/cases/sltp/visibility-logic.png" alt="Visibility logic" class="w-full h-full object-cover rounded-[24px] block" />
+              </div>
+            </div>
+
+            <!-- Decision 3: Small screens -->
+            <div class="flex flex-col gap-[56px] pb-[32px] w-full">
+              <div class="flex flex-col gap-[8px] w-full">
+                <p class="${BET_TITLE}">3/ Small screens</p>
+                <p class="${TEXT_FULL}">Значительная часть пользователей работала с маленьких и не самых новых телефонов.<br/>Поэтому line controls проектировались отдельно для тесного пространства.</p>
+              </div>
+              <div class="flex flex-col gap-[32px] w-full">
+                <div class="w-full aspect-[1984/1374] rounded-[16px] overflow-hidden">
+                  <img src="/assets/cases/sltp/small-screens-1.png" alt="Small screens" class="w-full h-full object-cover rounded-[16px] block" />
+                </div>
+                <div class="w-[707px] h-[138px] rounded-[16px] overflow-hidden">
+                  <img src="/assets/cases/sltp/small-screens-2.png" alt="Small screens detail" class="w-full h-full object-cover rounded-[16px] block" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Behavioral system -->
+        <div class="flex flex-col gap-[32px] items-start w-full">
+          <div class="${ROW} w-full">
+            <span class="${LABEL_WIDE}">От interaction-модели к системе поведения</span>
+            <div class="shrink-0 flex flex-col gap-[32px]">
+              <p class="${QUOTE} w-[570px]">Количество состояний и переходов быстро росло, поэтому часть работы ушла в проектирование правил поведения системы.</p>
+              <div class="grid grid-cols-2 gap-[16px] w-full">
+                <div class="flex flex-col gap-[8px]">
+                  <p class="${BET_TITLE}">Calculation logic</p>
+                  <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                    <li>price / pips / %</li>
+                    <li>realtime recalculation</li>
+                    <li>P&L synchronization</li>
+                  </ul>
+                </div>
+                <div class="flex flex-col gap-[8px]">
+                  <p class="${BET_TITLE}">Warning system</p>
+                  <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                    <li>invalid levels</li>
+                    <li>"too close to market"</li>
+                    <li>unsaved changes</li>
+                  </ul>
+                </div>
+                <div class="flex flex-col gap-[8px]">
+                  <p class="${BET_TITLE}">Chart behavior</p>
+                  <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                    <li>active / inactive states</li>
+                    <li>visibility logic</li>
+                    <li>multi-position handling</li>
+                    <li>confirmation states</li>
+                  </ul>
+                </div>
+                <div class="flex flex-col gap-[8px]">
+                  <p class="${BET_TITLE}">State synchronization</p>
+                  <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                    <li>edit &lt;-&gt; apply</li>
+                    <li>multiple interaction paths</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="w-[571px] h-[272px] rounded-[24px] overflow-hidden">
+                <img src="/assets/cases/sltp/behavior-system.png" alt="Behavior system" class="w-full h-full object-cover rounded-[24px] block" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Design System -->
+          <div class="${ROW} w-full">
+            <span class="${LABEL_WIDE}">Design System</span>
+            <div class="shrink-0 flex flex-col gap-[16px]">
+              <p class="${QUOTE} w-[570px]">Потребовались новые системные компоненты</p>
+              <p class="${TEXT_FULL} w-[570px]">Все компоенты я проработала на очень хорошем уровне детализации с учетом будущих кейсов использования</p>
+              <a href="https://www.figma.com/design/gzd7rk7vdzarXyDEUDzVGf/SL_TP?node-id=40000056-132983" target="_blank" class="${QUOTE} w-[570px] underline cursor-pointer">Figma</a>
+              <div class="${LIST_TEXT} w-[570px]">
+                <p>Lego-Field</p>
+                <p>Slider</p>
+                <p>Contextual menu</p>
+                <p>Chips</p>
+                <p>Control lines</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Outcome -->
+        <div class="${ROW} w-full">
+          <span class="shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.16px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]">Outcome</span>
+          <div class="shrink-0 w-[570px] flex flex-col gap-[16px]">
+            <p class="${TEXT_FULL}">В результате я не просто добавила SL/TP на график, а собрала устойчивую модель управления позицией:</p>
+            <div class="${LIST_TEXT}">
+              <p><span class="text-[#b3bdd2]">С быстрыми действиями</span> на графике,</p>
+              <p><span class="text-[#b3bdd2]">Точной настройкой</span> через шторку</p>
+              <p><span class="text-[#b3bdd2]">Понятной логикой поведения</span> в сложных сценариях.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result image -->
+        <div class="w-[1172px] h-[559px] shrink-0">
+          <img src="/assets/cases/sltp/result-img.png" alt="Result" class="w-full h-full object-contain block" />
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
 function renderPreviewContent() {
   if (!casePreviewInner) {
     return;
@@ -570,7 +941,7 @@ function renderPreviewContent() {
     return;
   }
 
-  if (viewState === "hover-emergency") {
+  if (viewState === "hover-emergency" || viewState === "hover-sltp") {
     return;
   }
 
@@ -580,12 +951,20 @@ function renderPreviewContent() {
 
   const currentCase = cases.find((c) => c.id === (activeCaseId ?? hoveredCaseId));
 
-  if (!currentCase || currentCase.id !== EMERGENCY_CASE_ID) {
+  if (!currentCase) {
+    return;
+  }
+
+  if (currentCase.id !== EMERGENCY_CASE_ID && currentCase.id !== SLTP_CASE_ID) {
     return;
   }
 
   if (renderedCaseId !== currentCase.id) {
-    casePreviewInner.innerHTML = generateEmergencyLongread();
+    if (currentCase.id === EMERGENCY_CASE_ID) {
+      casePreviewInner.innerHTML = generateEmergencyLongread();
+    } else if (currentCase.id === SLTP_CASE_ID) {
+      casePreviewInner.innerHTML = generateSLTPLongread();
+    }
     renderedCaseId = currentCase.id;
     zoneCasePreview?.scrollTo({ top: 0, behavior: "auto" });
   }
@@ -593,10 +972,14 @@ function renderPreviewContent() {
 
 function applyHoverLayerState() {
   const hoverBgLayer = document.querySelector("#hoverBgLayer");
-  const isHover = viewState === "hover-emergency";
+  const hoverBgLayerSltp = document.querySelector("#hoverBgLayerSltp");
 
   if (hoverBgLayer instanceof HTMLElement) {
-    hoverBgLayer.style.opacity = isHover ? "1" : "0";
+    hoverBgLayer.style.opacity = viewState === "hover-emergency" ? "1" : "0";
+  }
+
+  if (hoverBgLayerSltp instanceof HTMLElement) {
+    hoverBgLayerSltp.style.opacity = viewState === "hover-sltp" ? "1" : "0";
   }
 }
 
@@ -656,17 +1039,17 @@ function applyPreviewState() {
     return;
   }
 
-  if (viewState === "hover-emergency") {
+  if (viewState === "hover-emergency" || viewState === "hover-sltp") {
     zoneCasePreview.className = `${base} left-[1241px] top-0 h-[1080px] w-[679px] overflow-hidden opacity-100`;
     return;
   }
 
-  if (viewState === "opening-emergency") {
+  if (viewState === "opening-emergency" || viewState === "opening-sltp") {
     zoneCasePreview.className = `${base} left-[749px] top-0 h-[1080px] w-[1171px] overflow-hidden opacity-100`;
     return;
   }
 
-  if (viewState === "case-open-emergency") {
+  if (viewState === "case-open-emergency" || viewState === "case-open-sltp") {
     zoneCasePreview.className = `${base} left-[749px] top-0 h-[1080px] w-[1171px] overflow-x-hidden overflow-y-auto overscroll-contain opacity-100`;
     return;
   }
@@ -684,7 +1067,9 @@ function applyCloseButtonState() {
 
   const isVisible =
     viewState === "case-open-emergency" ||
-    viewState === "opening-emergency";
+    viewState === "opening-emergency" ||
+    viewState === "case-open-sltp" ||
+    viewState === "opening-sltp";
 
   closeCaseButton.className = isVisible
     ? "absolute left-[1809px] top-[36px] z-[60] flex items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[16px] py-[4px] text-[18px] leading-[20px] font-normal italic tracking-[-0.18px] text-[#b3bdd2] opacity-100 pointer-events-auto cursor-pointer transition-opacity duration-[400ms] ease-out [font-family:var(--font-case)]"
@@ -692,12 +1077,21 @@ function applyCloseButtonState() {
 }
 
 function applyCaseItemState() {
-  const activeId =
+  let activeId = null;
+
+  if (
     viewState === "hover-emergency" ||
     viewState === "opening-emergency" ||
     viewState === "case-open-emergency"
-      ? EMERGENCY_CASE_ID
-      : null;
+  ) {
+    activeId = EMERGENCY_CASE_ID;
+  } else if (
+    viewState === "hover-sltp" ||
+    viewState === "opening-sltp" ||
+    viewState === "case-open-sltp"
+  ) {
+    activeId = SLTP_CASE_ID;
+  }
   const caseButtons = document.querySelectorAll("[data-case-id]");
   const groupSections = document.querySelectorAll("[data-group-company]");
 
@@ -781,7 +1175,9 @@ function resetToOverview() {
 function handleClose() {
   if (
     viewState !== "case-open-emergency" &&
-    viewState !== "opening-emergency"
+    viewState !== "opening-emergency" &&
+    viewState !== "case-open-sltp" &&
+    viewState !== "opening-sltp"
   ) {
     return;
   }
@@ -844,17 +1240,39 @@ function handleClose() {
   }, 150 + 900);
 }
 
+function getHoverStateForCase(caseId) {
+  if (caseId === EMERGENCY_CASE_ID) return "hover-emergency";
+  if (caseId === SLTP_CASE_ID) return "hover-sltp";
+  return null;
+}
+
+function getOpeningStateForCase(caseId) {
+  if (caseId === EMERGENCY_CASE_ID) return "opening-emergency";
+  if (caseId === SLTP_CASE_ID) return "opening-sltp";
+  return null;
+}
+
+function getCaseOpenStateForCase(caseId) {
+  if (caseId === EMERGENCY_CASE_ID) return "case-open-emergency";
+  if (caseId === SLTP_CASE_ID) return "case-open-sltp";
+  return null;
+}
+
 function attachCaseEvents() {
   const caseButtons = document.querySelectorAll("[data-case-id]");
 
   caseButtons.forEach((caseButton) => {
     const caseId = caseButton.dataset.caseId;
+    const hoverState = getHoverStateForCase(caseId);
+    const openingState = getOpeningStateForCase(caseId);
+    const caseOpenState = getCaseOpenStateForCase(caseId);
+
+    if (!hoverState) return;
 
     caseButton.addEventListener("mouseenter", () => {
       if (
-        caseId !== EMERGENCY_CASE_ID ||
         viewState === "closing" ||
-        viewState === "opening-emergency"
+        viewState.startsWith("opening-")
       ) {
         return;
       }
@@ -862,7 +1280,7 @@ function attachCaseEvents() {
       hoveredCaseId = caseId;
 
       if (activeCaseId === null) {
-        viewState = "hover-emergency";
+        viewState = hoverState;
       }
 
       renderAboutState();
@@ -870,9 +1288,8 @@ function attachCaseEvents() {
 
     caseButton.addEventListener("focus", () => {
       if (
-        caseId !== EMERGENCY_CASE_ID ||
         viewState === "closing" ||
-        viewState === "opening-emergency"
+        viewState.startsWith("opening-")
       ) {
         return;
       }
@@ -880,7 +1297,7 @@ function attachCaseEvents() {
       hoveredCaseId = caseId;
 
       if (activeCaseId === null) {
-        viewState = "hover-emergency";
+        viewState = hoverState;
       }
 
       renderAboutState();
@@ -888,9 +1305,8 @@ function attachCaseEvents() {
 
     caseButton.addEventListener("click", () => {
       if (
-        caseId !== EMERGENCY_CASE_ID ||
         viewState === "closing" ||
-        viewState === "opening-emergency"
+        viewState.startsWith("opening-")
       ) {
         return;
       }
@@ -907,7 +1323,7 @@ function attachCaseEvents() {
 
       activeCaseId = caseId;
       hoveredCaseId = caseId;
-      viewState = "opening-emergency";
+      viewState = openingState;
 
       aboutPage.dataset.state = viewState;
       aboutPage.dataset.activeCase = activeCaseId ?? "";
@@ -935,11 +1351,11 @@ function attachCaseEvents() {
       openAnimationTimer = window.setTimeout(() => {
         openAnimationTimer = null;
 
-        if (viewState !== "opening-emergency") {
+        if (viewState !== openingState) {
           return;
         }
 
-        viewState = "case-open-emergency";
+        viewState = caseOpenState;
 
         if (casePreviewInner) {
           casePreviewInner.style.transition = "";
@@ -970,7 +1386,9 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && viewState !== "overview") {
     if (
       viewState === "case-open-emergency" ||
-      viewState === "opening-emergency"
+      viewState === "opening-emergency" ||
+      viewState === "case-open-sltp" ||
+      viewState === "opening-sltp"
     ) {
       handleClose();
       return;

@@ -17,7 +17,9 @@
   }
 
   .emergencyRedesignLongread p,
-  .emergencyRedesignLongread ul {
+  .emergencyRedesignLongread ul,
+  .sltpLongread p,
+  .sltpLongread ul {
     margin: 0;
   }
 
@@ -41,7 +43,7 @@
 }
 
 #zoneCasePreview,
-#zoneCasePreview *:not(#closeCaseButton) {
+#zoneCasePreview *:not(#closeCaseButton):not(.sltp-card) {
   background: transparent !important;
   background-color: transparent !important;
 }
@@ -57,9 +59,15 @@
 }
 
 #zoneCasePreview .emergencyRedesignLongread,
+#zoneCasePreview .sltpLongread,
 #zoneCasePreview #longreadHero,
 #zoneCasePreview #longreadSections {
   background: #000 !important;
+}
+
+#zoneCasePreview .sltp-card {
+  background: #121212 !important;
+  background-color: #121212 !important;
 }
 
 #zoneCasePreview img {
