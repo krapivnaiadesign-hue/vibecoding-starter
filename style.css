@@ -1,11 +1,71 @@
 @import "tailwindcss";
 
 @layer base {
+  html,
+  body {
+    overflow: hidden;
+  }
+
   :root {
     color-scheme: dark;
+    --font-intro: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-case: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-meta: "Acumin Pro SemiCondensed", "Arial Narrow", Arial, sans-serif;
     --font-statement: "Suisse Intl", "Arial Narrow", Arial, sans-serif;
     --font-menu: "Unica77 LL Cyrillic", "Arial Narrow", Arial, sans-serif;
     --font-label: "BlackGroteskC", Impact, "Arial Narrow", Arial, sans-serif;
   }
+
+  .emergencyRedesignLongread p,
+  .emergencyRedesignLongread ul {
+    margin: 0;
+  }
+
+  #zoneCasePreview::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  #zoneCasePreview::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #zoneCasePreview::-webkit-scrollbar-thumb {
+    background: rgba(179, 189, 210, 0.15);
+    border-radius: 2px;
+  }
+
+  #zoneCasePreview {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(179, 189, 210, 0.15) transparent;
+  }
+}
+
+#zoneCasePreview,
+#zoneCasePreview *:not(#closeCaseButton) {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+#zoneCasePreview *::before,
+#zoneCasePreview *::after {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+#zoneCasePreview {
+  background: #000 !important;
+}
+
+#zoneCasePreview .emergencyRedesignLongread,
+#zoneCasePreview #longreadHero,
+#zoneCasePreview #longreadSections {
+  background: #000 !important;
+}
+
+#zoneCasePreview img {
+  background: #000 !important;
+}
+
+#closeCaseButton {
+  background: rgba(179, 189, 210, 0.1) !important;
 }

@@ -9,7 +9,7 @@
     <div class="flex h-svh w-screen items-center justify-center overflow-hidden bg-black">
       <main
         id="aboutPage"
-        data-state="intro"
+        data-state="overview"
         data-active-case=""
         class="relative h-[min(100svh,calc(100vw*9/16))] w-[min(100vw,calc(100svh*16/9))] overflow-hidden rounded-[10px] bg-black text-[#b3bdd2]"
       >
@@ -19,156 +19,136 @@
         >
           <section
             id="zoneIntro"
-            aria-label="Zone Intro"
-            class="absolute left-[4px] top-0 z-[30] h-[1080px] w-[1019px] overflow-visible transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+            class="absolute left-0 top-0 z-[20] h-[1080px] w-[1174px] overflow-hidden transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
           >
+            <img
+              id="introIcon"
+              src="/assets/about/top-icon.svg"
+              alt=""
+              class="pointer-events-none absolute left-[29px] top-[calc(50%-329.5px)] z-[10] h-[25px] w-[25px] -translate-y-1/2 [mix-blend-mode:difference]"
+            />
+
             <div
-              id="introBackgroundMask"
-              class="absolute left-0 top-0 z-0 h-[1080px] w-[1019px] overflow-hidden pointer-events-none transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+              id="introMeta"
+              class="absolute left-[545px] top-[36px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]"
+            >
+              <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
+                <span class="font-bold">Product Designer:</span>
+                <span class="font-normal italic">Krapivnaia Polina</span>
+              </div>
+              <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
+                <span class="font-bold">Experience:</span>
+                <span class="font-normal italic">4+ Years · Fintech, AI SaaS</span>
+              </div>
+            </div>
+
+            <p
+              id="introStatement"
+              class="pointer-events-none absolute left-[194px] top-[178px] z-[30] m-0 w-[659px] -translate-y-full text-[18px] leading-[21px] font-bold italic text-[#b3bdd2] [font-family:var(--font-intro)] [mix-blend-mode:difference] [text-indent:277px]"
+            >
+              Я смотрю на дизайн как на построение среды, где человек понимает,
+              действует и движется через форму, пространство, время и отношения
+              между объектами.
+            </p>
+
+            <nav
+              id="introMenu"
+              class="absolute left-[194px] top-[201px] z-[30] flex w-[277px] items-center justify-between"
+              aria-label="About navigation"
+            >
+              <button
+                type="button"
+                class="pointer-events-auto flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] [font-family:var(--font-intro)]"
+              >
+                About Me +
+              </button>
+              <a
+                href="#"
+                class="pointer-events-auto flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
+              >
+                CV
+              </a>
+              <a
+                href="#"
+                class="pointer-events-auto flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
+              >
+                LinkedIn
+              </a>
+            </nav>
+
+            <div
+              id="introPortrait"
+              class="absolute left-[549px] top-[146px] z-[20] h-[211px] w-[201px] overflow-hidden"
             >
               <img
-                id="introBackground"
                 src="/assets/about/intro-background.jpg"
                 alt=""
-                class="pointer-events-none absolute left-0 top-0 z-0 h-[1080px] w-[1019px] object-cover opacity-[0.46] [transform:rotate(180deg)_scaleY(-1)] transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+                class="block h-full w-full object-cover grayscale brightness-[0.75] contrast-[1.05]"
               />
               <div
-                id="introBackgroundOverlay"
-                class="absolute inset-0 z-[1] bg-black/16"
-              ></div>
+                class="pointer-events-none absolute bottom-[8px] right-[8px] text-right text-[14px] leading-[14px] font-bold italic text-[rgba(179,189,210,0.25)] uppercase [font-family:var(--font-intro)] [mix-blend-mode:difference]"
+              >
+                продукт<br />как система
+              </div>
             </div>
 
             <div
-              id="introForeground"
-              class="absolute left-0 top-0 z-[40] h-[1080px] w-[1019px] overflow-visible transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+              id="introContacts"
+              class="absolute bottom-[35px] left-[545px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]"
+            >
+              <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
+                <span class="font-bold">Mail:</span>
+                <span class="font-normal italic">&lt; Krapivnaiadesign@Gmail.Com &gt;</span>
+              </div>
+              <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
+                <span class="font-bold">Location:</span>
+                <span class="font-normal italic">Serbia, Belgrade / Europe</span>
+              </div>
+            </div>
+
+            <div
+              id="selectedWorkBlock"
+              class="absolute left-[545px] top-[436px] z-[20] flex items-start justify-center gap-[64px]"
             >
               <div
-                id="introMeta"
-                class="absolute left-[76px] top-[96px] z-[40] grid w-[307px] grid-cols-[141px_1fr] text-[16px] leading-[20px] tracking-[0.16px] text-[rgba(179,189,210,0.7)] [font-family:var(--font-meta)] transition-[left] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+                id="selectedWorkLabel"
+                class="whitespace-nowrap text-[14px] leading-[17px] font-bold italic text-[rgba(179,189,210,0.72)] uppercase [font-family:var(--font-intro)]"
               >
-                <span class="font-semibold text-[#b3bdd2]">Product designer:</span>
-                <span class="font-normal text-[rgba(179,189,210,0.7)]">Krapivnaia Polina</span>
-                <span aria-hidden="true"></span>
-                <span class="font-normal text-[rgba(179,189,210,0.7)]">4+ years · Fintech, AI SaaS</span>
+                SELECTED WORK
               </div>
-
-              <p
-                id="introStatement"
-                class="pointer-events-none absolute left-[76px] top-[209px] z-[50] m-0 w-[873px] -translate-y-full text-[17px] leading-[22px] font-bold italic tracking-[3.4px] text-[#b3bdd2] [font-family:var(--font-statement)] [mix-blend-mode:difference] [text-indent:307px] transition-[left,width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
-              >
-                Я смотрю на дизайн как на построение среды, где человек понимает,
-                действует и движется через форму, пространство, время и отношения
-                между объектами.
-              </p>
-
-              <a
-                id="introMail"
-                href="mailto:krapivnaiadesign@gmail.com"
-                class="absolute left-[76px] top-[241px] z-[40] w-[306px] text-[16px] leading-[20px] tracking-[0.16px] no-underline [font-family:var(--font-meta)] transition-[left] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
-              >
-                <span class="font-semibold text-[#b3bdd2]">Mail:</span>
-                <span class="font-normal text-[rgba(179,189,210,0.7)]">
-                  &nbsp;&lt; krapivnaiadesign@gmail.com &gt;
-                </span>
-              </a>
-
-              <p
-                id="introLocation"
-                class="absolute left-[76px] top-[265px] z-[40] m-0 w-[306px] text-[16px] leading-[20px] tracking-[0.16px] text-[rgba(179,189,210,0.7)] [font-family:var(--font-meta)] transition-[left] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
-              >
-                <span class="font-semibold text-[#b3bdd2]">Location:</span>
-                <span class="font-normal text-[rgba(179,189,210,0.7)]">
-                  &nbsp;Serbia, Belgrade / Europe
-                </span>
-              </p>
-
-              <video
-                id="introVideo"
-                aria-label="Intro video"
-                class="absolute left-[383px] top-[291px] z-[43] block h-[187px] w-[181px] overflow-hidden object-cover opacity-80 grayscale brightness-[0.75] contrast-[1.05] transition-[left,top,width,height,transform] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
-                src="/assets/about/intro-video.mp4"
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="metadata"
-              ></video>
-
-              <nav
-                id="introMenu"
-                aria-label="About navigation"
-                class="absolute left-[381px] top-[498px] z-[44] flex items-center gap-[23px] transition-[left,top] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
-              >
-                <button
-                  type="button"
-                  class="flex items-center justify-center bg-[rgba(179,189,210,0.05)] px-[12px] py-[2px] text-[14px] leading-[20px] font-normal italic tracking-[-0.14px] whitespace-nowrap text-[#b3bdd2] transition-colors duration-200 ease-out hover:bg-[rgba(179,189,210,0.1)] hover:text-white [font-family:var(--font-menu)]"
-                >
-                  About Me +
-                </button>
-                <a
-                  href="#"
-                  class="flex items-center justify-center bg-[rgba(179,189,210,0.05)] px-[12px] py-[2px] text-[14px] leading-[20px] font-normal italic tracking-[-0.14px] whitespace-nowrap text-[#b3bdd2] no-underline transition-colors duration-200 ease-out hover:bg-[rgba(179,189,210,0.1)] hover:text-white [font-family:var(--font-menu)]"
-                >
-                  CV
-                </a>
-                <a
-                  href="#"
-                  class="flex items-center justify-center bg-[rgba(179,189,210,0.05)] px-[12px] py-[2px] text-[14px] leading-[20px] font-normal italic tracking-[-0.14px] whitespace-nowrap text-[#b3bdd2] no-underline transition-colors duration-200 ease-out hover:bg-[rgba(179,189,210,0.1)] hover:text-white [font-family:var(--font-menu)]"
-                >
-                  LinkedIn
-                </a>
-              </nav>
-
               <div
-                id="introLabel"
-                class="absolute left-[383px] top-[953px] z-[44] flex w-[181px] flex-col items-center justify-center gap-[8px] opacity-[0.77] [mix-blend-mode:difference] transition-[left,transform] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
-              >
-                <img
-                  src="/assets/about/bottom-icon.svg"
-                  alt=""
-                  class="h-[25px] w-[25px]"
-                />
-                <p
-                  class="m-0 text-center text-[13px] leading-[15px] italic tracking-[0.39px] text-[#abb7ce] uppercase [font-family:var(--font-label)]"
-                >
-                  видеть продукт как систему
-                </p>
-              </div>
+                id="selectedWorkList"
+                class="flex w-[448px] flex-col gap-[64px]"
+              ></div>
             </div>
           </section>
 
           <section
-            id="zoneCases"
-            aria-label="Zone Cases"
-            class="absolute right-0 top-1/2 z-[10] h-[1093px] w-[897px] -translate-y-1/2 overflow-hidden transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+            id="zoneCasePreview"
+            class="absolute left-[1941px] top-0 z-[10] h-[1080px] w-[679px] overflow-hidden opacity-0 transition-[left,width,height,opacity] duration-[900ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
           >
-            <div
-              id="casesStack"
-              class="absolute left-1/2 top-1/2 z-[10] flex w-[307px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-[24px] p-[16px] transition-[width,left,top,transform,height,opacity] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
-            >
-              <button
-                id="case1"
-                type="button"
-                data-case-card="case-1"
-                class="block h-[180px] w-[180px] shrink-0 rounded-[8px] bg-[#ff7979] transition-[width,height,opacity] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)] hover:scale-[1.02]"
-                aria-label="Open case 1"
-              ></button>
-              <button
-                id="case2"
-                type="button"
-                data-case-card="case-2"
-                class="block h-[180px] w-[180px] shrink-0 rounded-[8px] bg-[#275dff] transition-[width,height,opacity] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)] hover:scale-[1.02]"
-                aria-label="Open case 2"
-              ></button>
-              <button
-                id="case3"
-                type="button"
-                data-case-card="case-3"
-                class="block h-[180px] w-[180px] shrink-0 rounded-[8px] bg-[#45ff73] transition-[width,height,opacity] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)] hover:scale-[1.02]"
-                aria-label="Open case 3"
-              ></button>
+            <div id="hoverBgLayer" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity duration-[600ms]">
+              <img src="/assets/cases/emergency-redesign/hover/bg-01.png" alt="" class="absolute left-[124px] top-[-49px] w-[333px] h-[188px] rounded-[16px] object-cover opacity-[0.24] shadow-[0px_0px_18.5px_2px_rgba(0,0,0,0.25)]" />
+              <img src="/assets/cases/emergency-redesign/hover/bg-02.png" alt="" class="absolute right-[-150px] top-[21px] w-[303px] h-[266px] rounded-[16px] object-cover opacity-[0.24] shadow-[0px_0px_18.5px_2px_rgba(0,0,0,0.25)]" />
+              <img src="/assets/cases/emergency-redesign/hover/bg-03.png" alt="" class="absolute left-[9px] top-[176px] w-[405px] h-[538px] rounded-[16px] object-cover opacity-[0.12] shadow-[0px_0px_18.5px_2px_rgba(0,0,0,0.25)]" />
+              <img src="/assets/cases/emergency-redesign/hover/bg-04.png" alt="" class="absolute left-[-190px] top-[740px] w-[344px] h-[275px] rounded-[16px] object-cover opacity-[0.24] shadow-[0px_0px_18.5px_2px_rgba(0,0,0,0.25)]" />
+              <img src="/assets/cases/emergency-redesign/hover/bg-05.png" alt="" class="absolute right-[-154px] top-[364px] w-[333px] h-[274px] rounded-[16px] object-cover opacity-[0.24] shadow-[0px_0px_18.5px_2px_rgba(0,0,0,0.25)]" />
+              <img src="/assets/cases/emergency-redesign/hover/bg-06.png" alt="" class="absolute left-[162px] bottom-0 w-[538px] h-[382px] rounded-[16px] object-cover opacity-[0.24] shadow-[0px_0px_18.5px_2px_rgba(0,0,0,0.25)]" />
+              <div class="absolute left-[calc(50%-3px)] top-[15.28%] bottom-[15.28%] z-[5] w-[349px] -translate-x-1/2 overflow-hidden rounded-[15px]">
+                <img src="/assets/cases/emergency-redesign/hover/hover-main-phone.png" alt="" class="block h-full w-full object-cover" />
+              </div>
             </div>
+            <div id="casePreviewInner" class="relative z-[2] w-full"></div>
           </section>
+
+          <button
+            id="closeCaseButton"
+            type="button"
+            aria-label="Close case"
+            class="absolute left-[1809px] top-[36px] z-[60] flex items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[16px] py-[4px] text-[18px] leading-[20px] font-normal italic tracking-[-0.18px] text-[#b3bdd2] opacity-0 pointer-events-none transition-opacity duration-[400ms] ease-out [font-family:var(--font-case)]"
+          >
+            Close
+          </button>
         </div>
       </main>
     </div>
