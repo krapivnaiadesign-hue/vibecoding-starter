@@ -43,7 +43,7 @@
 }
 
 #zoneCasePreview,
-#zoneCasePreview *:not(#closeCaseButton):not(.sltp-card) {
+#zoneCasePreview *:not(#closeCaseButton):not(.sltp-card):not(.emergencyPrototypeOpenBtn) {
   background: transparent !important;
   background-color: transparent !important;
 }
@@ -60,6 +60,7 @@
 
 #zoneCasePreview .emergencyRedesignLongread,
 #zoneCasePreview .sltpLongread,
+#zoneCasePreview .kelpieLongread,
 #zoneCasePreview #longreadHero,
 #zoneCasePreview #longreadSections {
   background: #000 !important;
@@ -76,4 +77,9 @@
 
 #closeCaseButton {
   background: rgba(179, 189, 210, 0.1) !important;
+}
+
+.emergencyPrototypeOpenBtn {
+  background: rgba(179, 189, 210, 0.1) !important;
+  pointer-events: auto;
 }

@@ -6,6 +6,7 @@ const MOTION_EASING = "cubic-bezier(0.77,0,0.175,1)";
 const POSITION_TRANSITION = `left 900ms ${MOTION_EASING}, top 900ms ${MOTION_EASING}, width 900ms ${MOTION_EASING}, height 900ms ${MOTION_EASING}, bottom 900ms ${MOTION_EASING}, opacity 450ms ease, transform 900ms ${MOTION_EASING}`;
 const EMERGENCY_CASE_ID = "emergency-redesign";
 const SLTP_CASE_ID = "stop-loss-take-profit";
+const KELPIE_CASE_ID = "ai-platform-launch";
 const SELECTED_WORK_LABEL_CLASS =
   "whitespace-nowrap text-[14px] leading-[17px] font-bold italic text-[rgba(179,189,210,0.72)] uppercase [font-family:var(--font-intro)]";
 
@@ -161,7 +162,7 @@ function updateStageScale() {
 }
 
 function getIntroLayoutKey() {
-  if (viewState === "hover-emergency" || viewState === "hover-sltp") {
+  if (viewState === "hover-emergency" || viewState === "hover-sltp" || viewState === "hover-kelpie") {
     return "hover-emergency";
   }
 
@@ -170,6 +171,8 @@ function getIntroLayoutKey() {
     viewState === "case-open-emergency" ||
     viewState === "opening-sltp" ||
     viewState === "case-open-sltp" ||
+    viewState === "opening-kelpie" ||
+    viewState === "case-open-kelpie" ||
     viewState === "closing"
   ) {
     return "case-open";
@@ -198,6 +201,7 @@ function renderSelectedWorkList() {
                   <button
                     type="button"
                     data-case-id="${currentCase.id}"
+                    aria-label="${currentCase.id === KELPIE_CASE_ID ? "Open AI-Platform Launch case" : currentCase.title}"
                     class="group/case flex w-full cursor-pointer appearance-none flex-col gap-[12px] border-0 bg-transparent pl-[32px] text-left transition-[opacity,filter] duration-[250ms] ease-out [font-family:var(--font-intro)]"
                   >
                     <div class="flex w-full items-start gap-[9px]">
@@ -270,17 +274,24 @@ function generateEmergencyLongread() {
 
       <!-- A. Hero -->
       <div id="longreadHero" class="relative w-[1172px] h-[771px] shrink-0 overflow-hidden">
-        <img
-          id="heroFullImage"
-          src="/assets/cases/emergency-redesign/hero-preview.png"
-          alt="Emergency Redesign Hero"
-          class="absolute inset-0 w-full h-full object-cover"
-        />
-        <div class="absolute right-[52px] top-[134px] w-[291px] flex flex-col items-start">
+        <div class="absolute left-[257px] top-[38px] h-[659px] w-[483px]">
+          <img
+            src="/assets/cases/emergency-redesign/future-img.png"
+            alt="Emergency Redesign Future concept"
+            class="block h-full w-full object-cover"
+          />
+        </div>
+        <div class="absolute left-[744px] top-[505px] w-[279px] flex flex-col items-start">
           <p class="text-[14px] leading-[18px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.5)] [font-family:var(--font-case)]">
             <span>* </span><span class="font-bold italic">Future-концепт</span><span> торгового сценария: прототип более глубокой пересборки продукта, который не вошёл в релиз, но стал ориентиром для части архитектурных решений.</span>
           </p>
         </div>
+        <a
+          href="https://www.figma.com/proto/sd1M2O8MsgRhs90rvup2qr/FUTURE?node-id=40000024-12422&viewport=-4866%2C-179%2C0.45&t=qqtQZVUOBUav2Vya-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=40000024%3A12422&page-id=0%3A1"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="emergencyPrototypeOpenBtn absolute left-[744px] top-[628px] flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[12px] py-[6px] text-[16px] leading-[20px] font-normal italic tracking-[-0.16px] text-[#b3bdd2] no-underline [font-family:var(--font-case)]"
+        >Открыть прототип</a>
       </div>
 
       <!-- Longread body -->
@@ -939,6 +950,252 @@ function generateSLTPLongread() {
   `;
 }
 
+function generateKelpieLongread() {
+  const LABEL = "shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.48px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
+  const LABEL_WIDE = "shrink-0 w-[148px] text-[16px] leading-[20px] font-bold italic tracking-[0.48px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
+  const TEXT = "text-[18px] leading-[22px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.8)] [font-family:var(--font-case)]";
+  const TEXT_MUTED = "text-[18px] leading-[22px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
+  const TEXT_FULL = "text-[18px] leading-[22px] font-medium tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
+  const DETAIL_LABEL = "text-[16px] leading-[20px] tracking-[0.16px] font-bold text-[#b3bdd2] [font-family:var(--font-case)]";
+  const DETAIL_VALUE = "text-[16px] leading-[20px] tracking-[0.16px] italic text-[#b3bdd2] [font-family:var(--font-case)]";
+  const QUOTE = "font-bold italic text-[18px] leading-[22px] tracking-[0.18px] text-[rgba(179,189,210,0.8)] [font-family:var(--font-case)]";
+  const QUOTE_FULL = "font-bold italic text-[18px] leading-[22px] tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
+  const HIGHLIGHT = "font-bold italic text-[18px] leading-[21px] tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
+  const CAPTION = "font-light italic text-[14px] leading-[15px] tracking-[0.14px] text-[rgba(179,189,210,0.5)] text-center [font-family:var(--font-case)]";
+  const ROW = "flex items-start justify-between pl-[52px] pr-[154px] box-border";
+  const LIST = "pl-[27px] list-disc text-[18px] leading-[22px] font-normal tracking-[0.18px] text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
+
+  return `
+    <div class="kelpieLongread flex flex-col gap-[24px] w-[1172px] overflow-hidden">
+
+      <div id="longreadHero" class="relative w-[1172px] h-[771px] shrink-0 overflow-hidden">
+        <img
+          src="/assets/cases/kelpie/preview/kelpie-hero.png"
+          alt="Kelpie AI Platform"
+          class="block h-full w-full object-cover"
+        />
+      </div>
+
+      <div class="flex flex-col gap-[120px] items-center w-[1172px] pb-[120px]">
+
+        <div class="flex flex-col gap-[64px] items-start w-full">
+          <div class="${ROW} w-full">
+            <span class="${LABEL}">Context</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[28px]">
+              <div class="${QUOTE}">
+                <p class="mb-0">Как за 4 недели превратить хаотичный набор сложного функционала в понятную, масштабируемую AI-платформу, готовую к запуску на пользователей.</p>
+                <p>+ и получить оффер на роль Product Owner / Design Lead.</p>
+              </div>
+              <div class="flex flex-col gap-[16px]">
+                <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                  <span class="font-bold">Роль</span>
+                  <span class="${DETAIL_VALUE}">Lead Product Designer</span>
+                </div>
+                <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                  <span class="font-bold capitalize">Фокус</span>
+                  <span class="${DETAIL_VALUE}">продуктовая архитектура, UX-логика, MVP, дизайн-система</span>
+                </div>
+                <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                  <span class="font-bold capitalize">Срок</span>
+                  <span class="${DETAIL_VALUE}">4 недели</span>
+                </div>
+                <div class="flex items-start gap-[8px] ${DETAIL_LABEL}">
+                  <span class="font-bold capitalize shrink-0">Продукт:</span>
+                  <span class="${DETAIL_VALUE}">Kelpie — AI-augmented workplace: рабочая среда, где люди, документы, чаты, workflows, события и AI-агенты связаны в единую систему работы.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="${ROW} w-full">
+            <span class="${LABEL}">Проблема</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[32px]">
+              <p class="${TEXT}">Клиент пришёл с запросом на быстрый UX/UI-polish перед запуском.<br/>Еще до входа стало понятно: проблема была не в визуале.</p>
+              <div class="flex flex-col gap-[16px]">
+                <p class="${TEXT_MUTED}">В системе уже были наброски AI-assistant, agents, workflows, chats, files, совместный редактор документов, events и admin-зоны, но <span class="font-bold italic text-[#b3bdd2]">ни один из разделов не был логически проработан</span> и <span class="font-bold italic text-[#b3bdd2]">между ними не было ясной навигационной модели</span>:</p>
+                <p class="${TEXT_MUTED}">Фигмы не было, все собиралось срузу в код.</p>
+                <p class="${TEXT}">Продукт не читался как единая рабочая среда.</p>
+                <div class="${TEXT_MUTED}">
+                  <p class="mb-0">Было не понятно:</p>
+                  <ul class="${LIST}">
+                    <li>где начинается работа;</li>
+                    <li>чем AI Assistant отличается от agents и workflows;</li>
+                    <li>где запускать процесс;</li>
+                    <li>где следить за выполнением;</li>
+                    <li>где появляются результаты;</li>
+                    <li>как в работу включаются коллеги и AI.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-[24px] items-start w-full">
+            <div class="relative w-full h-[580px]">
+              <img src="/assets/cases/kelpie/longread/staging-01.png" alt="" class="absolute left-0 top-0 h-[440px] w-[810px] rounded-[16px] object-cover opacity-[0.85]" />
+              <img src="/assets/cases/kelpie/longread/staging-02.png" alt="" class="absolute right-0 bottom-0 h-[440px] w-[812px] rounded-[16px] object-cover" />
+            </div>
+            <p class="${CAPTION} w-full">состояние продукта, которое было на моменте моего подключения к работе</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-[64px] items-start w-full">
+          <div class="${ROW} w-full">
+            <span class="${LABEL_WIDE}">Deep dive за 3 дня</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[32px]">
+              <p class="${TEXT}">Быстро стало ясно: если сразу идти в UI, мы просто красиво оформим хаос. Поэтому несмотря на острую нехватку времени я настояила на моем глубокогом погружении.</p>
+              <div class="${TEXT}">
+                <p class="mb-0">За <span class="font-bold italic">три дня</span> я параллельно разбирала GitHub, staging, текущие фичи, backend-ограничения и AI-assisted разбор кода.</p>
+                <p class="mb-0">&nbsp;</p>
+                <p class="mb-0">Одновременно декомпозировала платформу на ключевые сущности — AI Assistant, agents, workflows, events, workspace, chats, Beach, Files, artifacts, settings — и собирала сырые карты в Figma, чтобы увидеть связи между разделами, сценариями и состояниями.</p>
+                <p>На непотнятных участках собирала HTML прототипы через нейронку, чтобы хоть как-то разобрать заложенную логику.</p>
+              </div>
+              <div class="flex justify-center w-full">
+                <img src="/assets/cases/kelpie/longread/giphy.gif" alt="" class="size-[279px] object-cover" />
+              </div>
+              <p class="${QUOTE}">Это было погружение в работающий хаос и только после этого стало возможно проектировать интерфейс не как набор экранов, а как рабочую архитектуру продукта.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-[12px] items-start w-full py-[24px]">
+            <div class="flex items-center justify-center w-full h-[531px] overflow-hidden">
+              <img src="/assets/cases/kelpie/longread/research-img.png" alt="" class="w-full h-full object-contain block" />
+            </div>
+            <p class="${CAPTION} w-full">Кусочки ресерча</p>
+          </div>
+
+          <div class="${ROW} w-full">
+            <span class="${LABEL_WIDE}">REFRAMING THE TASK</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[24px]">
+              <div class="${TEXT}">
+                <p class="mb-0"><span class="font-bold italic">Было:</span> “Быстро отполировать экраны перед запуском.”</p>
+                <p><span class="font-bold italic">Стало:</span> “Собрать рабочую модель AI-офиса — и сделать так, чтобы интерфейс её выражал.”</p>
+              </div>
+              <div class="${TEXT_MUTED}">
+                <p class="mb-0">Перед визуальным слоем я разложила продукт на ключевые сущности:</p>
+                <p class="mb-0">&nbsp;</p>
+                <p class="mb-0 font-bold text-[#b3bdd2]">AI Assistant · Agents · Workflows · Events · Workspace · Chats · Beach / Files · Artifacts · Admin settings</p>
+                <p class="mb-0">&nbsp;</p>
+                <p>Дальше я проверяла не отдельные экраны, а связи между ними:<br/>как пользователь переходит от запроса к AI → к запуску workflow → к мониторингу → к результату → к совместной работе.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-[32px] items-start w-full">
+          <div class="${ROW} w-full">
+            <span class="${LABEL_WIDE}">Scope/delivery</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[24px]">
+              <p class="${QUOTE_FULL}">Объём MVP оказался ближе к зрелому продукту, чем к быстрому launch package: почти каждый модуль требовал архитектурного решения, состояний и детализации.</p>
+              <p class="${TEXT_MUTED}">Был необходим второй дизайнер для делегирования вторичных сценариев.</p>
+              <p class="${TEXT}">
+                <span class="font-bold text-[#b3bdd2]">Мой фокус:</span> core architecture, роли модулей, ключевые сценарии и продуктовая модель.<br/>
+                <span class="font-bold text-[#b3bdd2]">Фокус второго дизайнера:</span> вторичные экраны, состояния, UI-polish, детализация компонентов и поддержка фреймов.
+              </p>
+            </div>
+          </div>
+          <div class="w-full overflow-hidden">
+            <img src="/assets/cases/kelpie/longread/scope-diagram.png" alt="" class="w-full h-auto block" />
+          </div>
+        </div>
+
+        <div class="${ROW} w-full items-start">
+          <span class="${LABEL}">Scope/<br/>delivery</span>
+          <div class="shrink-0 w-[570px] flex flex-col gap-[120px]">
+
+            <div class="flex flex-col gap-[24px]">
+              <p class="${HIGHLIGHT}">1/ Cжала платформу до 4 рабочих слоёв</p>
+              <p class="${TEXT_FULL}">Вместо длинного списка разделов я собрала Kelpie как AI-офис с четырьмя понятными слоями:</p>
+              <ol class="${LIST} list-decimal text-[#b3bdd2]">
+                <li class="mb-[8px]"><span class="font-bold">Workflow Library</span><br/>Что система и AI-агенты умеют делать.</li>
+                <li class="mb-[8px]"><span class="font-bold">Command Centre</span><br/>Что происходит сейчас: запущенные процессы, события, approvals, ошибки и действия.</li>
+                <li class="mb-[8px]"><span class="font-bold">Beach / Files</span><br/>Где живут документы, материалы, артефакты и результаты.</li>
+                <li><span class="font-bold">Chats / Collaboration</span><br/>Где люди и AI взаимодействуют вокруг работы.</li>
+              </ol>
+              <div class="w-full overflow-hidden">
+                <img src="/assets/cases/kelpie/longread/layers-img.png" alt="" class="w-full h-auto block" />
+              </div>
+              <p class="${QUOTE_FULL}">Это позволило не упростить продукт искусственно, а сделать его читаемым.</p>
+            </div>
+
+            <div class="flex flex-col gap-[24px]">
+              <p class="${HIGHLIGHT}">2/ Я ввела функциональную онтологию продукта</p>
+              <p class="${TEXT_FULL}">Каждый экран я проверяла через пять режимов работы пользователя:</p>
+              <p class="${TEXT_MUTED}">
+                <span class="font-bold italic text-[#b3bdd2]">Discovery</span> — найти, что умеет система.<br/>
+                <span class="font-bold italic text-[#b3bdd2]">Run</span> — запустить или продолжить работу.<br/>
+                <span class="font-bold italic text-[#b3bdd2]">Monitoring</span> — видеть процессы, статусы и события.<br/>
+                <span class="font-bold italic text-[#b3bdd2]">Collaboration</span> — взаимодействовать с людьми и AI.<br/>
+                <span class="font-bold italic text-[#b3bdd2]">Outputs</span> — находить документы, артефакты и результаты.
+              </p>
+              <div class="w-full overflow-hidden">
+                <img src="/assets/cases/kelpie/longread/ontology-img.png" alt="" class="w-full h-auto block" />
+              </div>
+              <p class="${TEXT_FULL}">Пользователь сейчас ищет, запускает, наблюдает, взаимодействует или работает с результатом?</p>
+            </div>
+
+            <div class="flex flex-col gap-[24px]">
+              <p class="${HIGHLIGHT}">3/ Навигация под ограничением: Widgets / Sections</p>
+              <p class="${QUOTE_FULL}">Строгое ограничение от заказчика было: ни в коем случае не типичный SaaS sidebar в качестве меню и навигации.</p>
+              <p class="${TEXT_FULL}"><span class="font-bold italic">Мультирежимность:</span> Widgets / Sections стали способом разделить обзор и глубокую работу: widgets показывают жизнь системы, sections дают доступ к полноценным рабочим зонам.</p>
+              <p class="${TEXT_FULL}">В дальнейших планах было попробовать спроектировать экран Widgets в качестве некого меню навигации, анализа и работы с платформой - чтобы из одного экрана воспроизводить всю работу по платформе.</p>
+              <div class="w-full overflow-hidden">
+                <img src="/assets/cases/kelpie/longread/nav-widgets-img.png" alt="" class="w-full h-auto block" />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-[24px]">
+              <p class="${HIGHLIGHT}">4/ Сделала Command Centre слоем управления работой</p>
+              <p class="${TEXT_FULL}">Он связал три уровня:</p>
+              <ol class="${LIST} list-decimal text-[#b3bdd2]">
+                <li class="mb-[8px]"><span class="font-bold italic">Events Feed</span><br/>События со всей платформы: prompts, AI responses, workflow actions, approvals, failures, chats, artifacts.</li>
+                <li class="mb-[8px]"><span class="font-bold italic">Workspace</span><br/>Погружение в конкретную работу: chat, logs, details, artifacts, execution.</li>
+                <li><span class="font-bold italic">Side Panel</span><br/>Быстрый доступ к текущей активности из любой точки интерфейса.</li>
+              </ol>
+              <p class="${TEXT_FULL}"><span class="font-bold italic">Важные события стали actionable:</span><br/>approve, reject, retry, open workspace, view logs, show chat, download artifacts.</p>
+              <div class="w-full overflow-hidden">
+                <img src="/assets/cases/kelpie/longread/commandcentre-img.png" alt="" class="w-full h-auto block" />
+              </div>
+              <p class="${QUOTE_FULL}">Я перевела технический шум в управляемый рабочий слой, где пользователь понимает, что происходит, где нужен его вклад и куда перейти дальше.</p>
+            </div>
+
+            <div class="flex flex-col gap-[24px]">
+              <p class="${HIGHLIGHT}">5/ Экран Welcome стал легким входом в сложный продукт</p>
+              <p class="${TEXT_FULL}">Первый экран не должен был сразу обрушивать на пользователя всю сложность AI-платформы — <span class="font-bold italic">поэтому Welcome стал спокойным первым слоем.</span></p>
+              <p class="${QUOTE_FULL}">Cначала — простой вход через assistant;<br/>Дальше — раскрытие widgets и sections;<br/>Затем — переход в Command Centre, Workflow Library, Beach, Chats и Files.</p>
+              <p class="${TEXT_FULL}">Это не было “идеальным” решением на бумаге.<br/>Это MVP-компромисс: сначала снизить тревожность и когнитивную нагрузку, потом постепенно раскрывать платформу.</p>
+              <div class="w-full overflow-hidden">
+                <img src="/assets/cases/kelpie/longread/welcome-img.png" alt="" class="w-full h-auto block" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-[64px] items-center w-full">
+          <div class="${ROW} w-full">
+            <span class="${LABEL}">Results</span>
+            <div class="shrink-0 w-[570px] flex flex-col gap-[12px]">
+              <p class="${QUOTE_FULL}">Цель:</p>
+              <p class="${TEXT_MUTED}">Подготовка к запуску для 40 компаний с целевым показателем 70% User Trust</p>
+              <p class="${QUOTE_FULL}">Scope:</p>
+              <p class="${TEXT_MUTED}">Реализовано и детально проработано 8 ключевых модулей системы (Command Centre, Library, Beach и др.). + часть вспомогательный внеплановых разделов (calendar, mail, contact) По итогу было заложено и проработано даже больше, чем могло реализоваться разработкой в срок запуска.</p>
+              <p class="${QUOTE_FULL}">Delivery:</p>
+              <p class="${TEXT_MUTED}">За 4 недели хаотичный staging превращен в архитектурно устойчивую платформу</p>
+              <p class="${QUOTE_FULL}">Market Validation:</p>
+              <p class="${QUOTE_FULL}">По итогам запуска получила оффер на роль Product Owner / Design Lead.</p>
+            </div>
+          </div>
+          <div class="w-[1088px] h-[775px] shrink-0 overflow-hidden rounded-[24px] shadow-[0px_4px_27.5px_19px_rgba(0,0,0,0.25)]">
+            <img src="/assets/cases/kelpie/longread/outcome-img.png" alt="" class="w-full h-full object-cover block" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
 function renderPreviewContent() {
   if (!casePreviewInner) {
     return;
@@ -952,7 +1209,11 @@ function renderPreviewContent() {
     return;
   }
 
-  if (viewState === "hover-emergency" || viewState === "hover-sltp") {
+  if (viewState === "hover-emergency" || viewState === "hover-sltp" || viewState === "hover-kelpie") {
+    if (casePreviewInner.innerHTML) {
+      casePreviewInner.innerHTML = "";
+      renderedCaseId = "";
+    }
     return;
   }
 
@@ -966,7 +1227,11 @@ function renderPreviewContent() {
     return;
   }
 
-  if (currentCase.id !== EMERGENCY_CASE_ID && currentCase.id !== SLTP_CASE_ID) {
+  if (
+    currentCase.id !== EMERGENCY_CASE_ID &&
+    currentCase.id !== SLTP_CASE_ID &&
+    currentCase.id !== KELPIE_CASE_ID
+  ) {
     return;
   }
 
@@ -975,6 +1240,8 @@ function renderPreviewContent() {
       casePreviewInner.innerHTML = generateEmergencyLongread();
     } else if (currentCase.id === SLTP_CASE_ID) {
       casePreviewInner.innerHTML = generateSLTPLongread();
+    } else if (currentCase.id === KELPIE_CASE_ID) {
+      casePreviewInner.innerHTML = generateKelpieLongread();
     }
     renderedCaseId = currentCase.id;
     zoneCasePreview?.scrollTo({ top: 0, behavior: "auto" });
@@ -984,6 +1251,7 @@ function renderPreviewContent() {
 function applyHoverLayerState() {
   const hoverBgLayer = document.querySelector("#hoverBgLayer");
   const hoverBgLayerSltp = document.querySelector("#hoverBgLayerSltp");
+  const hoverBgLayerKelpie = document.querySelector("#hoverBgLayerKelpie");
 
   if (hoverBgLayer instanceof HTMLElement) {
     hoverBgLayer.style.opacity = viewState === "hover-emergency" ? "1" : "0";
@@ -991,6 +1259,10 @@ function applyHoverLayerState() {
 
   if (hoverBgLayerSltp instanceof HTMLElement) {
     hoverBgLayerSltp.style.opacity = viewState === "hover-sltp" ? "1" : "0";
+  }
+
+  if (hoverBgLayerKelpie instanceof HTMLElement) {
+    hoverBgLayerKelpie.style.opacity = viewState === "hover-kelpie" ? "1" : "0";
   }
 }
 
@@ -1050,17 +1322,17 @@ function applyPreviewState() {
     return;
   }
 
-  if (viewState === "hover-emergency" || viewState === "hover-sltp") {
+  if (viewState === "hover-emergency" || viewState === "hover-sltp" || viewState === "hover-kelpie") {
     zoneCasePreview.className = `${base} left-[1241px] top-0 h-[1080px] w-[679px] overflow-hidden opacity-100`;
     return;
   }
 
-  if (viewState === "opening-emergency" || viewState === "opening-sltp") {
+  if (viewState === "opening-emergency" || viewState === "opening-sltp" || viewState === "opening-kelpie") {
     zoneCasePreview.className = `${base} left-[749px] top-0 h-[1080px] w-[1171px] overflow-hidden opacity-100`;
     return;
   }
 
-  if (viewState === "case-open-emergency" || viewState === "case-open-sltp") {
+  if (viewState === "case-open-emergency" || viewState === "case-open-sltp" || viewState === "case-open-kelpie") {
     zoneCasePreview.className = `${base} left-[749px] top-0 h-[1080px] w-[1171px] overflow-x-hidden overflow-y-auto overscroll-contain opacity-100`;
     return;
   }
@@ -1080,7 +1352,9 @@ function applyCloseButtonState() {
     viewState === "case-open-emergency" ||
     viewState === "opening-emergency" ||
     viewState === "case-open-sltp" ||
-    viewState === "opening-sltp";
+    viewState === "opening-sltp" ||
+    viewState === "case-open-kelpie" ||
+    viewState === "opening-kelpie";
 
   closeCaseButton.className = isVisible
     ? "absolute left-[1809px] top-[36px] z-[60] flex items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[16px] py-[4px] text-[18px] leading-[20px] font-normal italic tracking-[-0.18px] text-[#b3bdd2] opacity-100 pointer-events-auto cursor-pointer transition-opacity duration-[400ms] ease-out [font-family:var(--font-case)]"
@@ -1102,6 +1376,12 @@ function applyCaseItemState() {
     viewState === "case-open-sltp"
   ) {
     activeId = SLTP_CASE_ID;
+  } else if (
+    viewState === "hover-kelpie" ||
+    viewState === "opening-kelpie" ||
+    viewState === "case-open-kelpie"
+  ) {
+    activeId = KELPIE_CASE_ID;
   }
   const caseButtons = document.querySelectorAll("[data-case-id]");
   const groupSections = document.querySelectorAll("[data-group-company]");
@@ -1188,7 +1468,9 @@ function handleClose() {
     viewState !== "case-open-emergency" &&
     viewState !== "opening-emergency" &&
     viewState !== "case-open-sltp" &&
-    viewState !== "opening-sltp"
+    viewState !== "opening-sltp" &&
+    viewState !== "case-open-kelpie" &&
+    viewState !== "opening-kelpie"
   ) {
     return;
   }
@@ -1254,18 +1536,21 @@ function handleClose() {
 function getHoverStateForCase(caseId) {
   if (caseId === EMERGENCY_CASE_ID) return "hover-emergency";
   if (caseId === SLTP_CASE_ID) return "hover-sltp";
+  if (caseId === KELPIE_CASE_ID) return "hover-kelpie";
   return null;
 }
 
 function getOpeningStateForCase(caseId) {
   if (caseId === EMERGENCY_CASE_ID) return "opening-emergency";
   if (caseId === SLTP_CASE_ID) return "opening-sltp";
+  if (caseId === KELPIE_CASE_ID) return "opening-kelpie";
   return null;
 }
 
 function getCaseOpenStateForCase(caseId) {
   if (caseId === EMERGENCY_CASE_ID) return "case-open-emergency";
   if (caseId === SLTP_CASE_ID) return "case-open-sltp";
+  if (caseId === KELPIE_CASE_ID) return "case-open-kelpie";
   return null;
 }
 
@@ -1399,7 +1684,9 @@ document.addEventListener("keydown", (event) => {
       viewState === "case-open-emergency" ||
       viewState === "opening-emergency" ||
       viewState === "case-open-sltp" ||
-      viewState === "opening-sltp"
+      viewState === "opening-sltp" ||
+      viewState === "case-open-kelpie" ||
+      viewState === "opening-kelpie"
     ) {
       handleClose();
       return;
