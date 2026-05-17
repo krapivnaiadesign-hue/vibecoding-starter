@@ -11,7 +11,9 @@
         id="aboutPage"
         data-state="overview"
         data-active-case=""
-        class="relative h-[min(100svh,calc(100vw*9/16))] w-[min(100vw,calc(100svh*16/9))] overflow-hidden rounded-[10px] bg-black text-[#b3bdd2]"
+        data-case-active="false"
+        data-preview="overview"
+        class="portfolio relative h-[min(100svh,calc(100vw*9/16))] w-[min(100vw,calc(100svh*16/9))] overflow-hidden rounded-[10px] bg-black text-[#b3bdd2]"
       >
         <div
           id="aboutStage"
@@ -19,95 +21,107 @@
         >
           <section
             id="zoneIntro"
-            class="absolute left-0 top-0 z-[20] h-[1080px] w-[1174px] overflow-hidden transition-[width] duration-[700ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+            class="absolute left-0 top-0 z-[20] h-[1080px] w-[1174px] overflow-hidden"
           >
             <img
               id="introIcon"
               src="/assets/about/top-icon.svg"
               alt=""
-              class="pointer-events-none absolute left-[29px] top-[calc(50%-329.5px)] z-[10] h-[25px] w-[25px] -translate-y-1/2 [mix-blend-mode:difference]"
+              class="intro-chrome intro-motion pointer-events-none absolute left-[29px] top-[calc(50%-329.5px)] z-[10] h-[25px] w-[25px] [mix-blend-mode:difference]"
             />
 
             <div
-              id="introMeta"
-              class="absolute left-[545px] top-[36px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]"
+              id="introMetaGroup"
+              class="intro-chrome intro-motion absolute left-[545px] top-[36px] z-[20]"
             >
-              <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
-                <span class="font-bold">Product Designer:</span>
-                <span class="font-normal italic">Krapivnaia Polina</span>
-              </div>
-              <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
-                <span class="font-bold">Experience:</span>
-                <span class="font-normal italic">4+ Years · Fintech, AI SaaS</span>
+              <div
+                id="introMeta"
+                class="flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]"
+              >
+                <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
+                  <span class="font-bold">Product Designer:</span>
+                  <span class="font-normal italic">Krapivnaia Polina</span>
+                </div>
+                <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
+                  <span class="font-bold">Experience:</span>
+                  <span class="font-normal italic">4+ Years · Fintech, AI SaaS</span>
+                </div>
               </div>
             </div>
 
-            <p
-              id="introStatement"
-              class="pointer-events-none absolute left-[194px] top-[178px] z-[30] m-0 w-[659px] -translate-y-full text-[18px] leading-[21px] font-bold italic text-[#b3bdd2] [font-family:var(--font-intro)] [mix-blend-mode:difference] [text-indent:277px]"
-            >
-              Я смотрю на дизайн как на построение среды, где человек понимает,
-              действует и движется через форму, пространство, время и отношения
-              между объектами.
-            </p>
-
-            <nav
-              id="introMenu"
-              class="absolute left-[194px] top-[201px] z-[30] flex w-[277px] items-center justify-between"
-              aria-label="About navigation"
-            >
-              <button
-                type="button"
-                class="pointer-events-auto flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] [font-family:var(--font-intro)]"
+            <div id="introHeroGroup" class="absolute inset-0 z-[20] pointer-events-none">
+              <p
+                id="introStatement"
+                class="intro-chrome intro-motion intro-statement pointer-events-none absolute left-[194px] top-[178px] z-[30] m-0 w-[659px] text-[18px] leading-[21px] font-bold italic text-[#b3bdd2] [font-family:var(--font-intro)] [mix-blend-mode:difference] [text-indent:277px]"
               >
-                About Me +
-              </button>
-              <a
-                href="#"
-                class="pointer-events-auto flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
-              >
-                CV
-              </a>
-              <a
-                href="#"
-                class="pointer-events-auto flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
-              >
-                LinkedIn
-              </a>
-            </nav>
+                Я смотрю на дизайн как на построение среды, где человек понимает,
+                действует и движется через форму, пространство, время и отношения
+                между объектами.
+              </p>
 
-            <div
-              id="introPortrait"
-              class="absolute left-[549px] top-[146px] z-[20] h-[211px] w-[201px] overflow-hidden"
-            >
-              <img
-                src="/assets/about/intro-background.jpg"
-                alt=""
-                class="block h-full w-full object-cover grayscale brightness-[0.75] contrast-[1.05]"
-              />
-            </div>
+              <nav
+                id="introMenu"
+                class="intro-chrome intro-motion pointer-events-auto absolute left-[194px] top-[201px] z-[30] flex w-[277px] items-center justify-between"
+                aria-label="About navigation"
+              >
+                <button
+                  type="button"
+                  class="flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] [font-family:var(--font-intro)]"
+                >
+                  About Me +
+                </button>
+                <a
+                  href="#"
+                  class="flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
+                >
+                  CV
+                </a>
+                <a
+                  href="#"
+                  class="flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
+                >
+                  LinkedIn
+                </a>
+              </nav>
 
-            <div
-              id="introContacts"
-              class="absolute bottom-[35px] left-[545px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]"
-            >
-              <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
-                <span class="font-bold">Mail:</span>
-                <span class="font-normal italic">&lt; Krapivnaiadesign@Gmail.Com &gt;</span>
-              </div>
-              <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
-                <span class="font-bold">Location:</span>
-                <span class="font-normal italic">Serbia, Belgrade / Europe</span>
+              <div
+                id="introPortrait"
+                class="intro-chrome intro-motion pointer-events-none absolute left-[549px] top-[146px] z-[20] h-[211px] w-[201px] overflow-hidden"
+              >
+                <img
+                  src="/assets/about/intro-background.jpg"
+                  alt=""
+                  class="block h-full w-full object-cover grayscale brightness-[0.75] contrast-[1.05]"
+                />
               </div>
             </div>
 
             <div
-              id="selectedWorkBlock"
-              class="absolute left-[545px] top-[436px] z-[20] flex items-start justify-center gap-[64px]"
+              id="introFooterGroup"
+              class="intro-chrome intro-motion absolute bottom-[35px] left-[545px] z-[20]"
+            >
+              <div
+                id="introContacts"
+                class="flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]"
+              >
+                <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
+                  <span class="font-bold">Mail:</span>
+                  <span class="font-normal italic">&lt; Krapivnaiadesign@Gmail.Com &gt;</span>
+                </div>
+                <div class="flex items-center justify-between gap-[14px] text-[14px] leading-[17px]">
+                  <span class="font-bold">Location:</span>
+                  <span class="font-normal italic">Serbia, Belgrade / Europe</span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="introWorkGroup"
+              class="intro-motion absolute left-[545px] top-[436px] z-[20] flex items-start justify-center gap-[64px]"
             >
               <div
                 id="selectedWorkLabel"
-                class="whitespace-nowrap text-[14px] leading-[17px] font-bold italic text-[rgba(179,189,210,0.72)] uppercase [font-family:var(--font-intro)]"
+                class="intro-chrome intro-motion whitespace-nowrap text-[14px] leading-[17px] font-bold italic text-[rgba(179,189,210,0.72)] uppercase [font-family:var(--font-intro)]"
               >
                 SELECTED WORK
               </div>
@@ -120,18 +134,18 @@
 
           <section
             id="zoneCasePreview"
-            class="absolute left-[1941px] top-0 z-[10] h-[1080px] w-[679px] overflow-hidden opacity-0 transition-[left,width,height,opacity] duration-[900ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]"
+            class="portfolio-preview intro-motion absolute left-0 top-0 z-[10] h-[1080px] w-[679px] overflow-hidden opacity-0 pointer-events-none"
           >
-            <div id="hoverBgLayer" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity duration-[600ms]">
+            <div id="hoverBgLayer" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity [transition-duration:var(--intro-opacity-duration)] [transition-timing-function:var(--intro-motion-ease)]">
               <div class="absolute left-1/2 top-[calc(50%-0.5px)] h-[929px] w-[679px] -translate-x-1/2 -translate-y-1/2">
                 <img src="/assets/cases/emergency-redesign/future_img.png" alt="" class="block h-full w-full object-cover" />
               </div>
             </div>
-            <div id="hoverBgLayerSltp" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity duration-[600ms]">
+            <div id="hoverBgLayerSltp" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity [transition-duration:var(--intro-opacity-duration)] [transition-timing-function:var(--intro-motion-ease)]">
               <img src="/assets/cases/sltp/preview-sltp.png" alt=""
                    class="absolute inset-0 w-full h-full object-contain" />
             </div>
-            <div id="hoverBgLayerKelpie" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity duration-[600ms]" aria-hidden="true">
+            <div id="hoverBgLayerKelpie" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity [transition-duration:var(--intro-opacity-duration)] [transition-timing-function:var(--intro-motion-ease)]" aria-hidden="true">
               <img src="/assets/cases/kelpie/preview/kelpie-hover.png" alt="" class="absolute inset-0 w-full h-full object-contain" />
             </div>
             <div id="casePreviewInner" class="relative z-[2] w-full"></div>
@@ -141,7 +155,7 @@
             id="closeCaseButton"
             type="button"
             aria-label="Close case"
-            class="absolute left-[1809px] top-[36px] z-[60] flex items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[16px] py-[4px] text-[18px] leading-[20px] font-normal italic tracking-[-0.18px] text-[#b3bdd2] opacity-0 pointer-events-none transition-opacity duration-[400ms] ease-out [font-family:var(--font-case)]"
+            class="intro-motion absolute left-[1809px] top-[36px] z-[60] flex items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[16px] py-[4px] text-[18px] leading-[20px] font-normal italic tracking-[-0.18px] text-[#b3bdd2] opacity-0 pointer-events-none [font-family:var(--font-case)]"
           >
             Close
           </button>

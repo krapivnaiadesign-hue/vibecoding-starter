@@ -8,6 +8,9 @@
 
   :root {
     color-scheme: dark;
+    --intro-motion-duration: 950ms;
+    --intro-opacity-duration: 700ms;
+    --intro-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
     --font-intro: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-case: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-meta: "Acumin Pro SemiCondensed", "Arial Narrow", Arial, sans-serif;
@@ -90,4 +93,85 @@
 .emergencyPrototypeOpenBtn {
   background: rgba(179, 189, 210, 0.1) !important;
   pointer-events: auto;
+}
+
+.intro-motion {
+  transition:
+    transform var(--intro-motion-duration) var(--intro-motion-ease),
+    opacity var(--intro-opacity-duration) var(--intro-motion-ease),
+    width var(--intro-motion-duration) var(--intro-motion-ease);
+  will-change: transform, opacity;
+}
+
+.intro-case-motion {
+  transition:
+    transform var(--intro-motion-duration) var(--intro-motion-ease),
+    opacity var(--intro-opacity-duration) var(--intro-motion-ease),
+    color var(--intro-opacity-duration) var(--intro-motion-ease);
+  will-change: transform, opacity;
+}
+
+#introIcon {
+  transform: translate3d(0, -50%, 0);
+}
+
+#introStatement.intro-statement {
+  transform: translate3d(0, -100%, 0);
+}
+
+.portfolio-preview {
+  transform: translate3d(1941px, 0, 0);
+}
+
+#aboutPage[data-preview="hover"] .portfolio-preview {
+  transform: translate3d(1241px, 0, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#aboutPage[data-preview="open"] .portfolio-preview {
+  transform: translate3d(749px, 0, 0);
+  width: 1171px;
+  opacity: 1;
+  pointer-events: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+#aboutPage[data-preview="open"] #closeCaseButton {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#aboutPage[data-case-active="true"] #introMetaGroup {
+  transform: translate3d(-457px, 0, 0);
+}
+
+#aboutPage[data-case-active="true"] #introFooterGroup {
+  transform: translate3d(-457px, 0, 0);
+}
+
+#aboutPage[data-case-active="true"] #introWorkGroup {
+  transform: translate3d(-457px, 0, 0);
+}
+
+#aboutPage[data-case-active="true"] #introStatement.intro-statement {
+  transform: translate3d(-105px, -100%, 0);
+}
+
+#aboutPage[data-case-active="true"] #introPortrait {
+  transform: translate3d(-460px, 0, 0);
+}
+
+#aboutPage[data-case-active="true"] #introMenu {
+  transform: translate3d(125px, 0, 0);
+}
+
+#aboutPage[data-case-active="true"] .intro-chrome {
+  opacity: 0.3;
+}
+
+#aboutPage[data-case-active="true"] #introWorkGroup {
+  opacity: 1;
 }

@@ -2,13 +2,11 @@ import "./style.css";
 
 const STAGE_WIDTH = 1920;
 const STAGE_HEIGHT = 1080;
-const MOTION_EASING = "cubic-bezier(0.77,0,0.175,1)";
-const POSITION_TRANSITION = `left 900ms ${MOTION_EASING}, top 900ms ${MOTION_EASING}, width 900ms ${MOTION_EASING}, height 900ms ${MOTION_EASING}, bottom 900ms ${MOTION_EASING}, opacity 450ms ease, transform 900ms ${MOTION_EASING}`;
+const INTRO_MOTION_DURATION_MS = 950;
+const INTRO_MOTION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
 const EMERGENCY_CASE_ID = "emergency-redesign";
 const SLTP_CASE_ID = "stop-loss-take-profit";
 const KELPIE_CASE_ID = "ai-platform-launch";
-const SELECTED_WORK_LABEL_CLASS =
-  "whitespace-nowrap text-[14px] leading-[17px] font-bold italic text-[rgba(179,189,210,0.72)] uppercase [font-family:var(--font-intro)]";
 
 const aboutPage = document.querySelector("#aboutPage");
 const aboutStage = document.querySelector("#aboutStage");
@@ -19,7 +17,7 @@ const introStatement = document.querySelector("#introStatement");
 const introMenu = document.querySelector("#introMenu");
 const introPortrait = document.querySelector("#introPortrait");
 const introContacts = document.querySelector("#introContacts");
-const selectedWorkBlock = document.querySelector("#selectedWorkBlock");
+const introWorkGroup = document.querySelector("#introWorkGroup");
 const selectedWorkLabel = document.querySelector("#selectedWorkLabel");
 const selectedWorkList = document.querySelector("#selectedWorkList");
 const zoneCasePreview = document.querySelector("#zoneCasePreview");
@@ -38,9 +36,6 @@ const LIGHTBOX_EXCLUDED_ANCESTOR_IDS = new Set([
 let imageLightboxOpen = false;
 
 const CASE_INSET_PX = 46;
-const INTRO_OPACITY_TRANSITION = "opacity 300ms ease-out";
-const CASE_MOTION_TRANSITION =
-  "opacity 300ms ease-out, padding-left 300ms ease-out, color 300ms ease-out";
 
 const cases = [
   {
@@ -108,7 +103,11 @@ function hasHoveredCase() {
 }
 
 function getFocusCaseId() {
-  if (activeCaseId) {
+  if (viewState === "closing") {
+    return null;
+  }
+
+  if (isCaseActiveMode() && activeCaseId) {
     return activeCaseId;
   }
 
@@ -120,7 +119,7 @@ function getFocusCaseId() {
 }
 
 function isActiveCase(caseId) {
-  return activeCaseId === caseId;
+  return isCaseActiveMode() && activeCaseId === caseId;
 }
 
 function isCaseInActiveCompany(caseId) {
@@ -140,15 +139,11 @@ function isCaseInActiveCompany(caseId) {
   return focusCase.companyId === currentCase.companyId;
 }
 
-function getIntroElementOpacity() {
-  return hasActiveCase() ? 0.3 : 1;
-}
-
-function getSelectedWorkLabelOpacity() {
-  return hasActiveCase() ? 0.3 : 1;
-}
-
 function getCaseOpacity(caseId) {
+  if (isCaseActiveMode()) {
+    return caseId === activeCaseId ? 1 : 0.5;
+  }
+
   const focusCaseId = getFocusCaseId();
 
   if (!focusCaseId) {
@@ -159,6 +154,16 @@ function getCaseOpacity(caseId) {
 }
 
 function getCompanyOpacity(companyId) {
+  if (isCaseActiveMode()) {
+    const focusCase = getCaseById(activeCaseId);
+
+    if (!focusCase) {
+      return 1;
+    }
+
+    return focusCase.companyId === companyId ? 1 : 0.5;
+  }
+
   const focusCaseId = getFocusCaseId();
 
   if (!focusCaseId) {
@@ -174,78 +179,57 @@ function getCompanyOpacity(companyId) {
   return focusCase.companyId === companyId ? 1 : 0.5;
 }
 
-function getCasePaddingLeft(caseId) {
-  if (!activeCaseId) {
-    return CASE_INSET_PX;
+function getCaseTranslateX(caseId) {
+  if (!isCaseActiveMode()) {
+    return 0;
   }
 
-  return caseId === activeCaseId ? CASE_INSET_PX : 0;
+  return caseId === activeCaseId ? 0 : -CASE_INSET_PX;
 }
 
 function getCaseOffset(caseId) {
-  return getCasePaddingLeft(caseId);
+  return getCaseTranslateX(caseId);
 }
 
-const introLayouts = {
-  overview: {
-    zoneWidthClass: "w-[1174px]",
-    zoneOpacity: "1",
-    metaClass:
-      "absolute left-[545px] top-[36px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]",
-    portraitClass:
-      "absolute left-[549px] top-[146px] z-[20] h-[211px] w-[201px] overflow-hidden",
-    menuClass:
-      "absolute left-[194px] top-[201px] z-[30] flex w-[277px] items-center justify-between",
-    contactsClass:
-      "absolute bottom-[35px] left-[545px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]",
-    selectedWorkBlockClass:
-      "absolute left-[545px] top-[436px] z-[20] flex items-start justify-center gap-[64px]",
-    selectedWorkLabelClass: SELECTED_WORK_LABEL_CLASS,
-    statementClass:
-      "pointer-events-none absolute left-[194px] top-[178px] z-[30] m-0 w-[659px] -translate-y-full text-[18px] leading-[21px] font-bold italic text-[#b3bdd2] [font-family:var(--font-intro)] [mix-blend-mode:difference] [text-indent:277px]",
-  },
-  "hover-emergency": {
-    zoneWidthClass: "w-[1241px]",
-    zoneOpacity: "1",
-    metaClass:
-      "absolute left-[545px] top-[36px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]",
-    portraitClass:
-      "absolute left-[549px] top-[146px] z-[20] h-[211px] w-[201px] overflow-hidden",
-    menuClass:
-      "absolute left-[194px] top-[201px] z-[30] flex w-[277px] items-center justify-between",
-    contactsClass:
-      "absolute bottom-[35px] left-[545px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]",
-    selectedWorkBlockClass:
-      "absolute left-[545px] top-[436px] z-[20] flex items-start justify-center gap-[64px]",
-    selectedWorkLabelClass: SELECTED_WORK_LABEL_CLASS,
-    statementClass:
-      "pointer-events-none absolute left-[194px] top-[178px] z-[30] m-0 w-[659px] -translate-y-full text-[18px] leading-[21px] font-bold italic text-[#b3bdd2] [font-family:var(--font-intro)] [mix-blend-mode:difference] [text-indent:277px]",
-  },
-  "case-open": {
-    zoneWidthClass: "w-[731px]",
-    zoneOpacity: "1",
-    metaClass:
-      "absolute left-[88px] top-[36px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]",
-    portraitClass:
-      "absolute left-[89px] top-[146px] z-[20] h-[211px] w-[201px] overflow-hidden",
-    menuClass:
-      "absolute left-[319px] top-[201px] z-[30] flex w-[277px] items-center justify-between",
-    contactsClass:
-      "absolute bottom-[35px] left-[88px] z-[20] flex w-[310px] flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]",
-    selectedWorkBlockClass:
-      "absolute left-[88px] top-[436px] z-[20] flex items-start justify-center gap-[64px]",
-    selectedWorkLabelClass: SELECTED_WORK_LABEL_CLASS,
-    statementClass:
-      "pointer-events-none absolute left-[89px] top-[178px] z-[30] m-0 w-[659px] -translate-y-full text-[18px] leading-[21px] font-bold italic text-[#b3bdd2] [font-family:var(--font-intro)] [mix-blend-mode:difference] [text-indent:277px]",
-  },
-};
+function isCaseActiveMode() {
+  return Boolean(activeCaseId) && viewState !== "closing";
+}
 
-const ZONE_INTRO_BASE_CLASS =
-  "absolute left-0 top-0 z-[20] h-[1080px] overflow-hidden transition-[width,opacity] duration-[900ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]";
+function getPreviewMode() {
+  if (viewState === "closing") {
+    return "overview";
+  }
 
-const INTRO_STATIC_CLASSES = {
-  icon: "pointer-events-none absolute left-[29px] top-[calc(50%-329.5px)] z-[10] h-[25px] w-[25px] -translate-y-1/2 [mix-blend-mode:difference]",
-};
+  if (
+    activeCaseId ||
+    viewState.startsWith("opening-") ||
+    viewState.startsWith("case-open-")
+  ) {
+    return "open";
+  }
+
+  if (
+    viewState === "hover-emergency" ||
+    viewState === "hover-sltp" ||
+    viewState === "hover-kelpie"
+  ) {
+    return "hover";
+  }
+
+  return "overview";
+}
+
+function syncPortfolioAttributes() {
+  if (!aboutPage) {
+    return;
+  }
+
+  aboutPage.dataset.state = viewState;
+  aboutPage.dataset.activeCase = activeCaseId ?? "";
+  aboutPage.dataset.hoveredCase = hoveredCaseId ?? "";
+  aboutPage.dataset.caseActive = isCaseActiveMode() ? "true" : "false";
+  aboutPage.dataset.preview = getPreviewMode();
+}
 
 let hoveredCaseId = null;
 let activeCaseId = null;
@@ -271,26 +255,6 @@ function updateStageScale() {
   aboutStage.style.transform = `scale(${scale})`;
 }
 
-function getIntroLayoutKey() {
-  if (viewState === "hover-emergency" || viewState === "hover-sltp" || viewState === "hover-kelpie") {
-    return "hover-emergency";
-  }
-
-  if (
-    viewState === "opening-emergency" ||
-    viewState === "case-open-emergency" ||
-    viewState === "opening-sltp" ||
-    viewState === "case-open-sltp" ||
-    viewState === "opening-kelpie" ||
-    viewState === "case-open-kelpie" ||
-    viewState === "closing"
-  ) {
-    return "case-open";
-  }
-
-  return "overview";
-}
-
 function renderSelectedWorkList() {
   if (!selectedWorkList) {
     return;
@@ -300,7 +264,7 @@ function renderSelectedWorkList() {
     .map(
       (group) => `
         <section class="flex w-full flex-col gap-[36px]" data-company-id="${group.companyId}">
-          <div data-company-heading class="flex w-full flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]">
+          <div data-company-heading class="intro-case-motion flex w-full flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]">
             <p class="m-0 text-[15px] leading-[18px] font-bold">${group.company}</p>
             <p class="m-0 text-[15px] leading-[18px] font-normal">${group.role}</p>
           </div>
@@ -312,26 +276,25 @@ function renderSelectedWorkList() {
                     type="button"
                     data-case-id="${currentCase.id}"
                     aria-label="${currentCase.id === KELPIE_CASE_ID ? "Open AI-Platform Launch case" : currentCase.title}"
-                    class="group/case flex w-full cursor-pointer appearance-none flex-col gap-[12px] border-0 bg-transparent pl-[46px] text-left [font-family:var(--font-intro)]"
-                    style="transition: ${CASE_MOTION_TRANSITION}"
+                    class="intro-case-motion group/case flex w-full cursor-pointer appearance-none flex-col gap-[12px] border-0 bg-transparent pl-[46px] text-left [font-family:var(--font-intro)]"
                   >
                     <div class="flex w-full items-start gap-[9px]">
                       <span
                         data-case-title
-                        class="min-w-0 flex-1 text-[15px] leading-[18px] font-bold italic text-[rgba(179,189,210,0.72)] uppercase transition-[color,opacity,text-decoration-color] duration-[250ms] ease-out"
+                        class="min-w-0 flex-1 text-[15px] leading-[18px] font-bold italic text-[rgba(179,189,210,0.72)] uppercase"
                       >
                         ${currentCase.title}
                       </span>
                       <span
                         data-case-plus
-                        class="text-[18px] leading-[18px] font-normal text-[rgba(179,189,210,0.72)] transition-[color,opacity] duration-[250ms] ease-out"
+                        class="text-[18px] leading-[18px] font-normal text-[rgba(179,189,210,0.72)]"
                       >
                         +
                       </span>
                     </div>
                     <p
                       data-case-description
-                      class="m-0 text-[14px] leading-[17px] font-normal text-[rgba(179,189,210,0.55)] transition-[color,opacity] duration-[250ms] ease-out"
+                      class="m-0 text-[14px] leading-[17px] font-normal text-[rgba(179,189,210,0.55)]"
                     >
                       ${currentCase.description}
                     </p>
@@ -346,25 +309,8 @@ function renderSelectedWorkList() {
     .join("");
 }
 
-function applyMotionTransition(element) {
-  if (!element) {
-    return;
-  }
-
-  element.style.transition = POSITION_TRANSITION;
-}
-
 function initializeAnimatedElements() {
-  [
-    introIcon,
-    introMeta,
-    introStatement,
-    introMenu,
-    introPortrait,
-    introContacts,
-    selectedWorkBlock,
-    selectedWorkLabel,
-  ].forEach(applyMotionTransition);
+  // Motion is driven by CSS (.intro-motion / .intro-case-motion + data-* on #aboutPage).
 }
 
 function isZoomableImage(img) {
@@ -1584,122 +1530,6 @@ function applyHoverLayerState() {
   }
 }
 
-function applyIntroState() {
-  const layoutKey = getIntroLayoutKey();
-  const currentLayout = introLayouts[layoutKey];
-
-  if (!zoneIntro || !currentLayout) {
-    return;
-  }
-
-  zoneIntro.className = `${ZONE_INTRO_BASE_CLASS} ${currentLayout.zoneWidthClass}`;
-  zoneIntro.style.opacity = currentLayout.zoneOpacity;
-
-  if (introIcon) {
-    introIcon.className = INTRO_STATIC_CLASSES.icon;
-  }
-
-  if (introStatement) {
-    introStatement.className = currentLayout.statementClass;
-  }
-
-  if (introMeta) {
-    introMeta.className = currentLayout.metaClass;
-  }
-
-  if (introPortrait) {
-    introPortrait.className = currentLayout.portraitClass;
-  }
-
-  if (introMenu) {
-    introMenu.className = currentLayout.menuClass;
-  }
-
-  if (introContacts) {
-    introContacts.className = currentLayout.contactsClass;
-  }
-
-  if (selectedWorkBlock) {
-    selectedWorkBlock.className = currentLayout.selectedWorkBlockClass;
-  }
-
-  if (selectedWorkLabel) {
-    selectedWorkLabel.className = currentLayout.selectedWorkLabelClass;
-  }
-}
-
-function applyPreviewState() {
-  if (!zoneCasePreview) {
-    return;
-  }
-
-  const base = "absolute z-[10] transition-[left,width,height,opacity] duration-[900ms] [transition-timing-function:cubic-bezier(0.77,0,0.175,1)]";
-
-  if (viewState === "overview") {
-    zoneCasePreview.className = `${base} left-[1941px] top-0 h-[1080px] w-[679px] overflow-hidden opacity-0 pointer-events-none`;
-    return;
-  }
-
-  if (viewState === "hover-emergency" || viewState === "hover-sltp" || viewState === "hover-kelpie") {
-    zoneCasePreview.className = `${base} left-[1241px] top-0 h-[1080px] w-[679px] overflow-hidden opacity-100`;
-    return;
-  }
-
-  if (viewState === "opening-emergency" || viewState === "opening-sltp" || viewState === "opening-kelpie") {
-    zoneCasePreview.className = `${base} left-[749px] top-0 h-[1080px] w-[1171px] overflow-hidden opacity-100`;
-    return;
-  }
-
-  if (viewState === "case-open-emergency" || viewState === "case-open-sltp" || viewState === "case-open-kelpie") {
-    zoneCasePreview.className = `${base} left-[749px] top-0 h-[1080px] w-[1171px] overflow-x-hidden overflow-y-auto overscroll-contain opacity-100`;
-    return;
-  }
-
-  if (viewState === "closing") {
-    zoneCasePreview.className = `${base} left-[1941px] top-0 h-[1080px] w-[1171px] overflow-hidden opacity-100 pointer-events-none`;
-    return;
-  }
-}
-
-function applyCloseButtonState() {
-  if (!closeCaseButton) {
-    return;
-  }
-
-  const isVisible =
-    viewState === "case-open-emergency" ||
-    viewState === "opening-emergency" ||
-    viewState === "case-open-sltp" ||
-    viewState === "opening-sltp" ||
-    viewState === "case-open-kelpie" ||
-    viewState === "opening-kelpie";
-
-  closeCaseButton.className = isVisible
-    ? "absolute left-[1809px] top-[36px] z-[60] flex items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[16px] py-[4px] text-[18px] leading-[20px] font-normal italic tracking-[-0.18px] text-[#b3bdd2] opacity-100 pointer-events-auto cursor-pointer transition-opacity duration-[400ms] ease-out [font-family:var(--font-case)]"
-    : "absolute left-[1809px] top-[36px] z-[60] flex items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[16px] py-[4px] text-[18px] leading-[20px] font-normal italic tracking-[-0.18px] text-[#b3bdd2] opacity-0 pointer-events-none transition-opacity duration-[400ms] ease-out [font-family:var(--font-case)]";
-}
-
-function applyIntroElementsOpacity() {
-  const introOpacity = getIntroElementOpacity();
-  const labelOpacity = getSelectedWorkLabelOpacity();
-
-  [introIcon, introMeta, introStatement, introMenu, introPortrait, introContacts].forEach(
-    (element) => {
-      if (!element) {
-        return;
-      }
-
-      element.style.opacity = String(introOpacity);
-      element.style.transition = INTRO_OPACITY_TRANSITION;
-    },
-  );
-
-  if (selectedWorkLabel) {
-    selectedWorkLabel.style.opacity = String(labelOpacity);
-    selectedWorkLabel.style.transition = INTRO_OPACITY_TRANSITION;
-  }
-}
-
 function applyCaseItemState() {
   const caseButtons = document.querySelectorAll("[data-case-id]");
   const companyHeadings = document.querySelectorAll("[data-company-heading]");
@@ -1713,7 +1543,6 @@ function applyCaseItemState() {
     }
 
     heading.style.opacity = String(getCompanyOpacity(companyId));
-    heading.style.transition = INTRO_OPACITY_TRANSITION;
   });
 
   caseButtons.forEach((caseButton) => {
@@ -1730,8 +1559,7 @@ function applyCaseItemState() {
     const plus = caseButton.querySelector("[data-case-plus]");
 
     caseButton.style.opacity = String(getCaseOpacity(caseId));
-    caseButton.style.paddingLeft = `${getCasePaddingLeft(caseId)}px`;
-    caseButton.style.transition = CASE_MOTION_TRANSITION;
+    caseButton.style.transform = `translate3d(${getCaseTranslateX(caseId)}px, 0, 0)`;
 
     title?.classList.toggle("text-[#b3bdd2]", isFocused);
     title?.classList.toggle("text-[rgba(179,189,210,0.72)]", !isFocused);
@@ -1753,14 +1581,7 @@ function renderAboutState() {
     return;
   }
 
-  aboutPage.dataset.state = viewState;
-  aboutPage.dataset.activeCase = activeCaseId ?? "";
-  aboutPage.dataset.hoveredCase = hoveredCaseId ?? "";
-
-  applyIntroState();
-  applyIntroElementsOpacity();
-  applyPreviewState();
-  applyCloseButtonState();
+  syncPortfolioAttributes();
   applyCaseItemState();
   renderPreviewContent();
   applyHoverLayerState();
@@ -1780,11 +1601,6 @@ function resetToOverview() {
   hoveredCaseId = null;
   activeCaseId = null;
   viewState = "overview";
-
-  if (casePreviewInner) {
-    casePreviewInner.style.transition = "";
-    casePreviewInner.style.transform = "";
-  }
 
   renderAboutState();
 }
@@ -1811,53 +1627,15 @@ function handleClose() {
   }
 
   viewState = "closing";
-
-  if (casePreviewInner) {
-    casePreviewInner.style.transition = `transform 600ms ${MOTION_EASING}`;
-    casePreviewInner.style.transform = "translateX(1200px)";
-  }
-
-  applyCloseButtonState();
+  renderAboutState();
 
   closeAnimationTimer = window.setTimeout(() => {
-    hoveredCaseId = null;
-
-    aboutPage.dataset.state = viewState;
-    aboutPage.dataset.activeCase = activeCaseId ?? "";
-    aboutPage.dataset.hoveredCase = hoveredCaseId ?? "";
-
-    applyPreviewState();
-    applyIntroElementsOpacity();
-    applyCaseItemState();
-    applyHoverLayerState();
-
-    const overviewLayout = introLayouts["overview"];
-    if (zoneIntro && overviewLayout) {
-      zoneIntro.className = `${ZONE_INTRO_BASE_CLASS} ${overviewLayout.zoneWidthClass}`;
-      zoneIntro.style.opacity = overviewLayout.zoneOpacity;
-      if (introMeta) introMeta.className = overviewLayout.metaClass;
-      if (introPortrait) introPortrait.className = overviewLayout.portraitClass;
-      if (introMenu) introMenu.className = overviewLayout.menuClass;
-      if (introContacts) introContacts.className = overviewLayout.contactsClass;
-      if (introStatement) introStatement.className = overviewLayout.statementClass;
-      if (selectedWorkBlock) selectedWorkBlock.className = overviewLayout.selectedWorkBlockClass;
-      if (selectedWorkLabel) selectedWorkLabel.className = overviewLayout.selectedWorkLabelClass;
-    }
-  }, 150);
-
-  window.setTimeout(() => {
     closeAnimationTimer = null;
     activeCaseId = null;
     hoveredCaseId = null;
     viewState = "overview";
-
-    if (casePreviewInner) {
-      casePreviewInner.style.transition = "";
-      casePreviewInner.style.transform = "";
-    }
-
     renderAboutState();
-  }, 150 + 900);
+  }, INTRO_MOTION_DURATION_MS);
 }
 
 function getHoverStateForCase(caseId) {
@@ -1948,29 +1726,11 @@ function attachCaseEvents() {
       hoveredCaseId = caseId;
       viewState = openingState;
 
-      aboutPage.dataset.state = viewState;
-      aboutPage.dataset.activeCase = activeCaseId ?? "";
-      aboutPage.dataset.hoveredCase = hoveredCaseId ?? "";
-
       renderPreviewContent();
 
-      if (casePreviewInner) {
-        casePreviewInner.style.transition = "none";
-        casePreviewInner.style.transform = "translateX(1200px)";
-      }
-
-      applyIntroState();
-      applyIntroElementsOpacity();
-      applyPreviewState();
-      applyCloseButtonState();
-      applyCaseItemState();
-      applyHoverLayerState();
-
-      if (casePreviewInner) {
-        casePreviewInner.getBoundingClientRect();
-        casePreviewInner.style.transition = `transform 900ms ${MOTION_EASING}`;
-        casePreviewInner.style.transform = "translateX(0)";
-      }
+      requestAnimationFrame(() => {
+        renderAboutState();
+      });
 
       openAnimationTimer = window.setTimeout(() => {
         openAnimationTimer = null;
@@ -1980,19 +1740,13 @@ function attachCaseEvents() {
         }
 
         viewState = caseOpenState;
-
-        if (casePreviewInner) {
-          casePreviewInner.style.transition = "";
-          casePreviewInner.style.transform = "";
-        }
-
         renderAboutState();
-      }, 900);
+      }, INTRO_MOTION_DURATION_MS);
     });
   });
 }
 
-selectedWorkBlock?.addEventListener("mouseleave", () => {
+introWorkGroup?.addEventListener("mouseleave", () => {
   if (activeCaseId !== null) {
     return;
   }
