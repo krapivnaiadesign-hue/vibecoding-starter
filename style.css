@@ -75,6 +75,14 @@
   background: #000 !important;
 }
 
+#zoneCasePreview .kelpieLongread img {
+  background-color: #000 !important;
+}
+
+#zoneCasePreview .kelpieLongread .kelpie-media {
+  background-color: #000 !important;
+}
+
 #closeCaseButton {
   background: rgba(179, 189, 210, 0.1) !important;
 }

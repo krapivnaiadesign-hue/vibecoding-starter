@@ -124,7 +124,7 @@
           >
             <div id="hoverBgLayer" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity duration-[600ms]">
               <div class="absolute left-1/2 top-[calc(50%-0.5px)] h-[929px] w-[679px] -translate-x-1/2 -translate-y-1/2">
-                <img src="/assets/cases/emergency-redesign/future-img.png" alt="" class="block h-full w-full object-cover" />
+                <img src="/assets/cases/emergency-redesign/future_img.png" alt="" class="block h-full w-full object-cover" />
               </div>
             </div>
             <div id="hoverBgLayerSltp" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity duration-[600ms]">
@@ -147,6 +147,29 @@
           </button>
         </div>
       </main>
+    </div>
+
+    <div
+      id="imageLightbox"
+      class="fixed inset-0 z-[200] flex items-center justify-center bg-black/92 p-[24px] opacity-0 pointer-events-none transition-opacity duration-200 ease-out"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-label="Просмотр изображения"
+    >
+      <button
+        id="imageLightboxClose"
+        type="button"
+        aria-label="Закрыть"
+        class="absolute right-[24px] top-[24px] z-[1] flex size-[40px] items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] text-[24px] leading-none font-normal italic text-[#b3bdd2] [font-family:var(--font-case)]"
+      >
+        ×
+      </button>
+      <img
+        id="imageLightboxImg"
+        alt=""
+        class="max-h-[calc(100svh-48px)] max-w-[calc(100vw-48px)] w-auto h-auto object-contain"
+      />
     </div>
 
     <script type="module" src="/main.js"></script>
