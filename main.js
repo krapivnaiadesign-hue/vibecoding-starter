@@ -255,33 +255,38 @@ function initializeAnimatedElements() {
 }
 
 function generateEmergencyLongread() {
-  const LABEL = "shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.48px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
-  const LABEL_TIGHT = "shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.16px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
-  const LABEL_WIDE = "shrink-0 w-[236px] text-[16px] leading-[20px] font-bold italic tracking-[0.48px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
-  const BODY = "shrink-0 w-[570px] flex flex-col gap-[32px]";
-  const TEXT = "text-[18px] leading-[21px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.8)] [font-family:var(--font-case)]";
-  const TEXT_FULL = "text-[18px] leading-[21px] font-medium tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
-  const DETAIL_LABEL = "text-[16px] leading-[20px] tracking-[0.16px] font-bold text-[#b3bdd2] [font-family:var(--font-case)]";
-  const DETAIL_VALUE = "text-[16px] leading-[20px] tracking-[0.16px] italic text-[#b3bdd2] [font-family:var(--font-case)]";
-  const SMALL_LABEL = "text-[15px] leading-[20px] tracking-[0.15px] font-bold capitalize text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
-  const QUOTE = "font-bold italic text-[18px] leading-[21px] tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
-  const CAPTION = "font-light italic text-[14px] leading-[15px] tracking-[0.14px] text-[#b3bdd2] [font-family:var(--font-case)]";
-  const BET_TITLE = "text-[18px] leading-[21px] font-bold italic tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
-  const ROW = "flex items-start justify-between pl-[52px] pr-[154px] box-border";
+  const LABEL = "shrink-0 w-[150px] text-[16px] leading-[20px] font-bold italic tracking-[0.48px] uppercase text-[#8d97ab] [font-family:var(--font-case)]";
+  const BODY = "shrink-0 w-[600px] flex flex-col";
+  const ROW = "flex items-start gap-[120px] pl-[56px] pr-[154px] box-border w-full";
+  const BODY_INSET = "flex pl-[326px] pr-[154px] box-border w-full";
+  const HEADLINE = "text-[24px] leading-[28px] font-bold italic tracking-[0.24px] text-[#b3bdd2] [font-family:var(--font-case)]";
+  const TEXT = "text-[18px] leading-[22px] font-normal tracking-[0px] text-[rgba(141,151,171,0.8)] [font-family:var(--font-case)]";
+  const EMPH = "font-bold italic text-[#b3bdd2] [font-family:var(--font-case)]";
+  const DETAIL_LABEL = "text-[16px] leading-[20px] tracking-[0.16px] font-bold text-[#8d97ab] [font-family:var(--font-case)]";
+  const DETAIL_VALUE = "text-[16px] leading-[20px] tracking-[0.16px] italic text-[#8d97ab] [font-family:var(--font-case)]";
+  const SMALL_LABEL = "text-[15px] leading-[20px] tracking-[0.15px] font-bold capitalize text-[#8d97ab] [font-family:var(--font-case)]";
+  const QUOTE = "font-bold italic text-[18px] leading-[22px] tracking-[0px] text-[#b3bdd2] [font-family:var(--font-case)]";
+  const CAPTION = "font-normal italic text-[14px] leading-[15px] tracking-[0.14px] text-[#8d97ab] [font-family:var(--font-case)]";
+  const BET_TITLE = "text-[18px] leading-[21px] font-bold italic tracking-[0.18px] text-[#8d97ab] [font-family:var(--font-case)]";
+  const TEXT_MUTED = "text-[16px] leading-[20px] font-bold tracking-[0.16px] text-[rgba(141,151,171,0.6)] text-center capitalize [font-family:var(--font-case)]";
+  const OPTION_INTRO = "text-[18px] leading-[21px] font-medium tracking-[0px] text-[#8d97ab] text-center [font-family:var(--font-case)]";
+  const LABEL_TIGHT = LABEL;
+  const LABEL_WIDE = LABEL;
+  const TEXT_FULL = "text-[18px] leading-[22px] font-normal tracking-[0px] text-[#b3bdd2] [font-family:var(--font-case)]";
 
   return `
     <div class="emergencyRedesignLongread flex flex-col gap-[24px] w-[1172px] overflow-hidden">
 
       <!-- A. Hero -->
-      <div id="longreadHero" class="relative w-[1172px] h-[771px] shrink-0 overflow-hidden">
-        <div class="absolute left-[257px] top-[38px] h-[659px] w-[483px]">
+      <div id="longreadHero" class="relative w-[1172px] h-[700px] shrink-0 overflow-hidden">
+        <div class="absolute left-[248px] top-[16px] h-[684px] w-[501px]">
           <img
             src="/assets/cases/emergency-redesign/future-img.png"
             alt="Emergency Redesign Future concept"
             class="block h-full w-full object-cover"
           />
         </div>
-        <div class="absolute left-[744px] top-[505px] w-[279px] flex flex-col items-start">
+        <div class="absolute left-[744px] top-[495px] w-[279px] flex flex-col items-start">
           <p class="text-[14px] leading-[18px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.5)] [font-family:var(--font-case)]">
             <span>* </span><span class="font-bold italic">Future-концепт</span><span> торгового сценария: прототип более глубокой пересборки продукта, который не вошёл в релиз, но стал ориентиром для части архитектурных решений.</span>
           </p>
@@ -290,7 +295,7 @@ function generateEmergencyLongread() {
           href="https://www.figma.com/proto/sd1M2O8MsgRhs90rvup2qr/FUTURE?node-id=40000024-12422&viewport=-4866%2C-179%2C0.45&t=qqtQZVUOBUav2Vya-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=40000024%3A12422&page-id=0%3A1"
           target="_blank"
           rel="noopener noreferrer"
-          class="emergencyPrototypeOpenBtn absolute left-[744px] top-[628px] flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[12px] py-[6px] text-[16px] leading-[20px] font-normal italic tracking-[-0.16px] text-[#b3bdd2] no-underline [font-family:var(--font-case)]"
+          class="emergencyPrototypeOpenBtn absolute left-[744px] top-[618px] flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[12px] py-[6px] text-[16px] leading-[20px] font-normal italic tracking-[-0.16px] text-[#b3bdd2] no-underline [font-family:var(--font-case)]"
         >Открыть прототип</a>
       </div>
 
@@ -298,88 +303,79 @@ function generateEmergencyLongread() {
       <div id="longreadSections" class="flex flex-col gap-[120px] items-center w-[1172px]">
 
         <!-- B. Context -->
-        <div class="${ROW} w-full">
+        <div class="${ROW}">
           <span class="${LABEL}">Context</span>
-          <div class="shrink-0 w-[570px] flex flex-col gap-[28px]">
-            <p class="${TEXT}">
+          <div class="${BODY} gap-[28px]">
+            <p class="${HEADLINE}">
               Экстренный перезапуск iOS trading app под блокировкой, коротким дедлайном и неопределёнными правилами ревью.
             </p>
             <div class="flex flex-col gap-[16px]">
-              <div class="flex items-center gap-[8px] text-[#b3bdd2] text-[16px] leading-[20px] tracking-[0.16px] [font-family:var(--font-case)]">
+              <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
                 <span class="font-bold">Роль</span>
-                <span class="italic">Product Designer</span>
+                <span class="${DETAIL_VALUE}">Product Designer</span>
               </div>
-              <div class="flex items-center gap-[8px] text-[#b3bdd2] text-[16px] leading-[20px] tracking-[0.16px] [font-family:var(--font-case)]">
-                <span class="font-bold">Срок</span>
-                <span class="italic">~1.5 months</span>
+              <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                <span class="font-bold capitalize">Срок</span>
+                <span class="${DETAIL_VALUE}">~1.5 months</span>
               </div>
-              <div class="flex items-center gap-[8px] text-[#b3bdd2] text-[16px] leading-[20px] tracking-[0.16px] [font-family:var(--font-case)]">
+              <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
                 <span class="font-bold capitalize">Команда</span>
-                <span class="italic">5 developers, позже пришел 2-ой дизайнер на флоу регистрации</span>
-              </div>
-              <div class="flex items-start w-full text-[#b3bdd2] text-[16px] leading-[20px] tracking-[0.16px] [font-family:var(--font-case)]">
-                <span class="font-bold capitalize">Результат</span>
+                <span class="${DETAIL_VALUE}">5 developers, позже пришел 2-ой дизайнер на флоу регистрации</span>
               </div>
             </div>
-            <p class="${TEXT_FULL}">
-              Я использовала вынужденный перезапуск как возможность не только обновить интерфейс, но и улучшить структуру продукта: сохранить ключевые торговые сценарии и заложить основу для дальнейшего развития.
+            <p class="${TEXT}">
+              <span class="${EMPH}">Я использовала вынужденный перезапуск как возможность не только обновить интерфейс, но и улучшить структуру продукта:</span>
+              сохранить ключевые торговые сценарии и заложить основу для дальнейшего развития.
             </p>
           </div>
         </div>
 
         <!-- C. Risk -->
         <div class="flex flex-col items-start w-full">
-          <div class="${ROW} w-full">
+          <div class="${ROW}">
             <span class="${LABEL}">Risk</span>
-            <div class="shrink-0 w-[570px] flex flex-col items-center">
+            <div class="${BODY}">
               <p class="${TEXT}">
-                Старое iOS-приложение уже было заблокировано. С выходом новой iOS компания рисковала потерять текущую iOS-аудиторию — меньшую, чем Android, но значимую по выручке.
+                <span>Старое </span><span class="${EMPH}">iOS-приложение уже было заблокировано в сторе </span><span>(просто не досмотрели за требованиями AppStore регуляции). </span>
+                <span class="${EMPH}">С выходом новой iOS 26 компания рисковала потерять всю текущую iOS-аудиторию</span><span> — меньшую, чем Android, но значимую по выручке.</span>
               </p>
             </div>
           </div>
-          <div class="flex flex-col gap-[12px] items-start py-[24px] w-full">
-            <div class="flex items-center justify-center px-[24px] h-[481px] w-full overflow-hidden">
-              <img src="/assets/cases/emergency-redesign/risk-img.png" alt="Старый интерфейс" class="w-full h-[481px] object-contain block" />
+          <div class="flex flex-col gap-[12px] items-center justify-center py-[32px] w-full">
+            <div class="h-[464px] w-[752px] overflow-hidden">
+              <img src="/assets/cases/emergency-redesign/risk-img.png" alt="Старый интерфейс" class="w-full h-full object-contain block" />
             </div>
-            <div class="flex items-center justify-center px-[24px] w-full">
-              <span class="${CAPTION}">Старый интерфейс</span>
-            </div>
+            <span class="${CAPTION}">Старый интерфейс</span>
           </div>
-          <div class="flex items-center pl-[315px] pr-[154px] w-full">
-            <p class="w-[411px] ${QUOTE}">
-              Новое приложение должно было быть достаточно другим, но при этом не ломать основные торговые сценарии.
+          <div class="${BODY_INSET}">
+            <p class="${QUOTE}">
+              <span>Новое приложение должно было быть достаточно другим, </span><span>но при этом не ломать основные торговые сценарии.</span>
             </p>
           </div>
         </div>
 
         <!-- D. From masking to rebuilding -->
         <div class="flex flex-col items-start w-full">
-          <div class="${ROW} w-full">
+          <div class="${ROW}">
             <span class="${LABEL_WIDE}">From masking to rebuilding</span>
-            <div class="shrink-0 w-[570px] flex flex-col gap-[32px]">
+            <div class="${BODY} gap-[32px]">
               <div class="flex flex-col gap-[8px]">
                 <span class="${SMALL_LABEL}">Initial ask:</span>
-                <p class="${TEXT_FULL}">
-                  Слегка изменить вход в продукт, онбординг и стартовые экраны, а торговую логику временно скрыть через feature toggle.
-                </p>
+                <p class="${TEXT}">Слегка изменить вход в продукт, онбординг и стартовые экраны, а торговую логику временно скрыть через feature toggle.</p>
               </div>
               <div class="w-[41px] h-[48px]">
                 <img src="/assets/cases/emergency-redesign/arrow.svg" alt="" class="block w-full h-full" />
               </div>
               <div class="flex flex-col gap-[8px]">
                 <span class="${SMALL_LABEL}">Reframing:</span>
-                <p class="${TEXT_FULL}">
-                  На этом этапе я настояла, что нельзя тратить редкое окно изменений только на оболочку. Если продукт всё равно приходится пересобирать, нужно использовать этот момент не как временный обход, а как возможность усилить систему.
-                </p>
+                <p class="${TEXT}">На этом этапе я настояла, что нельзя тратить редкое окно изменений только на оболочку. Если продукт всё равно приходится пересобирать, нужно использовать этот момент не как временный обход, а как возможность усилить систему.</p>
               </div>
               <div class="w-[339px] h-[64px] rounded-[16px] overflow-hidden">
                 <img src="/assets/cases/emergency-redesign/guys-img.png" alt="" class="block w-full h-full object-cover" />
               </div>
               <div class="flex flex-col gap-[8px]">
                 <span class="${SMALL_LABEL}">Real problem:</span>
-                <p class="${TEXT_FULL}">
-                  Продукт накопил UX-долг и архитектурную хрупкость: перегруженная навигация, разрозненные сущности, скрытые действия и ошибки в торговом сценарии.
-                </p>
+                <p class="${TEXT}">Продукт <span class="${EMPH}">накопил UX-долг</span> и архитектурно <span class="${EMPH}">не выдерживал масштабирование</span>: перегруженная навигация, разрозненные сущности, скрытые действия и ошибки в торговом сценарии.</p>
               </div>
             </div>
           </div>
@@ -396,12 +392,10 @@ function generateEmergencyLongread() {
         <!-- E. Decision space -->
         <div class="flex flex-col gap-[64px] items-start w-full">
           <div class="flex flex-col items-start w-full">
-            <div class="${ROW} w-full">
+            <div class="${ROW}">
               <span class="${LABEL}">Decision space</span>
-              <div class="shrink-0 w-[570px] flex flex-col items-center">
-                <p class="${TEXT}">
-                  У меня было три дня, чтобы построить диапазон решений, которые можно защитить и реально собрать в этих условиях.
-                </p>
+              <div class="${BODY}">
+                <p class="${TEXT}"><span>У меня было </span><span class="${EMPH}">три дня, чтобы построить диапазон решений</span><span>, которые можно защитить и реально собрать в этих условиях.</span></p>
               </div>
             </div>
             <div class="flex items-center justify-center px-[192px] py-[32px] w-full overflow-hidden">
@@ -409,76 +403,119 @@ function generateEmergencyLongread() {
             </div>
           </div>
           <div class="flex flex-col gap-[64px] items-start w-full">
-            <div class="flex items-center pr-[154px] w-full">
-              <p class="w-[411px] ${TEXT_FULL} tracking-[0.16px] [font-family:var(--font-case)]">
-                <span class="font-medium">И в итоге на защиту и обсуждение было вынесено </span><span class="font-bold">три опции:</span>
-              </p>
+            <div class="flex items-center justify-center w-full">
+              <p class="${OPTION_INTRO} w-[411px]">И в итоге на защиту и обсуждение было вынесено три опции:</p>
             </div>
             <div class="flex flex-col gap-[32px] items-start w-full">
-              <div class="flex gap-[32px] items-start w-full">
-                <div class="flex-1 min-w-0 flex flex-col gap-[16px] items-center">
-                  <div class="flex flex-col gap-[12px] items-center h-[85px] text-center w-full">
-                    <span class="${SMALL_LABEL} text-center w-full">1/ Minimal masking</span>
-                    <p class="${TEXT_FULL} text-center w-full">Косметический редизайн + точечные фиксы: быстро, но почти не меняет систему.</p>
+              <div class="flex gap-[33px] items-start px-[32px] w-full">
+                <div class="flex-1 min-w-0 flex flex-col gap-[24px] items-center">
+                  <div class="flex flex-col gap-[12px] items-center h-[115px] text-center w-full">
+                    <span class="${TEXT_MUTED} w-full">1/ Minimal Masking</span>
+                    <div class="flex flex-col h-[90px] w-full text-center">
+                      <p class="mb-0 ${OPTION_INTRO}">Косметический редизайн + пару ux фиксов:</p>
+                      <p class="mb-0 ${TEXT}">но прежняя архитектура &gt; риск повторной блокировки</p>
+                    </div>
                   </div>
-                  <p class="text-[18px] leading-[21px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]">Fastest / lowest value</p>
                   <div class="w-[208px] h-[450px] rounded-[24px] overflow-hidden">
                     <video src="/assets/cases/emergency-redesign/Minimal-Masking.mov" autoplay loop muted playsinline class="w-full h-full object-cover block"></video>
                   </div>
+                  <p class="${TEXT_MUTED}">Fastest / lowest value</p>
                 </div>
-                <div class="flex-1 min-w-0 flex flex-col gap-[16px] items-center">
-                  <div class="flex flex-col gap-[12px] items-center h-[85px] text-center w-full">
-                    <span class="${SMALL_LABEL} text-center w-full">2/ Full trade-first redesign</span>
-                    <p class="${TEXT_FULL} text-center w-full">Полный пересбор торгового сценария: Сильно для будущего, но рискованно для текущего релиза.</p>
+                <div class="flex-1 min-w-0 flex flex-col gap-[24px] items-center">
+                  <div class="flex flex-col gap-[12px] items-center h-[115px] text-center w-full">
+                    <span class="${TEXT_MUTED} w-full">2/ Full Trade-First Redesign</span>
+                    <div class="flex flex-col h-[90px] w-full text-center">
+                      <p class="mb-0 ${OPTION_INTRO}">Полный пересбор торгового сценария:</p>
+                      <p class="mb-0 ${TEXT}">вынесения торговли на первый уровень. Заложение будущего фундамента</p>
+                    </div>
                   </div>
-                  <p class="text-[18px] leading-[21px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]">Highest value / too risky now</p>
                   <div class="w-[204px] h-[439px] rounded-[24px] overflow-hidden">
                     <video src="/assets/cases/emergency-redesign/Full-redesign.mov" autoplay loop muted playsinline class="w-full h-full object-cover block"></video>
                   </div>
+                  <p class="${TEXT_MUTED}">Highest value / too risky now</p>
                 </div>
-                <div class="flex-1 min-w-0 flex flex-col gap-[16px] items-center">
-                  <div class="flex flex-col gap-[12px] items-center h-[85px] text-center w-full">
-                    <span class="${SMALL_LABEL} text-center w-full">3/ Structural adjustment — selected</span>
-                    <p class="${TEXT_FULL} text-center w-full">Обединение Счетов + Позиций → в единый раздел. Плюс точечное закрытие UX-долга.</p>
+                <div class="flex-1 min-w-0 flex flex-col gap-[24px] items-center">
+                  <div class="flex flex-col gap-[12px] items-center h-[115px] text-center w-full">
+                    <span class="${TEXT_MUTED} w-full">3/ Structural Adjustment</span>
+                    <div class="flex flex-col h-[90px] w-full text-center">
+                      <p class="mb-0 ${OPTION_INTRO}">Объединение Счетов и Позиций + закрытие части UX-долга.</p>
+                      <p class="mb-0 ${TEXT}">Заметное отличие от старой структуры, но собираемое в срок</p>
+                    </div>
                   </div>
-                  <p class="text-[18px] leading-[21px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]">Balanced value / shippable</p>
                   <div class="w-[203px] h-[439px] rounded-[24px] overflow-hidden">
                     <video src="/assets/cases/emergency-redesign/Structural-adjustment.mov" autoplay loop muted playsinline class="w-full h-full object-cover block"></video>
                   </div>
+                  <p class="${TEXT_MUTED}">Balanced value / shippable</p>
                 </div>
               </div>
               <div class="flex items-center justify-center px-[24px] w-full">
                 <span class="${CAPTION}">Первичные прототипы для защиты каждой из идей</span>
               </div>
-              <div class="flex items-center py-[16px] w-full">
-                <p class="w-[411px] ${QUOTE}">
-                  Я выбирала не между хорошим и плохим, а между слишком слабым и слишком дорогим.
-                </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- E2. Trade-off & Decision -->
+        <div class="flex flex-col gap-[32px] items-start w-full">
+          <div class="${ROW}">
+            <span class="${LABEL}">Trade-off &amp; Decision</span>
+            <div class="${BODY} gap-[32px]">
+              <p class="${TEXT}">Я представляла направления редизайна перед лидами команд и советом управляющих — около 50 человек.</p>
+              <div class="flex flex-col gap-[8px]">
+                <span class="${SMALL_LABEL}">Цель встречи:</span>
+                <p class="${TEXT}">Согласовать направление, чтобы скорее перейти к реализации.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-[20px] items-center w-full">
+            <div class="relative h-[450px] w-[786px]">
+              <div class="absolute left-0 top-0 h-[321px] w-[585px] border border-white overflow-hidden">
+                <img src="/assets/cases/emergency-redesign/trade-off-slide-01.png" alt="" class="block h-full w-full object-cover" />
+              </div>
+              <div class="absolute left-[201px] top-[129px] h-[321px] w-[585px] border border-white shadow-[0px_4px_36.4px_0px_rgba(0,0,0,0.25)] overflow-hidden">
+                <img src="/assets/cases/emergency-redesign/trade-off-slide-02.png" alt="" class="block h-full w-full object-cover" />
+              </div>
+            </div>
+            <span class="${CAPTION}">Слайды из презентации на команды</span>
+          </div>
+          <div class="${BODY_INSET}">
+            <div class="${BODY} gap-[8px]">
+              <span class="${SMALL_LABEL}">Финальное решение:</span>
+              <div class="${TEXT}">
+                <p class="mb-0">Обединение Счетов + Позиций → в единый раздел</p>
+                <p class="mb-0">Плюс точечное закрытие UX-долга.</p>
+                <ol class="pl-[27px] list-decimal mt-[8px]">
+                  <li>Делал продукт заметно другим,</li>
+                  <li>Был реализуем в срок</li>
+                  <li>Не ломал его полностью,</li>
+                  <li>И давал реальную продуктовую пользу.</li>
+                </ol>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- F. Three product bets -->
-        <div class="${ROW} w-full">
-          <span class="${LABEL_TIGHT}">Three product bets</span>
-          <div class="shrink-0 w-[570px] flex flex-col gap-[56px]">
+        <!-- F. Key decision -->
+        <div class="${ROW}">
+          <span class="${LABEL}">Key decision</span>
+          <div class="${BODY} gap-[56px]">
 
             <!-- Bet 1 -->
             <div class="flex flex-col gap-[32px]">
               <div class="flex flex-col gap-[32px]">
                 <div class="flex flex-col gap-[8px]">
                   <p class="${BET_TITLE}">1/ Капитал как единая система</p>
-                  <p class="${TEXT_FULL}">Funds и Positions были разорваны, хотя пользователь мыслит их как один контур: "где мои деньги и что с ними происходит".</p>
+                  <p class="${TEXT}"><span class="${EMPH}">Funds</span> и <span class="${EMPH}">Positions</span> были разорваны, хотя пользователь мыслит их как один контур: "где мои деньги и что с ними происходит".</p>
                 </div>
                 <div class="flex flex-col gap-[8px]">
                   <span class="${SMALL_LABEL}">Decision:</span>
-                  <p class="${TEXT_FULL}">Объединить Funds + Positions в Account / Capital layer.</p>
+                  <p class="${TEXT}">Объединить <span class="${EMPH}">Funds + Positions</span> в единый раздел</p>
                 </div>
                 <div class="flex flex-col gap-[8px]">
                   <span class="${SMALL_LABEL}">Impact:</span>
-                  <p class="${TEXT_FULL}">Меньше разрывов в модели капитала + место для будущей архитектуры.</p>
+                  <p class="${TEXT}">Меньше разрывов в модели капитала + место для будущей архитектуры.</p>
                 </div>
+                <p class="${EMPH}">Баллов к решению прибавляло то, что такая логика уже была реализована у одно из лидеров рынка.</p>
               </div>
               <div class="w-full h-[670px] overflow-hidden">
                 <img src="/assets/cases/emergency-redesign/capital-system-img.png" alt="Capital system" class="w-full h-full object-cover block" />
@@ -490,11 +527,11 @@ function generateEmergencyLongread() {
               <div class="flex flex-col gap-[32px]">
                 <div class="flex flex-col gap-[8px]">
                   <p class="${BET_TITLE}">2/ Упрощение взаимодействия с торговлей</p>
-                  <p class="${TEXT_FULL}">Trade flow страдал от конфликтующих tap-зон, скрытых категорий и слабой иерархии.</p>
+                  <p class="${TEXT}">Trade flow страдал от конфликтующих tap-зон, скрытых категорий и слабой иерархии.</p>
                 </div>
                 <div class="flex flex-col gap-[8px]">
                   <span class="${SMALL_LABEL}">Decision:</span>
-                  <ul class="pl-[27px] ${TEXT_FULL} list-disc">
+                  <ul class="pl-[27px] ${TEXT} list-disc">
                     <li>Переработаны карточки инструментов</li>
                     <li>Убраны конфликтующие tap-зоны</li>
                     <li>Категории вынесены в явный паттерн (чипы / табы)</li>
@@ -504,7 +541,7 @@ function generateEmergencyLongread() {
                 </div>
                 <div class="flex flex-col gap-[8px]">
                   <span class="${SMALL_LABEL}">Impact:</span>
-                  <p class="${TEXT_FULL}">Я не переизобрела торговлю, а убрала точки путаницы</p>
+                  <p class="${TEXT}">Я не переизобрела торговлю, а убрала точки путаницы</p>
                 </div>
               </div>
               <div class="w-full aspect-[1710/1092] overflow-hidden">
@@ -517,15 +554,15 @@ function generateEmergencyLongread() {
               <div class="flex flex-col gap-[32px]">
                 <div class="flex flex-col gap-[8px]">
                   <p class="${BET_TITLE}">3/ Визуальное обновление</p>
-                  <p class="${TEXT_FULL}">UI должен был быстро создать ощущение нового продукта, но не мог стать главным фокусом.</p>
+                  <p class="${TEXT}">UI должен был быстро создать ощущение нового продукта, но не мог стать главным фокусом.</p>
                 </div>
                 <div class="flex flex-col gap-[8px]">
                   <span class="${SMALL_LABEL}">Decision:</span>
-                  <p class="${TEXT_FULL}">Минимально достаточная visual system, поддерживающая новую структуру.</p>
+                  <p class="${TEXT}">Минимально достаточная visual system, поддерживающая новую структуру.</p>
                 </div>
                 <div class="flex flex-col gap-[8px]">
                   <span class="${SMALL_LABEL}">Impact:</span>
-                  <p class="${TEXT_FULL}">Сначала система, потом полировка.</p>
+                  <p class="${TEXT}">Сначала система, потом полировка.</p>
                 </div>
               </div>
               <div class="flex gap-[56px] items-start w-full">
@@ -539,13 +576,13 @@ function generateEmergencyLongread() {
           </div>
         </div>
 
-        <!-- G. Execution note -->
+        <!-- G. Execution node -->
         <div class="flex flex-col gap-[32px] items-start w-full">
-          <div class="${ROW} w-full font-bold italic [font-family:var(--font-case)]">
-            <span class="${LABEL_TIGHT}">Execution note</span>
-            <div class="shrink-0 w-[570px] ${QUOTE}">
-              <p class="leading-[21px]">Дизайн и разработка шли параллельно: решения уходили в разработку частями, архитектура уточнялась по ходу, а перед релизом мы быстро проверили и поправили ключевые паттерны.</p>
-              <p class="leading-[21px] mt-[4px]">Моя задача была не просто придумать направление, а удержать продукт целым, пока он собирался по частям.</p>
+          <div class="${ROW}">
+            <span class="${LABEL}">Execution node</span>
+            <div class="${BODY} gap-[32px]">
+              <p class="${TEXT}"><span class="${EMPH}">Дизайн и разработка шли параллельно:</span> решения уходили в разработку частями, архитектура уточнялась по ходу, а перед релизом мы быстро проверили и поправили ключевые паттерны.</p>
+              <p class="${TEXT}">Моя задача была не просто придумать направление, а удержать продукт целым, пока он собирался по частям.</p>
             </div>
           </div>
           <div class="w-[1172px] h-[387px] overflow-hidden">
@@ -554,27 +591,48 @@ function generateEmergencyLongread() {
         </div>
 
         <!-- H. Outcome -->
-        <div class="${ROW} w-full">
-          <span class="${LABEL_TIGHT}">Outcome</span>
-          <div class="shrink-0 w-[570px] flex flex-col gap-[32px]">
-            <div class="flex flex-col gap-[8px]">
-              <span class="${SMALL_LABEL}">Бизнес</span>
-              <p class="${TEXT_FULL}">iOS-канал сохранён, приложение выпущено в срок, пользователи не потеряли доступ к продукту.</p>
-            </div>
-            <div class="flex flex-col gap-[8px]">
-              <span class="${SMALL_LABEL}">Продукт</span>
-              <p class="${TEXT_FULL}">Архитектура стала более управляемой: навигация, видимость капитала и торговые взаимодействия получили более ясную модель.</p>
-            </div>
-            <div class="flex flex-col gap-[8px]">
-              <span class="${SMALL_LABEL}">Система</span>
-              <p class="${TEXT_FULL}">Появилась база под future-концепт и дальнейшее развитие продукта.</p>
+        <div class="flex flex-col gap-[32px] items-center w-full">
+          <div class="${ROW}">
+            <span class="${LABEL}">Outcome</span>
+            <div class="${BODY} gap-[32px]">
+              <div class="flex flex-col gap-[8px]">
+                <span class="${SMALL_LABEL}">Бизнес</span>
+                <p class="${TEXT}"><span class="${EMPH}">iOS-канал сохранён</span>, приложение выпущено в срок, пользователи не потеряли доступ к продукту.</p>
+              </div>
+              <div class="flex flex-col gap-[8px]">
+                <span class="${SMALL_LABEL}">Продукт</span>
+                <p class="${TEXT}"><span class="${EMPH}">Архитектура стала более управляемой:</span> навигация, видимость капитала и торговые взаимодействия получили более ясную модель.</p>
+              </div>
+              <div class="flex flex-col gap-[8px]">
+                <span class="${SMALL_LABEL}">Система</span>
+                <p class="${TEXT}">Появилась <span class="${EMPH}">база под future-концепт</span> и дальнейшее развитие продукта.</p>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- I. Outcome image -->
-        <div class="w-full aspect-[3454/1964] rounded-[24px] overflow-hidden">
-          <img src="/assets/cases/emergency-redesign/outcome-final.png" alt="Final outcome" class="w-full h-full object-cover block rounded-[24px]" />
+          <div class="flex items-center justify-center w-full">
+            <img
+              src="/assets/cases/emergency-redesign/outcome-composite.png"
+              alt="Slack review и Figma workspace"
+              class="block w-[1066px] max-w-full h-auto rounded-[24px]"
+            />
+          </div>
+          <div class="flex w-full pl-[322px] pr-[154px] box-border">
+            <div class="${BODY} gap-[8px]">
+              <span class="${SMALL_LABEL}">P.S.</span>
+              <div class="${TEXT}">
+                <p class="mb-0">На этом эта история, конечно, не закончилась.</p>
+                <p class="mb-0">Немного порадовалась и дальше предстояла работа:</p>
+                <ul class="pl-[27px] list-disc mt-[8px]">
+                  <li>По <span class="${EMPH}">быстрым доработкам</span> перед запуском уже на пользователей на основе коридорок и обратной связи от команд</li>
+                  <li><span class="${EMPH}">Доставка концепции и правил работы</span> с новым интерфейсом <span class="${EMPH}">на других дизайнеров;</span></li>
+                  <li>В перерывах, моления на то, чтобы все таки не раскрыли и не заблочили</li>
+                  <li>Закрывание косяков, которые в спешке конечно же были допущены</li>
+                  <li><span class="${EMPH}">Доработка Future-концепции, подготовка к уже основательным UX исследованиям</span></li>
+                  <li>Подтягивание старой андроид версии до новой ios</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div><!-- end #longreadSections -->
@@ -583,94 +641,99 @@ function generateEmergencyLongread() {
 }
 
 function generateSLTPLongread() {
-  const LABEL = "shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.48px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
-  const LABEL_WIDE = "shrink-0 w-[231px] text-[16px] leading-[20px] font-bold italic tracking-[0.16px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
-  const TEXT = "text-[18px] leading-[22px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.8)] [font-family:var(--font-case)]";
-  const TEXT_FULL = "text-[18px] leading-[22px] font-medium tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
-  const DETAIL_LABEL = "text-[16px] leading-[20px] tracking-[0.16px] font-bold text-[#b3bdd2] capitalize [font-family:var(--font-case)]";
-  const DETAIL_VALUE = "text-[16px] leading-[20px] tracking-[0.16px] italic text-[#b3bdd2] [font-family:var(--font-case)]";
-  const SMALL_LABEL = "text-[15px] leading-[20px] tracking-[0.15px] font-bold capitalize text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
-  const SMALL_TEXT = "text-[14px] leading-[22px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.5)] [font-family:var(--font-case)]";
-  const QUOTE = "font-bold italic text-[18px] leading-[22px] tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
-  const CAPTION = "font-light italic text-[14px] leading-[15px] tracking-[0.14px] text-[rgba(179,189,210,0.5)] [font-family:var(--font-case)]";
-  const BET_TITLE = "text-[18px] leading-[21px] font-bold italic tracking-[0.18px] text-[#b3bdd2] [font-family:var(--font-case)]";
-  const LIST_TEXT = "text-[18px] leading-[22px] font-normal tracking-[0.18px] text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
-  const CARD_TITLE = "text-[18px] leading-[22px] font-medium tracking-[0.18px] text-[rgba(179,189,210,0.8)] [font-family:var(--font-case)]";
-  const CARD_DESC = "text-[14px] leading-[18px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]";
-  const CARD_FOOTER = "text-[14px] leading-[18px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]";
-  const ROW = "flex items-start justify-between pl-[52px] pr-[154px] box-border";
+  const LABEL = "shrink-0 w-[150px] text-[16px] leading-[20px] font-bold italic tracking-[0.48px] uppercase text-[#8d97ab] [font-family:var(--font-case)]";
+  const BODY = "shrink-0 w-[600px] flex flex-col";
+  const ROW = "flex items-start gap-[120px] pl-[56px] pr-[154px] box-border w-full";
+  const HEADLINE = "text-[24px] leading-[28px] font-bold italic tracking-[0.24px] text-[rgba(179,189,210,0.8)] [font-family:var(--font-case)]";
+  const TEXT = "text-[18px] leading-[22px] font-normal tracking-[0px] text-[rgba(141,151,171,0.8)] [font-family:var(--font-case)]";
+  const EMPH = "font-bold italic text-[#b3bdd2] [font-family:var(--font-case)]";
+  const DETAIL_LABEL = "text-[16px] leading-[20px] tracking-[0.16px] font-bold text-[#8d97ab] [font-family:var(--font-case)]";
+  const DETAIL_VALUE = "text-[16px] leading-[20px] tracking-[0.16px] italic text-[#8d97ab] [font-family:var(--font-case)]";
+  const SMALL_LABEL = "text-[15px] leading-[20px] tracking-[0.15px] font-bold text-[#8d97ab] [font-family:var(--font-case)]";
+  const SMALL_NOTE = "text-[18px] leading-[22px] font-normal tracking-[0px] text-[rgba(141,151,171,0.6)] [font-family:var(--font-case)]";
+  const NOTE_MUTED = "text-[18px] leading-[22px] font-normal tracking-[0px] text-[rgba(141,151,171,0.6)] [font-family:var(--font-case)]";
+  const CAPTION = "font-normal italic text-[14px] leading-[15px] tracking-[0.14px] text-[#8d97ab] [font-family:var(--font-case)]";
+  const BET_TITLE = "text-[18px] leading-[21px] font-bold italic tracking-[0px] text-[#8d97ab] [font-family:var(--font-case)]";
+  const LIST_MUTED = "text-[18px] leading-[22px] font-normal tracking-[0px] text-[rgba(141,151,171,0.6)] [font-family:var(--font-case)]";
+  const CARD_TITLE = "text-[18px] leading-[22px] font-medium tracking-[0px] text-[rgba(179,189,210,0.8)] text-center [font-family:var(--font-case)]";
+  const CARD_DESC = "text-[14px] leading-[18px] font-medium tracking-[0px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]";
+  const CARD_FOOTER = "text-[14px] leading-[18px] font-medium tracking-[0px] text-[rgba(179,189,210,0.6)] text-center [font-family:var(--font-case)]";
+  const GRID_TITLE = "text-[18px] leading-[21px] font-bold italic tracking-[0px] text-[#b3bdd2] [font-family:var(--font-case)]";
+  const LINK = "font-bold italic text-[18px] leading-[22px] tracking-[0px] text-[#b3bdd2] underline [font-family:var(--font-case)]";
 
   return `
     <div class="sltpLongread flex flex-col gap-[24px] w-[1172px] overflow-hidden">
 
       <!-- Hero -->
-      <div class="relative w-[1172px] h-[771px] shrink-0 overflow-hidden">
-        <div class="absolute left-[calc(50%+0.5px)] top-[55px] w-[657px] h-[661px] -translate-x-1/2">
-          <img src="/assets/cases/sltp/preview-sltp.png" alt="SLTP Preview" class="w-[81.66%] h-full object-cover block" />
+      <div class="relative w-[1172px] h-[700px] shrink-0 overflow-hidden">
+        <div class="absolute left-[calc(50%-127.5px)] top-[42px] h-[604px] w-[601px] -translate-x-1/2">
+          <img src="/assets/cases/sltp/preview-sltp.png" alt="SLTP Preview" class="block h-full w-[81.66%] object-cover" />
         </div>
-        <div class="absolute left-[769px] top-[134px] w-[291px] flex flex-col items-start">
-          <p class="${SMALL_TEXT}">* SL/TP — механика автоматического закрытия позиции:<br/>Stop Loss ограничивает потери,<br/>Take Profit фиксирует прибыль.</p>
+        <div class="absolute left-[639px] top-[553px] w-[291px] flex flex-col items-start">
+          <p class="text-[14px] leading-[22px] font-medium tracking-[0.14px] text-[rgba(179,189,210,0.5)] [font-family:var(--font-case)]">* SL/TP — механика автоматического закрытия позиции:<br/>Stop Loss ограничивает потери,<br/>Take Profit фиксирует прибыль.</p>
         </div>
       </div>
 
       <!-- Longread body -->
       <div class="flex flex-col gap-[120px] items-center w-[1172px] pb-[120px]">
 
-        <!-- Context + Problem -->
-        <div class="flex flex-col gap-[40px] items-start w-full">
-          <!-- Context -->
-          <div class="${ROW} w-full">
-            <span class="${LABEL}">Context</span>
-            <div class="shrink-0 w-[570px] flex flex-col gap-[28px]">
-              <div class="flex flex-col gap-[16px]">
-                <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
-                  <span class="font-bold">Роль</span>
-                  <span class="${DETAIL_VALUE}">Product Designer</span>
-                </div>
-                <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
-                  <span class="font-bold capitalize">Figma</span>
-                  <a href="https://www.figma.com/design/gzd7rk7vdzarXyDEUDzVGf/SL_TP?node-id=233-70776" target="_blank" class="${DETAIL_VALUE} underline cursor-pointer">переход на фигму</a>
-                </div>
-                <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
-                  <span class="font-bold capitalize">Процесс</span>
-                  <span class="${DETAIL_VALUE}">Research → interaction model → behavior system</span>
-                </div>
+        <!-- Context -->
+        <div class="${ROW}">
+          <span class="${LABEL}">Context</span>
+          <div class="${BODY} gap-[28px]">
+            <p class="${HEADLINE}">Как перевести график из пассивного отображения в инструмент управления позицией и риском</p>
+            <div class="flex flex-col gap-[16px]">
+              <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                <span class="font-bold">Роль</span>
+                <span class="${DETAIL_VALUE}">Product Designer</span>
               </div>
-              <p class="${QUOTE}">В результате перевела график из пассивного отображения в инструмент управления позицией</p>
-            </div>
-          </div>
-
-          <!-- Problem -->
-          <div class="${ROW} w-full">
-            <span class="${LABEL}">Problem</span>
-            <div class="shrink-0 w-[570px] flex flex-col gap-[16px]">
-              <div class="flex flex-col items-start">
-                <p class="${SMALL_TEXT}">* SL/TP — механика автоматического закрытия позиции:<br/>Stop Loss ограничивает потери,<br/>Take Profit фиксирует прибыль.</p>
+              <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                <span class="font-bold capitalize">Figma</span>
+                <a href="https://www.figma.com/design/gzd7rk7vdzarXyDEUDzVGf/SL_TP?node-id=233-70776" target="_blank" rel="noopener noreferrer" class="${DETAIL_VALUE} underline">переход на фигму</a>
               </div>
-              <div class="${TEXT}">
-                <p>SL/TP в нашем приложении настраивались вне графика, поэтому пользователь:</p>
-                <ul class="pl-[27px] list-disc">
-                  <li>не видел уровень в момент действия,</li>
-                  <li>управлял риском через разорванный сценарий,</li>
-                  <li>терял скорость и контроль в активной торговле.</li>
-                </ul>
+              <div class="flex items-center gap-[8px] ${DETAIL_LABEL}">
+                <span class="font-bold capitalize">Процесс</span>
+                <span class="${DETAIL_VALUE}">Research → interaction model → behavior system</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Best practice / Research -->
+        <!-- Problem -->
+        <div class="${ROW}">
+          <span class="${LABEL}">Problem</span>
+          <div class="${BODY} gap-[32px]">
+            <div class="${SMALL_NOTE}">
+              <p class="mb-0">* SL/TP — механика автоматического закрытия позиции:</p>
+              <p class="mb-0">Stop Loss ограничивает потери,</p>
+              <p>Take Profit фиксирует прибыль.</p>
+            </div>
+            <div class="${TEXT}">
+              <p class="mb-0"><span>SL/TP в нашем приложении </span><span class="${EMPH}">настраивались вне графика</span><span>, поэтому пользователь:</span></p>
+              <ul class="pl-[27px] list-disc mt-[8px]">
+                <li><span class="${EMPH}">не видел уровень</span> в момент действия,</li>
+                <li><span class="${EMPH}">управлял риском через разорванный сценарий</span>,</li>
+                <li><span class="${EMPH}">терял скорость и контроль</span> в активной торговле.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Best practice не было -->
         <div class="flex flex-col items-start w-full">
-          <div class="${ROW} w-full">
+          <div class="${ROW}">
             <span class="${LABEL}">Best practice не было</span>
-            <div class="shrink-0 w-[570px] flex flex-col gap-[32px]">
+            <div class="${BODY} gap-[32px]">
               <div class="${TEXT}">
-                <p>Я пошла исследовать конкурентов, изучить фичу и ее потенциал.</p>
-                <a href="https://www.figma.com/design/gzd7rk7vdzarXyDEUDzVGf/SL_TP?node-id=40000053-132980" target="_blank" class="underline cursor-pointer">Figma</a>
+                <p class="mb-0">Я пошла исследовать конкурентов, изучить фичу и ее потенциал.</p>
+                <a href="https://www.figma.com/design/gzd7rk7vdzarXyDEUDzVGf/SL_TP?node-id=40000053-132980" target="_blank" rel="noopener noreferrer" class="underline">Figma</a>
+              </div>
+              <div class="h-[28px] w-[23px]">
+                <img src="/assets/cases/emergency-redesign/arrow.svg" alt="" class="block h-full w-full" />
               </div>
               <div class="flex flex-col gap-[16px]">
-                <p class="${TEXT}">Задача была разобраться</p>
-                <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                <p class="${EMPH}">Задача была разобраться</p>
+                <ul class="pl-[27px] list-disc ${LIST_MUTED}">
                   <li>как SL/TP устроен у конкурентов,</li>
                   <li>какие паттерны реально ускоряют работу,</li>
                   <li>где текущая фича в продукте уже слабая,</li>
@@ -680,7 +743,7 @@ function generateSLTPLongread() {
               </div>
             </div>
           </div>
-          <div class="flex flex-col gap-[12px] items-start py-[24px] w-full">
+          <div class="flex flex-col gap-[12px] items-start py-[32px] w-full">
             <div class="flex items-center justify-center w-full h-[424px] overflow-hidden">
               <img src="/assets/cases/sltp/risk-img.png" alt="Research" class="w-[939px] h-[424px] object-cover rounded-[24px] shadow-[0px_4px_121.5px_0px_rgba(0,0,0,0.25)] block" />
             </div>
@@ -690,11 +753,11 @@ function generateSLTPLongread() {
           </div>
 
           <!-- After research -->
-          <div class="${ROW} w-full">
+          <div class="${ROW}">
             <span class="${LABEL}">After research</span>
-            <div class="shrink-0 w-[570px] flex flex-col gap-[24px]">
-              <p class="${TEXT}">Ключевая сложность была в проектировании логики взаимодействия</p>
-              <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+            <div class="${BODY} gap-[16px]">
+              <p class="${EMPH}">Ключевая сложность была в проектировании логики взаимодействия</p>
+              <ul class="pl-[27px] list-disc ${LIST_MUTED}">
                 <li>скорость vs контроль</li>
                 <li>что происходит напрямую на графике</li>
                 <li>нужны ли доп точки управления</li>
@@ -706,136 +769,126 @@ function generateSLTPLongread() {
           </div>
         </div>
 
-        <!-- 3 Interaction Models -->
-        <div class="flex flex-col items-start w-full">
-          <div class="flex flex-col gap-[64px] items-start w-full">
-            <div class="${ROW} w-full">
-              <span class="${LABEL}">3 interaction models.</span>
-              <div class="shrink-0 w-[570px]">
-                <p class="${TEXT}">Ни один существующий паттерн не решает задачу полностью, поэтому дальше я собирала собственные interaction-модели, комбинируя сильные стороны разных подходов.</p>
+        <!-- 4 interaction models -->
+        <div class="flex flex-col gap-[32px] items-start w-full">
+          <div class="${ROW}">
+            <span class="${LABEL}">4 interaction models.</span>
+            <div class="${BODY}">
+              <p class="${TEXT}">Ни один существующий паттерн не решает задачу полностью, поэтому дальше я собирала собственные interaction-модели, комбинируя сильные стороны разных подходов.</p>
+            </div>
+          </div>
+          <div class="flex flex-col gap-[32px] items-center justify-center px-[32px] w-full">
+            <div class="flex gap-[8px] items-start w-full">
+              <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
+                <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
+                  <p class="${CARD_TITLE} w-full">Inline-only</p>
+                  <p class="${CARD_DESC} w-full">Управление прямо<br/>на тегах SL/TP.</p>
+                </div>
+                <div class="h-[549px] w-[253px]">
+                  <img src="/assets/cases/sltp/inline-only-img.png" alt="Inline-only" class="w-full h-full object-contain block" />
+                </div>
+                <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ быстро<br/>− перегружает график</p>
+              </div>
+              <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
+                <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
+                  <p class="${CARD_TITLE} w-full">Panel-only</p>
+                  <p class="${CARD_DESC} w-full">Все инструменты в панели управления, отдельно от графика.</p>
+                </div>
+                <div class="h-[549px] w-[253px]">
+                  <img src="/assets/cases/sltp/panel-only-img.png" alt="Panel-only" class="w-full h-full object-contain block" />
+                </div>
+                <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ чисто<br/>− действие отрывается от уровня</p>
+              </div>
+              <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
+                <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
+                  <p class="${CARD_TITLE} w-full">Hybrid</p>
+                  <p class="${CARD_DESC} w-full">Действия в панеле, а на графике только изменение значений.</p>
+                </div>
+                <div class="h-[549px] w-[253px]">
+                  <img src="/assets/cases/sltp/hybrid-img.png" alt="Hybrid" class="w-full h-full object-contain block" />
+                </div>
+                <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ разделяет управление уровнем и позицией<br/>− требует сложной state-логики</p>
+              </div>
+              <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
+                <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
+                  <p class="${CARD_TITLE} w-full">Movable Hybrid</p>
+                  <p class="${CARD_DESC} w-full">Гибридный вариант с подвижной панелью.</p>
+                </div>
+                <div class="h-[549px] w-[253px]">
+                  <img src="/assets/cases/sltp/movable-hybrid-img.png" alt="Movable Hybrid" class="w-full h-full object-contain block" />
+                </div>
+                <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ гибкость<br/>− лишняя сложность</p>
               </div>
             </div>
-
-            <div class="flex flex-col gap-[32px] items-center justify-center px-[52px] w-full">
-              <div class="flex gap-[8px] items-start w-full">
-                <!-- Card 1: Inline-only -->
-                <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
-                  <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
-                    <p class="${CARD_TITLE} text-center w-full">Inline-only</p>
-                    <p class="${CARD_DESC} text-center w-full">Управление прямо<br/>на тегах SL/TP.</p>
-                  </div>
-                  <div class="h-[549px] w-[253px]">
-                    <img src="/assets/cases/sltp/inline-only-img.png" alt="Inline-only" class="w-full h-full object-contain block" />
-                  </div>
-                  <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ быстро<br/>− перегружает график</p>
-                </div>
-                <!-- Card 2: Panel-only -->
-                <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
-                  <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
-                    <p class="${CARD_TITLE} text-center w-full">Panel-only</p>
-                    <p class="${CARD_DESC} text-center w-full">Все инструменты в панели управления, отдельно от графика.</p>
-                  </div>
-                  <div class="h-[549px] w-[253px]">
-                    <img src="/assets/cases/sltp/panel-only-img.png" alt="Panel-only" class="w-full h-full object-contain block" />
-                  </div>
-                  <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ чисто<br/>− действие отрывается от уровня</p>
-                </div>
-                <!-- Card 3: Hybrid -->
-                <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
-                  <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
-                    <p class="${CARD_TITLE} text-center w-full">Hybrid</p>
-                    <p class="${CARD_DESC} text-center w-full">Действия в панеле, а на графике только изменение значений.</p>
-                  </div>
-                  <div class="h-[549px] w-[253px]">
-                    <img src="/assets/cases/sltp/hybrid-img.png" alt="Hybrid" class="w-full h-full object-contain block" />
-                  </div>
-                  <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ разделяет управление уровнем и позицией<br/>− требует сложной state-логики</p>
-                </div>
-                <!-- Card 4: Movable Hybrid -->
-                <div class="sltp-card flex-1 min-w-0 flex flex-col gap-[16px] h-[740px] items-center justify-center bg-[#121212] rounded-[24px]">
-                  <div class="flex flex-col gap-[8px] h-[85px] items-center text-center px-[16px] w-full">
-                    <p class="${CARD_TITLE} text-center w-full">Movable Hybrid</p>
-                    <p class="${CARD_DESC} text-center w-full">Гибридный вариант с подвижной панелью.</p>
-                  </div>
-                  <div class="h-[549px] w-[253px]">
-                    <img src="/assets/cases/sltp/movable-hybrid-img.png" alt="Movable Hybrid" class="w-full h-full object-contain block" />
-                  </div>
-                  <p class="${CARD_FOOTER} h-[55px] w-[228px]">+ гибкость<br/>− лишняя сложность</p>
-                </div>
-              </div>
-              <div class="flex items-center justify-end px-[24px] w-full">
-                <span class="${CAPTION}">Сырые прототипы для защиты каждоый из идей</span>
-              </div>
+            <div class="flex items-center justify-end px-[24px] w-full">
+              <span class="text-[14px] leading-[15px] font-normal italic tracking-[0.14px] text-[rgba(179,189,210,0.5)] [font-family:var(--font-case)]">Сырые прототипы для защиты каждой из идей</span>
             </div>
           </div>
         </div>
 
         <!-- Final interaction model -->
-        <div class="${ROW} w-full">
-          <span class="shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.16px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]">Final interaction model</span>
-          <div class="shrink-0 w-[570px] flex flex-col gap-[32px] items-start">
-            <div class="flex flex-col gap-[8px] w-full">
-              <p class="${BET_TITLE}">1/ Dual flow</p>
-              <p class="${TEXT_FULL}">После обсуждений с командой, коридорный исследований выбором стали два варианта: inline-only and hybrid</p>
-            </div>
-            <div class="flex flex-col gap-[16px] w-full">
-              <p class="${SMALL_LABEL}">Final decision:</p>
-              <p class="${TEXT_FULL}">В итоге выбрали Hybrid, потому он что лучше разводил управление позицией и управление конкретным уровнем.</p>
-              <p class="text-[15px] leading-[22px] font-medium tracking-[0.15px] text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]">*Оба финальных варианта уже закрывали базовые действия. Разница была не в наличии функций, а в том, насколько логично они были организованы.</p>
-            </div>
-            <div class="flex flex-col gap-[8px] w-full">
-              <p class="${SMALL_LABEL}">Логика разделения:</p>
-              <div class="${TEXT_FULL}">
-                <p class="mb-[8px]"><span>Редактирование и удаление конкретного SL/TP — </span><span class="text-[rgba(179,189,210,0.6)]">через линии на графике.</span></p>
-                <p class="mb-[8px]"><span>Добавление SL/TP на позцию и закрытие позиции — </span><span class="text-[rgba(179,189,210,0.6)]">в панели управления.</span></p>
-                <p><span>Точные настройки — </span><span class="text-[rgba(179,189,210,0.6)]">через шторку.</span></p>
+        <div class="${ROW}">
+          <span class="${LABEL}">Final interaction model</span>
+          <div class="flex flex-col gap-[32px] flex-1 min-w-0">
+            <div class="${BODY} gap-[32px]">
+              <p class="${EMPH}">После обсуждений с командой, коридорный исследований выбором стали два варианта: inline-only and hybrid</p>
+              <div class="flex flex-col gap-[16px]">
+                <span class="${SMALL_LABEL}">Final decision:</span>
+                <p class="${TEXT}">В итоге выбрали Hybrid, потому что он лучше разделял управление позицией и управление конкретным уровнем.</p>
+              </div>
+              <p class="${NOTE_MUTED}">*Оба финальных варианта уже закрывали базовые действия. Разница была не в наличии функций, а в том, насколько логично они были организованы.<br/>+ были проведены количественные исследования <a href="https://www.figma.com/design/p4Yp3a3PqZgo0xNenaFWQA/%D0%9F%D1%80%D0%BE%D1%82%D0%BE%D1%82%D0%B8%D0%BF-SL_TP-%D0%B4%D0%BB%D1%8F-%D0%B8%D1%81%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F?node-id=0-1" target="_blank" rel="noopener noreferrer" class="underline">с прототипами</a> на реальных пользователях целевых стран (600 человек)</p>
+              <div class="flex flex-col gap-[8px]">
+                <span class="${SMALL_LABEL}">Логика разделения:</span>
+                <div class="${TEXT}">
+                  <p class="mb-[8px]"><span class="${EMPH}">Редактирование и удаление конкретного SL/TP</span> — через линии на графике.</p>
+                  <p class="mb-[8px]"><span class="${EMPH}">Добавление SL/TP</span> на позицию и закрытие позиции — в панели управления.</p>
+                  <p><span class="${EMPH}">Точные настройки</span> — через шторку.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 3 Key Decisions -->
-        <div class="${ROW} w-full">
-          <span class="shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.16px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]">3 KEY DECISIONS</span>
-          <div class="shrink-0 w-[570px] flex flex-col gap-[56px]">
+        <!-- 3 KEY DECISIONS -->
+        <div class="${ROW}">
+          <span class="${LABEL}">3 KEY DECISIONS</span>
+          <div class="flex flex-col gap-[120px] flex-1 min-w-0 max-w-[846px]">
 
-            <!-- Decision 1: Dual flow -->
             <div class="flex flex-col gap-[32px] w-full">
-              <div class="flex flex-col gap-[8px] w-full">
+              <div class="${BODY} gap-[14px]">
                 <p class="${BET_TITLE}">1/ Dual flow</p>
-                <p class="${TEXT_FULL}">Быстрые действия — на графике.<br/>Точные настройки — в шторке.</p>
-                <p class="${TEXT_FULL}">Точная настройка через шторку не может быть запасным входом. Она должна быть частью flow. И если она становится полноценной частью сценария, её нужно было усилить.</p>
+                <p class="${TEXT}"><span class="${EMPH}">Быстрые действия</span> — на графике.<br/><span class="${EMPH}">Точные настройки</span> — в шторке.</p>
+                <p class="${TEXT}">Точная настройка через шторку не может быть запасным входом. Она должна быть частью flow. И если она становится полноценной частью сценария, её нужно было усилить.</p>
               </div>
-              <div class="flex flex-col items-start w-full">
+              <div class="flex flex-col gap-[24px] w-full">
                 <div class="w-[570px] h-[398px]">
                   <img src="/assets/cases/sltp/ui-fixes-1.png" alt="UI fixes" class="w-full h-full object-contain block" />
                 </div>
-                <p class="${TEXT_FULL} mt-[8px]">Также были точечные UI фиксы</p>
-                <div class="w-full h-[394px] rounded-[24px] overflow-hidden mt-[8px]">
+                <p class="${TEXT}">Также были точечные UI фиксы</p>
+                <div class="w-[570px] h-[394px] rounded-[24px] overflow-hidden">
                   <img src="/assets/cases/sltp/ui-fixes-2.png" alt="UI fixes 2" class="w-full h-full object-contain rounded-[24px] block" />
                 </div>
               </div>
             </div>
 
-            <!-- Decision 2: Visibility logic -->
-            <div class="flex flex-col gap-[32px] pb-[32px] w-full">
-              <div class="flex flex-col gap-[24px] w-full">
+            <div class="flex flex-col gap-[32px] w-full">
+              <div class="${BODY} gap-[14px]">
                 <p class="${BET_TITLE}">2/ Visibility logic</p>
-                <p class="${TEXT_FULL}">Вкл/выкл отображения SL/TP планировалось только в Chart settings.</p>
-                <div class="w-[305px] h-[246px]">
-                  <img src="/assets/cases/sltp/visibility-settings.png" alt="Visibility settings" class="w-full h-full object-contain block" />
-                </div>
-                <p class="${TEXT_FULL}">Но ранее сделанный инструмент Рисования на графике — уже мог скрывать позиции на графике.</p>
+                <p class="${TEXT}">Вкл/выкл отображения SL/TP планировалось только в Chart settings.</p>
               </div>
-              <div class="flex flex-col gap-[8px] w-full">
-                <p class="${SMALL_LABEL}">Конфликт:</p>
-                <p class="${TEXT_FULL}">SL/TP скрыты из шторки инструментов рисования, а toggle в Chart settings включён.</p>
+              <div class="w-[305px] h-[246px]">
+                <img src="/assets/cases/sltp/visibility-settings.png" alt="Visibility settings" class="w-full h-full object-contain block" />
               </div>
-              <div class="flex flex-col gap-[8px] w-full">
+              <p class="${TEXT} w-[600px]">Но ранее сделанный инструмент Рисования на графике — уже мог скрывать позиции на графике.</p>
+              <div class="${BODY} gap-[8px]">
+                <span class="${SMALL_LABEL}">Конфликт:</span>
+                <p class="${TEXT}">SL/TP скрыты из шторки инструментов рисования, а toggle в Chart settings включён.</p>
+              </div>
+              <div class="${BODY} gap-[8px]">
                 <p class="${BET_TITLE}">Решение: развести роли</p>
-                <div class="${TEXT_FULL}">
-                  <p>Chart settings — постоянная видимость.</p>
-                  <p>Drawing tools — временное скрытие.</p>
+                <div class="${TEXT}">
+                  <p class="mb-0"><span class="${EMPH}">Chart settings</span> — постоянная видимость.</p>
+                  <p class="mb-0"><span class="${EMPH}">Drawing tools</span> — временное скрытие.</p>
                   <p>UI объясняет активное скрытие.</p>
                 </div>
               </div>
@@ -844,11 +897,10 @@ function generateSLTPLongread() {
               </div>
             </div>
 
-            <!-- Decision 3: Small screens -->
-            <div class="flex flex-col gap-[56px] pb-[32px] w-full">
-              <div class="flex flex-col gap-[8px] w-full">
+            <div class="flex flex-col gap-[32px] w-full">
+              <div class="${BODY} gap-[14px]">
                 <p class="${BET_TITLE}">3/ Small screens</p>
-                <p class="${TEXT_FULL}">Значительная часть пользователей работала с маленьких и не самых новых телефонов.<br/>Поэтому line controls проектировались отдельно для тесного пространства.</p>
+                <p class="${TEXT}">Значительная часть пользователей работала с маленьких и не самых новых телефонов.<br/>Поэтому line controls проектировались отдельно для тесного пространства.</p>
               </div>
               <div class="flex flex-col gap-[32px] w-full">
                 <div class="w-full aspect-[1984/1374] rounded-[16px] overflow-hidden">
@@ -863,32 +915,32 @@ function generateSLTPLongread() {
           </div>
         </div>
 
-        <!-- Behavioral system -->
+        <!-- State explosion -->
         <div class="flex flex-col gap-[32px] items-start w-full">
-          <div class="${ROW} w-full">
-            <span class="${LABEL_WIDE}">От interaction-модели к системе поведения</span>
-            <div class="shrink-0 flex flex-col gap-[32px]">
-              <p class="${QUOTE} w-[570px]">Количество состояний и переходов быстро росло, поэтому часть работы ушла в проектирование правил поведения системы.</p>
+          <div class="${ROW}">
+            <span class="${LABEL}">State explosion</span>
+            <div class="${BODY} gap-[32px]">
+              <p class="${EMPH}">Количество состояний и переходов быстро росло, поэтому часть работы ушла в проектирование правил поведения системы.</p>
               <div class="grid grid-cols-2 gap-[16px] w-full">
                 <div class="flex flex-col gap-[8px]">
-                  <p class="${BET_TITLE}">Calculation logic</p>
-                  <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                  <p class="${GRID_TITLE}">Calculation logic</p>
+                  <ul class="pl-[27px] list-disc ${LIST_MUTED}">
                     <li>price / pips / %</li>
                     <li>realtime recalculation</li>
-                    <li>P&L synchronization</li>
+                    <li>P&amp;L synchronization</li>
                   </ul>
                 </div>
                 <div class="flex flex-col gap-[8px]">
-                  <p class="${BET_TITLE}">Warning system</p>
-                  <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                  <p class="${GRID_TITLE}">Warning system</p>
+                  <ul class="pl-[27px] list-disc ${LIST_MUTED}">
                     <li>invalid levels</li>
-                    <li>"too close to market"</li>
+                    <li>&quot;too close to market&quot;</li>
                     <li>unsaved changes</li>
                   </ul>
                 </div>
                 <div class="flex flex-col gap-[8px]">
-                  <p class="${BET_TITLE}">Chart behavior</p>
-                  <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                  <p class="${GRID_TITLE}">Chart behavior</p>
+                  <ul class="pl-[27px] list-disc ${LIST_MUTED}">
                     <li>active / inactive states</li>
                     <li>visibility logic</li>
                     <li>multi-position handling</li>
@@ -896,53 +948,55 @@ function generateSLTPLongread() {
                   </ul>
                 </div>
                 <div class="flex flex-col gap-[8px]">
-                  <p class="${BET_TITLE}">State synchronization</p>
-                  <ul class="pl-[27px] list-disc ${LIST_TEXT}">
+                  <p class="${GRID_TITLE}">State synchronization</p>
+                  <ul class="pl-[27px] list-disc ${LIST_MUTED}">
                     <li>edit &lt;-&gt; apply</li>
                     <li>multiple interaction paths</li>
                   </ul>
                 </div>
               </div>
-              <div class="w-[571px] h-[272px] rounded-[24px] overflow-hidden">
-                <img src="/assets/cases/sltp/behavior-system.png" alt="Behavior system" class="w-full h-full object-cover rounded-[24px] block" />
-              </div>
             </div>
           </div>
+          <div class="flex items-center justify-center w-full">
+            <div class="w-[700px] h-[334px] rounded-[24px] overflow-hidden">
+              <img src="/assets/cases/sltp/behavior-system.png" alt="Behavior system" class="w-full h-full object-cover rounded-[24px] block" />
+            </div>
+          </div>
+        </div>
 
-          <!-- Design System -->
-          <div class="${ROW} w-full">
-            <span class="${LABEL_WIDE}">Design System</span>
-            <div class="shrink-0 flex flex-col gap-[16px]">
-              <p class="${QUOTE} w-[570px]">Потребовались новые системные компоненты</p>
-              <p class="${TEXT_FULL} w-[570px]">Все компоенты я проработала на очень хорошем уровне детализации с учетом будущих кейсов использования</p>
-              <a href="https://www.figma.com/design/gzd7rk7vdzarXyDEUDzVGf/SL_TP?node-id=40000056-132983" target="_blank" class="${QUOTE} w-[570px] underline cursor-pointer">Figma</a>
-              <div class="${LIST_TEXT} w-[570px]">
-                <p>Lego-Field</p>
-                <p>Slider</p>
-                <p>Contextual menu</p>
-                <p>Chips</p>
-                <p>Control lines</p>
-              </div>
+        <!-- Design System -->
+        <div class="${ROW}">
+          <span class="${LABEL}">Design System</span>
+          <div class="${BODY} gap-[24px]">
+            <p class="${EMPH}">Потребовались новые системные компоненты</p>
+            <p class="${TEXT}">Все компоненты я проработала на очень хорошем уровне детализации с учетом будущих кейсов использования</p>
+            <a href="https://www.figma.com/design/gzd7rk7vdzarXyDEUDzVGf/SL_TP?node-id=40000056-132983" target="_blank" rel="noopener noreferrer" class="${LINK}">Figma</a>
+            <div class="${LIST_MUTED}">
+              <p>Lego-Field</p>
+              <p>Slider</p>
+              <p>Contextual menu</p>
+              <p>Chips</p>
+              <p>Control lines</p>
             </div>
           </div>
         </div>
 
         <!-- Outcome -->
-        <div class="${ROW} w-full">
-          <span class="shrink-0 w-[131px] text-[16px] leading-[20px] font-bold italic tracking-[0.16px] uppercase text-[rgba(179,189,210,0.6)] [font-family:var(--font-case)]">Outcome</span>
-          <div class="shrink-0 w-[570px] flex flex-col gap-[16px]">
-            <p class="${TEXT_FULL}">В результате я не просто добавила SL/TP на график, а собрала устойчивую модель управления позицией:</p>
-            <div class="${LIST_TEXT}">
-              <p><span class="text-[#b3bdd2]">С быстрыми действиями</span> на графике,</p>
-              <p><span class="text-[#b3bdd2]">Точной настройкой</span> через шторку</p>
-              <p><span class="text-[#b3bdd2]">Понятной логикой поведения</span> в сложных сценариях.</p>
+        <div class="flex flex-col gap-[64px] items-center w-full">
+          <div class="${ROW}">
+            <span class="${LABEL}">Outcome</span>
+            <div class="${BODY} gap-[16px]">
+              <p class="${EMPH}">В результате я не просто добавила SL/TP на график, а собрала устойчивую модель управления позицией:</p>
+              <div class="${TEXT}">
+                <p class="mb-0">С <span class="${EMPH}">быстрыми действиями</span> на графике,</p>
+                <p class="mb-0"><span class="${EMPH}">Точной настройкой</span> через шторку</p>
+                <p><span class="${EMPH}">Понятной логикой поведения</span> в сложных сценариях.</p>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Result image -->
-        <div class="w-[1172px] h-[559px] shrink-0">
-          <img src="/assets/cases/sltp/result-img.png" alt="Result" class="w-full h-full object-contain block" />
+          <div class="w-[1172px] h-[559px] shrink-0">
+            <img src="/assets/cases/sltp/result-img.png" alt="Result" class="w-full h-full object-contain block" />
+          </div>
         </div>
 
       </div>
