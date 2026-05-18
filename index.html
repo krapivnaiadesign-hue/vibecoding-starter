@@ -11,14 +11,19 @@
       class="fixed inset-0 z-[500] flex h-svh w-full flex-col overflow-hidden bg-black text-[#8d97ab] md:hidden [font-family:var(--font-intro)]"
       aria-label="Mobile portfolio"
     >
-      <div class="pointer-events-none absolute left-0 top-0 h-[min(50.75svh,473px)] w-full overflow-hidden">
-        <img
-          src="/assets/about/mobile-background.png"
-          alt=""
-          class="block h-full w-full scale-y-[-1] object-cover opacity-50 grayscale"
-        />
-        <div class="absolute inset-0 bg-black/50"></div>
-        <div class="absolute inset-0 bg-[rgba(217,217,217,0.01)] backdrop-blur-[3px]"></div>
+      <div
+        class="pointer-events-none absolute left-1/2 top-[113px] z-0 h-[353px] w-[320.909px] max-w-[calc(100%-108px)] -translate-x-1/2"
+        aria-hidden="true"
+      >
+        <div class="relative h-full w-full overflow-hidden">
+          <div class="absolute inset-0 bg-black"></div>
+          <img
+            src="/assets/about/mobback.png"
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover opacity-50 backdrop-blur-[7px]"
+          />
+          <div class="absolute inset-0 bg-[rgba(217,217,217,0.01)] backdrop-blur-[2px]"></div>
+        </div>
       </div>
 
       <div class="relative z-[10] flex shrink-0 flex-col gap-[12px] px-[24px] pt-[32px] text-[14px] leading-[20px]">
@@ -315,14 +320,6 @@
         playsinline
       ></video>
     </div>
-
-    <p
-      id="caseCursorLabel"
-      class="pointer-events-none fixed left-0 top-0 z-[300] m-0 hidden -translate-y-1/2 text-[14px] leading-[20px] font-normal italic lowercase text-[#b7bfcf] [font-family:var(--font-intro)] [mix-blend-mode:difference] md:block"
-      aria-hidden="true"
-    >
-      click
-    </p>
 
     <script type="module" src="/main.js"></script>
   </body>

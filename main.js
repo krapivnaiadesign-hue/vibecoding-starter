@@ -32,7 +32,6 @@ const selectedWorkList = document.querySelector("#selectedWorkList");
 const zoneCasePreview = document.querySelector("#zoneCasePreview");
 const casePreviewInner = document.querySelector("#casePreviewInner");
 const closeCaseButton = document.querySelector("#closeCaseButton");
-const caseCursorLabel = document.querySelector("#caseCursorLabel");
 const imageLightbox = document.querySelector("#imageLightbox");
 const imageLightboxImg = document.querySelector("#imageLightboxImg");
 const imageLightboxVideo = document.querySelector("#imageLightboxVideo");
@@ -341,13 +340,13 @@ function renderSelectedWorkList() {
                     type="button"
                     data-case-id="${currentCase.id}"
                     aria-label="${currentCase.id === KELPIE_CASE_ID ? "Open AI-Platform Launch case" : currentCase.title}"
-                    class="intro-case-motion group/case flex w-[448px] cursor-none appearance-none flex-col border-0 bg-transparent p-0 pl-[46px] text-left [font-family:var(--font-intro)]"
+                    class="intro-case-motion flex w-[448px] cursor-pointer appearance-none flex-col border-0 bg-transparent p-0 pl-[46px] text-left [font-family:var(--font-intro)]"
                   >
                     <div class="flex w-[402px] flex-col gap-[7px]">
                       <div class="flex w-full items-center gap-[9px]">
                         <span
                           data-case-title
-                          class="min-w-0 flex-1 text-[15px] leading-[20px] font-medium text-[#b7bfcf]"
+                          class="case-click-cursor min-w-0 flex-1 text-[15px] leading-[20px] font-medium text-[#b7bfcf]"
                         >
                           ${currentCase.title}
                         </span>
@@ -361,7 +360,7 @@ function renderSelectedWorkList() {
                       </div>
                       <p
                         data-case-description
-                        class="m-0 w-full text-[15px] leading-[20px] font-normal text-[rgba(183,191,207,0.6)]"
+                        class="case-click-cursor m-0 w-full text-[15px] leading-[20px] font-normal text-[rgba(183,191,207,0.6)]"
                       >
                         ${currentCase.description}
                       </p>
@@ -1673,14 +1672,9 @@ function applyHoverLayerState() {
   }
 }
 
-function shouldShowCaseCursor() {
-  return viewState !== "closing" && !viewState.startsWith("opening-");
-}
-
 function applyCaseItemState() {
   const caseButtons = document.querySelectorAll("[data-case-id]");
   const companyHeadings = document.querySelectorAll("[data-company-heading]");
-  const useClickCursor = shouldShowCaseCursor();
 
   companyHeadings.forEach((heading) => {
     const companySection = heading.closest("[data-company-id]");
@@ -1722,11 +1716,8 @@ function applyCaseItemState() {
       plus.textContent = isActive ? "−" : "+";
     }
 
-    caseButton.classList.toggle("cursor-none", useClickCursor);
-    caseButton.classList.toggle("cursor-pointer", !useClickCursor);
+    caseButton.classList.add("cursor-pointer");
   });
-
-  syncCaseCursorPointer();
 }
 
 function resetCaseOpacityForAboutTransition() {
@@ -1906,93 +1897,6 @@ function getCaseOpenStateForCase(caseId) {
   return null;
 }
 
-const CASE_CURSOR_OFFSET_X = 12;
-let lastCaseCursorPointer = { x: 0, y: 0 };
-
-function moveCaseCursorLabel(event) {
-  if (!(caseCursorLabel instanceof HTMLElement)) {
-    return;
-  }
-
-  caseCursorLabel.style.left = `${event.clientX + CASE_CURSOR_OFFSET_X}px`;
-  caseCursorLabel.style.top = `${event.clientY}px`;
-}
-
-function showCaseCursorLabel(event) {
-  if (!(caseCursorLabel instanceof HTMLElement)) {
-    return;
-  }
-
-  caseCursorLabel.classList.remove("hidden");
-  moveCaseCursorLabel(event);
-}
-
-function hideCaseCursorLabel() {
-  caseCursorLabel?.classList.add("hidden");
-}
-
-function getCaseButtonUnderPointer(x, y) {
-  if (!selectedWorkMotionGroup) {
-    return null;
-  }
-
-  const element = document.elementFromPoint(x, y);
-
-  if (!(element instanceof Element)) {
-    return null;
-  }
-
-  const caseButton = element.closest("[data-case-id]");
-
-  if (!(caseButton instanceof HTMLElement)) {
-    return null;
-  }
-
-  if (!selectedWorkMotionGroup.contains(caseButton)) {
-    return null;
-  }
-
-  return caseButton;
-}
-
-function updateCaseCursorFromPointer(event) {
-  lastCaseCursorPointer.x = event.clientX;
-  lastCaseCursorPointer.y = event.clientY;
-
-  if (!shouldShowCaseCursor()) {
-    hideCaseCursorLabel();
-    return;
-  }
-
-  const caseButton = getCaseButtonUnderPointer(event.clientX, event.clientY);
-
-  if (caseButton) {
-    showCaseCursorLabel(event);
-    return;
-  }
-
-  hideCaseCursorLabel();
-}
-
-function syncCaseCursorPointer() {
-  requestAnimationFrame(() => {
-    updateCaseCursorFromPointer({
-      clientX: lastCaseCursorPointer.x,
-      clientY: lastCaseCursorPointer.y,
-    });
-  });
-}
-
-function attachCaseCursorEvents() {
-  if (!caseCursorLabel || !selectedWorkMotionGroup) {
-    return;
-  }
-
-  selectedWorkMotionGroup.addEventListener("pointermove", updateCaseCursorFromPointer);
-  selectedWorkMotionGroup.addEventListener("pointerleave", hideCaseCursorLabel);
-  window.addEventListener("blur", hideCaseCursorLabel);
-}
-
 function attachCaseEvents() {
   const caseButtons = document.querySelectorAll("[data-case-id]");
 
@@ -2047,8 +1951,6 @@ function attachCaseEvents() {
       ) {
         return;
       }
-
-      hideCaseCursorLabel();
 
       if (openAnimationTimer) {
         clearTimeout(openAnimationTimer);
@@ -2148,7 +2050,6 @@ function initDesktopApp() {
   renderSelectedWorkList();
   initializeAnimatedElements();
   initImageLightbox();
-  attachCaseCursorEvents();
   attachCaseEvents();
   updateStageScale();
   renderAboutState();

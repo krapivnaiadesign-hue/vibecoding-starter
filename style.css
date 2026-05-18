@@ -278,3 +278,9 @@
     --about-panel-width: min(574px, 42vw);
   }
 }
+
+.case-click-cursor {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='24' viewBox='0 0 64 24'%3E%3Ctext x='0' y='16' fill='%23b7bfcf' font-size='14' font-style='italic' font-family='Arial, sans-serif'%3Eclick%3C/text%3E%3C/svg%3E")
+      0 12,
+    pointer;
+}
