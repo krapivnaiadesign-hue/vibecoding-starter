@@ -112,11 +112,7 @@
 }
 
 #introIcon {
-  transform: translate3d(0, -50%, 0);
-}
-
-#introStatement.intro-statement {
-  transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 .portfolio-preview {
@@ -156,8 +152,8 @@
   transform: translate3d(-457px, 0, 0);
 }
 
-#aboutPage[data-case-active="true"] #introStatement.intro-statement {
-  transform: translate3d(-105px, -100%, 0);
+#aboutPage[data-case-active="true"] #introStatement {
+  transform: translate3d(-105px, 0, 0);
 }
 
 #aboutPage[data-case-active="true"] #introPortrait {

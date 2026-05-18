@@ -44,8 +44,8 @@ const cases = [
     id: "emergency-redesign",
     companyId: "fbs",
     company: "FBS — FinTech / Trading",
-    role: "Senior Product Designer (Октябрь 2024 - Февраль 2026)",
-    title: "EMERGENCY REDESIGN",
+    dateRange: "Oct 2024 - Feb 2026",
+    title: "Emergency Redesign",
     description: "Возглавила экстренный редизайн и архитектурный перезапуск iOS-приложения",
     previewType: "iphone",
     previewAsset: "/assets/cases/emergency-redesign/preview.png",
@@ -54,8 +54,8 @@ const cases = [
     id: "stop-loss-take-profit",
     companyId: "fbs",
     company: "FBS — FinTech / Trading",
-    role: "Senior Product Designer (Октябрь 2024 - Февраль 2026)",
-    title: "STOP LOSS / TAKE PROFIT",
+    dateRange: "Oct 2024 - Feb 2026",
+    title: "Stop Loss / Take profit",
     description: "Кейс о том, как я перевела график из пассивного отображения риска в место, где риском можно управлять.",
     previewType: "iphone",
     previewAsset: "/assets/cases/fbs/iphone-preview.png",
@@ -63,9 +63,9 @@ const cases = [
   {
     id: "ai-platform-launch",
     companyId: "kelpie",
-    company: "Kelpie AI Platform — Australian AI / SaaS / Startup",
-    role: "Product Designer / Product Owner (Август 2025 - Сентябрь 2025)",
-    title: "AI-PLATFORM LAUNCH",
+    company: "Kelpie AI Platform — AI / SaaS",
+    dateRange: "Aug 2025 - Sep 2025",
+    title: "AI-Platform Launch",
     description: "Запускала MVP с нуля, собирала продуктовую архитектуру, навигацию и дизайн-систему в условиях высокой неопределённости.",
     previewType: "iphone",
     previewAsset: "/assets/cases/fbs/iphone-preview.png",
@@ -84,7 +84,7 @@ const groupedCases = Array.from(
     map.set(currentCase.companyId, {
       companyId: currentCase.companyId,
       company: currentCase.company,
-      role: currentCase.role,
+      dateRange: currentCase.dateRange,
       items: [currentCase],
     });
 
@@ -265,12 +265,18 @@ function renderSelectedWorkList() {
   selectedWorkList.innerHTML = groupedCases
     .map(
       (group) => `
-        <section class="flex w-full flex-col gap-[36px]" data-company-id="${group.companyId}">
-          <div data-company-heading class="intro-case-motion flex w-full flex-col gap-[12px] text-[rgba(179,189,210,0.72)] [font-family:var(--font-intro)]">
-            <p class="m-0 text-[15px] leading-[18px] font-bold">${group.company}</p>
-            <p class="m-0 text-[15px] leading-[18px] font-normal">${group.role}</p>
+        <section class="flex w-[448px] flex-col gap-[32px]" data-company-id="${group.companyId}">
+          <div data-company-heading class="intro-case-motion w-full [font-family:var(--font-intro)]">
+            <div class="flex w-full items-start gap-[12px]">
+              <p class="m-0 shrink-0 text-[15px] leading-[20px] font-bold italic tracking-[0.15px] text-[#b7bfcf] uppercase">
+                ${group.company}
+              </p>
+              <p class="m-0 shrink-0 text-[15px] leading-[20px] font-normal tracking-[0.15px] text-[rgba(183,191,207,0.6)]">
+                ${group.dateRange}
+              </p>
+            </div>
           </div>
-          <div class="flex w-full flex-col gap-[32px]">
+          <div class="flex w-[448px] flex-col gap-[32px]">
             ${group.items
               .map(
                 (currentCase) => `
@@ -278,28 +284,31 @@ function renderSelectedWorkList() {
                     type="button"
                     data-case-id="${currentCase.id}"
                     aria-label="${currentCase.id === KELPIE_CASE_ID ? "Open AI-Platform Launch case" : currentCase.title}"
-                    class="intro-case-motion group/case flex w-full cursor-pointer appearance-none flex-col gap-[12px] border-0 bg-transparent pl-[46px] text-left [font-family:var(--font-intro)]"
+                    class="intro-case-motion group/case flex w-[448px] cursor-pointer appearance-none flex-col border-0 bg-transparent p-0 pl-[46px] text-left [font-family:var(--font-intro)]"
                   >
-                    <div class="flex w-full items-start gap-[9px]">
-                      <span
-                        data-case-title
-                        class="min-w-0 flex-1 text-[15px] leading-[18px] font-bold italic text-[rgba(179,189,210,0.72)] uppercase"
+                    <div class="flex w-[402px] flex-col gap-[7px]">
+                      <div class="flex w-full items-center gap-[9px]">
+                        <span
+                          data-case-title
+                          class="min-w-0 flex-1 text-[15px] leading-[20px] font-medium text-[#b7bfcf]"
+                        >
+                          ${currentCase.title}
+                        </span>
+                        <span
+                          data-case-plus
+                          class="flex size-[16px] shrink-0 items-center justify-center text-[16px] leading-[16px] font-normal text-[#b7bfcf]"
+                          aria-hidden="true"
+                        >
+                          +
+                        </span>
+                      </div>
+                      <p
+                        data-case-description
+                        class="m-0 w-full text-[15px] leading-[20px] font-normal text-[rgba(183,191,207,0.6)]"
                       >
-                        ${currentCase.title}
-                      </span>
-                      <span
-                        data-case-plus
-                        class="text-[18px] leading-[18px] font-normal text-[rgba(179,189,210,0.72)]"
-                      >
-                        +
-                      </span>
+                        ${currentCase.description}
+                      </p>
                     </div>
-                    <p
-                      data-case-description
-                      class="m-0 text-[14px] leading-[17px] font-normal text-[rgba(179,189,210,0.55)]"
-                    >
-                      ${currentCase.description}
-                    </p>
                   </button>
                 `,
               )
@@ -1638,14 +1647,14 @@ function applyCaseItemState() {
     caseButton.style.opacity = String(getCaseOpacity(caseId));
     caseButton.style.transform = `translate3d(${getCaseTranslateX(caseId)}px, 0, 0)`;
 
-    title?.classList.toggle("text-[#b3bdd2]", isFocused);
-    title?.classList.toggle("text-[rgba(179,189,210,0.72)]", !isFocused);
+    title?.classList.toggle("text-[#b7bfcf]", isFocused);
+    title?.classList.toggle("text-[#b7bfcf]", !isFocused);
 
-    description?.classList.toggle("text-[rgba(179,189,210,0.8)]", isFocused);
-    description?.classList.toggle("text-[rgba(179,189,210,0.55)]", !isFocused);
+    description?.classList.toggle("text-[rgba(183,191,207,0.8)]", isFocused);
+    description?.classList.toggle("text-[rgba(183,191,207,0.6)]", !isFocused);
 
-    plus?.classList.toggle("text-[#b3bdd2]", isFocused);
-    plus?.classList.toggle("text-[rgba(179,189,210,0.72)]", !isFocused);
+    plus?.classList.toggle("text-[#b7bfcf]", isFocused);
+    plus?.classList.toggle("text-[#b7bfcf]", !isFocused);
 
     if (plus) {
       plus.textContent = isActive ? "−" : "+";
