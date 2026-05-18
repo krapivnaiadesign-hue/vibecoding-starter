@@ -2,9 +2,9 @@ import "./style.css";
 
 const STAGE_WIDTH = 1920;
 const STAGE_HEIGHT = 1080;
-const INTRO_MOTION_DURATION_MS = 950;
-const ABOUT_MOTION_DURATION_MS = 850;
-const INTRO_MOTION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+const INTRO_MOTION_DURATION_MS = 1200;
+const ABOUT_MOTION_DURATION_MS = 1200;
+const INTRO_MOTION_EASING = "cubic-bezier(0.16, 1, 0.3, 1)";
 const EMERGENCY_CASE_ID = "emergency-redesign";
 const SLTP_CASE_ID = "stop-loss-take-profit";
 const KELPIE_CASE_ID = "ai-platform-launch";
@@ -27,6 +27,7 @@ const selectedWorkList = document.querySelector("#selectedWorkList");
 const zoneCasePreview = document.querySelector("#zoneCasePreview");
 const casePreviewInner = document.querySelector("#casePreviewInner");
 const closeCaseButton = document.querySelector("#closeCaseButton");
+const caseCursorLabel = document.querySelector("#caseCursorLabel");
 const imageLightbox = document.querySelector("#imageLightbox");
 const imageLightboxImg = document.querySelector("#imageLightboxImg");
 const imageLightboxVideo = document.querySelector("#imageLightboxVideo");
@@ -145,9 +146,23 @@ function isCaseInActiveCompany(caseId) {
   return focusCase.companyId === currentCase.companyId;
 }
 
+function isAboutOpenMode() {
+  return isAboutOpen && !isCaseActiveMode();
+}
+
 function getCaseOpacity(caseId) {
   if (isCaseActiveMode()) {
     return caseId === activeCaseId ? 1 : 0.5;
+  }
+
+  if (isAboutOpenMode()) {
+    const focusCaseId = getFocusCaseId();
+
+    if (!focusCaseId) {
+      return 0.3;
+    }
+
+    return caseId === focusCaseId ? 1 : 0.3;
   }
 
   const focusCaseId = getFocusCaseId();
@@ -168,6 +183,22 @@ function getCompanyOpacity(companyId) {
     }
 
     return focusCase.companyId === companyId ? 1 : 0.5;
+  }
+
+  if (isAboutOpenMode()) {
+    const focusCaseId = getFocusCaseId();
+
+    if (!focusCaseId) {
+      return 0.3;
+    }
+
+    const focusCase = getCaseById(focusCaseId);
+
+    if (!focusCase) {
+      return 0.3;
+    }
+
+    return focusCase.companyId === companyId ? 1 : 0.3;
   }
 
   const focusCaseId = getFocusCaseId();
@@ -235,7 +266,8 @@ function syncPortfolioAttributes() {
   aboutPage.dataset.hoveredCase = hoveredCaseId ?? "";
   aboutPage.dataset.caseActive = isCaseActiveMode() ? "true" : "false";
   aboutPage.dataset.preview = getPreviewMode();
-  aboutPage.dataset.aboutOpen = isAboutOpen ? "true" : "false";
+  const showAboutOpenUi = isAboutOpen && !isCaseActiveMode();
+  aboutPage.dataset.aboutOpen = showAboutOpenUi ? "true" : "false";
 }
 
 let hoveredCaseId = null;
@@ -290,7 +322,7 @@ function renderSelectedWorkList() {
                     type="button"
                     data-case-id="${currentCase.id}"
                     aria-label="${currentCase.id === KELPIE_CASE_ID ? "Open AI-Platform Launch case" : currentCase.title}"
-                    class="intro-case-motion group/case flex w-[448px] cursor-pointer appearance-none flex-col border-0 bg-transparent p-0 pl-[46px] text-left [font-family:var(--font-intro)]"
+                    class="intro-case-motion group/case flex w-[448px] cursor-none appearance-none flex-col border-0 bg-transparent p-0 pl-[46px] text-left [font-family:var(--font-intro)]"
                   >
                     <div class="flex w-[402px] flex-col gap-[7px]">
                       <div class="flex w-full items-center gap-[9px]">
@@ -1622,9 +1654,14 @@ function applyHoverLayerState() {
   }
 }
 
+function shouldShowCaseCursor() {
+  return viewState !== "closing" && !viewState.startsWith("opening-");
+}
+
 function applyCaseItemState() {
   const caseButtons = document.querySelectorAll("[data-case-id]");
   const companyHeadings = document.querySelectorAll("[data-company-heading]");
+  const useClickCursor = shouldShowCaseCursor();
 
   companyHeadings.forEach((heading) => {
     const companySection = heading.closest("[data-company-id]");
@@ -1665,6 +1702,21 @@ function applyCaseItemState() {
     if (plus) {
       plus.textContent = isActive ? "−" : "+";
     }
+
+    caseButton.classList.toggle("cursor-none", useClickCursor);
+    caseButton.classList.toggle("cursor-pointer", !useClickCursor);
+  });
+
+  syncCaseCursorPointer();
+}
+
+function resetCaseOpacityForAboutTransition() {
+  document.querySelectorAll("[data-case-id]").forEach((caseButton) => {
+    caseButton.style.opacity = "";
+  });
+
+  document.querySelectorAll("[data-company-heading]").forEach((heading) => {
+    heading.style.opacity = "";
   });
 }
 
@@ -1673,18 +1725,22 @@ function syncAboutPanelUi() {
     return;
   }
 
-  aboutToggleButton.setAttribute("aria-expanded", isAboutOpen ? "true" : "false");
+  const showAboutOpenUi = isAboutOpen && !isCaseActiveMode();
+
+  aboutToggleButton.setAttribute("aria-expanded", showAboutOpenUi ? "true" : "false");
   aboutToggleButton.setAttribute(
     "aria-label",
-    isAboutOpen ? "Close about section" : "Open about section",
+    showAboutOpenUi ? "Close about section" : "Open about section",
   );
 
   if (aboutLabelClosed instanceof HTMLElement) {
-    aboutLabelClosed.classList.toggle("hidden", isAboutOpen);
+    aboutLabelClosed.classList.toggle("opacity-100", !showAboutOpenUi);
+    aboutLabelClosed.classList.toggle("opacity-0", showAboutOpenUi);
   }
 
   if (aboutLabelOpen instanceof HTMLElement) {
-    aboutLabelOpen.classList.toggle("hidden", !isAboutOpen);
+    aboutLabelOpen.classList.toggle("opacity-100", showAboutOpenUi);
+    aboutLabelOpen.classList.toggle("opacity-0", !showAboutOpenUi);
   }
 
   if (aboutPanel instanceof HTMLElement) {
@@ -1698,8 +1754,10 @@ function closeAboutPanel() {
   }
 
   isAboutOpen = false;
+  resetCaseOpacityForAboutTransition();
   syncAboutPanelUi();
   syncPortfolioAttributes();
+  applyCaseItemState();
 }
 
 function toggleAboutPanel() {
@@ -1708,8 +1766,35 @@ function toggleAboutPanel() {
   }
 
   isAboutOpen = !isAboutOpen;
+  resetCaseOpacityForAboutTransition();
   syncAboutPanelUi();
   syncPortfolioAttributes();
+  applyCaseItemState();
+}
+
+function openAboutFromCase() {
+  if (!isCaseActiveMode()) {
+    toggleAboutPanel();
+    return;
+  }
+
+  if (openAnimationTimer) {
+    clearTimeout(openAnimationTimer);
+    openAnimationTimer = null;
+  }
+
+  if (closeAnimationTimer) {
+    clearTimeout(closeAnimationTimer);
+    closeAnimationTimer = null;
+  }
+
+  activeCaseId = null;
+  hoveredCaseId = null;
+  viewState = "overview";
+  isAboutOpen = true;
+
+  resetCaseOpacityForAboutTransition();
+  renderAboutState();
 }
 
 function renderAboutState() {
@@ -1797,6 +1882,93 @@ function getCaseOpenStateForCase(caseId) {
   return null;
 }
 
+const CASE_CURSOR_OFFSET_X = 12;
+let lastCaseCursorPointer = { x: 0, y: 0 };
+
+function moveCaseCursorLabel(event) {
+  if (!(caseCursorLabel instanceof HTMLElement)) {
+    return;
+  }
+
+  caseCursorLabel.style.left = `${event.clientX + CASE_CURSOR_OFFSET_X}px`;
+  caseCursorLabel.style.top = `${event.clientY}px`;
+}
+
+function showCaseCursorLabel(event) {
+  if (!(caseCursorLabel instanceof HTMLElement)) {
+    return;
+  }
+
+  caseCursorLabel.classList.remove("hidden");
+  moveCaseCursorLabel(event);
+}
+
+function hideCaseCursorLabel() {
+  caseCursorLabel?.classList.add("hidden");
+}
+
+function getCaseButtonUnderPointer(x, y) {
+  if (!selectedWorkMotionGroup) {
+    return null;
+  }
+
+  const element = document.elementFromPoint(x, y);
+
+  if (!(element instanceof Element)) {
+    return null;
+  }
+
+  const caseButton = element.closest("[data-case-id]");
+
+  if (!(caseButton instanceof HTMLElement)) {
+    return null;
+  }
+
+  if (!selectedWorkMotionGroup.contains(caseButton)) {
+    return null;
+  }
+
+  return caseButton;
+}
+
+function updateCaseCursorFromPointer(event) {
+  lastCaseCursorPointer.x = event.clientX;
+  lastCaseCursorPointer.y = event.clientY;
+
+  if (!shouldShowCaseCursor()) {
+    hideCaseCursorLabel();
+    return;
+  }
+
+  const caseButton = getCaseButtonUnderPointer(event.clientX, event.clientY);
+
+  if (caseButton) {
+    showCaseCursorLabel(event);
+    return;
+  }
+
+  hideCaseCursorLabel();
+}
+
+function syncCaseCursorPointer() {
+  requestAnimationFrame(() => {
+    updateCaseCursorFromPointer({
+      clientX: lastCaseCursorPointer.x,
+      clientY: lastCaseCursorPointer.y,
+    });
+  });
+}
+
+function attachCaseCursorEvents() {
+  if (!caseCursorLabel || !selectedWorkMotionGroup) {
+    return;
+  }
+
+  selectedWorkMotionGroup.addEventListener("pointermove", updateCaseCursorFromPointer);
+  selectedWorkMotionGroup.addEventListener("pointerleave", hideCaseCursorLabel);
+  window.addEventListener("blur", hideCaseCursorLabel);
+}
+
 function attachCaseEvents() {
   const caseButtons = document.querySelectorAll("[data-case-id]");
 
@@ -1809,11 +1981,7 @@ function attachCaseEvents() {
     if (!hoverState) return;
 
     caseButton.addEventListener("mouseenter", () => {
-      if (
-        viewState === "closing" ||
-        viewState.startsWith("opening-") ||
-        isAboutOpen
-      ) {
+      if (viewState === "closing" || viewState.startsWith("opening-")) {
         return;
       }
 
@@ -1827,11 +1995,7 @@ function attachCaseEvents() {
     });
 
     caseButton.addEventListener("focus", () => {
-      if (
-        viewState === "closing" ||
-        viewState.startsWith("opening-") ||
-        isAboutOpen
-      ) {
+      if (viewState === "closing" || viewState.startsWith("opening-")) {
         return;
       }
 
@@ -1851,6 +2015,8 @@ function attachCaseEvents() {
       ) {
         return;
       }
+
+      hideCaseCursorLabel();
 
       if (openAnimationTimer) {
         clearTimeout(openAnimationTimer);
@@ -1889,7 +2055,7 @@ function attachCaseEvents() {
 }
 
 selectedWorkMotionGroup?.addEventListener("mouseleave", () => {
-  if (activeCaseId !== null || isAboutOpen) {
+  if (activeCaseId !== null) {
     return;
   }
 
@@ -1899,6 +2065,11 @@ selectedWorkMotionGroup?.addEventListener("mouseleave", () => {
 });
 
 aboutToggleButton?.addEventListener("click", () => {
+  if (isCaseActiveMode()) {
+    openAboutFromCase();
+    return;
+  }
+
   toggleAboutPanel();
 });
 
@@ -1941,6 +2112,7 @@ window.addEventListener("orientationchange", updateStageScale);
 renderSelectedWorkList();
 initializeAnimatedElements();
 initImageLightbox();
+attachCaseCursorEvents();
 attachCaseEvents();
 updateStageScale();
 renderAboutState();

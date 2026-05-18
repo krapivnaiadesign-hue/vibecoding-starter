@@ -63,12 +63,20 @@
             <button
               id="aboutToggleButton"
               type="button"
-              class="about-toggle-motion absolute left-[194px] top-[201px] z-[40] flex h-[28px] cursor-pointer items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] whitespace-nowrap text-[#b3bdd2] [font-family:var(--font-intro)]"
+              class="about-toggle-motion intro-menu-btn absolute left-[194px] top-[201px] z-[40] flex h-[28px] w-[125px] cursor-pointer items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] text-[#b3bdd2] [font-family:var(--font-intro)]"
               aria-expanded="false"
               aria-label="Open about section"
             >
-              <span data-about-label-closed class="font-normal italic">About me +</span>
-              <span data-about-label-open class="hidden">
+              <span
+                data-about-label-closed
+                class="pointer-events-none absolute inset-0 flex items-center justify-center font-normal italic opacity-100"
+              >
+                About me +
+              </span>
+              <span
+                data-about-label-open
+                class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0"
+              >
                 <span class="font-bold italic text-[#b3bdd2]">Close</span><span class="font-normal italic text-[rgba(183,191,207,0.6)]"> (about me)</span>
               </span>
             </button>
@@ -132,14 +140,14 @@
 
             <nav
               id="introMenuLinks"
-              class="intro-chrome intro-motion pointer-events-auto absolute left-[325.5px] top-[201px] z-[30] flex items-center gap-[42.5px]"
+              class="intro-motion pointer-events-auto absolute left-[325.5px] top-[201px] z-[30] flex items-center gap-[42.5px]"
               aria-label="Portfolio navigation"
             >
               <a
                 href="https://drive.google.com/file/d/1SOZPXmtESknNsEzRW3fIAldHYCJ7GArl/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex h-[28px] items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
+                class="intro-menu-btn flex h-[28px] items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
               >
                 CV
               </a>
@@ -147,7 +155,7 @@
                 href="https://www.linkedin.com/in/polina-krapivnaia-3346a5343/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex h-[28px] items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
+                class="intro-menu-btn flex h-[28px] items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
               >
                 LinkedIn
               </a>
@@ -156,7 +164,7 @@
 
             <div
               id="selectedWorkMotionGroup"
-              class="intro-motion absolute left-[545px] top-[436px] z-[20] flex h-[406px] w-[614px] items-start overflow-visible"
+              class="intro-motion pointer-events-auto absolute left-[545px] top-[436px] z-[20] flex h-[406px] w-[614px] items-start overflow-hidden"
             >
               <p
                 id="selectedWorkLabel"
@@ -166,14 +174,14 @@
               </p>
               <div
                 id="selectedWorkList"
-                class="ml-[56px] flex w-[448px] shrink-0 flex-col gap-[40px]"
+                class="ml-[56px] flex h-[406px] min-h-0 w-[448px] flex-col gap-[40px] overflow-y-auto overscroll-contain"
               ></div>
             </div>
           </section>
 
           <section
             id="zoneCasePreview"
-            class="portfolio-preview intro-motion absolute left-0 top-0 z-[10] h-[1080px] w-[679px] overflow-hidden opacity-0 pointer-events-none"
+            class="portfolio-preview intro-motion absolute left-0 top-0 z-[10] h-[1080px] w-[679px] opacity-0 pointer-events-none"
           >
             <div id="hoverBgLayer" class="absolute inset-0 z-[1] pointer-events-none opacity-0 transition-opacity [transition-duration:var(--intro-opacity-duration)] [transition-timing-function:var(--intro-motion-ease)]">
               <div class="absolute left-1/2 top-[calc(50%-0.5px)] h-[929px] w-[679px] -translate-x-1/2 -translate-y-1/2">
@@ -230,6 +238,14 @@
         playsinline
       ></video>
     </div>
+
+    <p
+      id="caseCursorLabel"
+      class="pointer-events-none fixed left-0 top-0 z-[300] hidden m-0 -translate-y-1/2 text-[14px] leading-[20px] font-normal italic lowercase text-[#b7bfcf] [font-family:var(--font-intro)] [mix-blend-mode:difference]"
+      aria-hidden="true"
+    >
+      click
+    </p>
 
     <script type="module" src="/main.js"></script>
   </body>

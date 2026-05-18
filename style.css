@@ -8,14 +8,14 @@
 
   :root {
     color-scheme: dark;
-    --intro-motion-duration: 950ms;
-    --intro-opacity-duration: 700ms;
-    --about-motion-duration: 850ms;
+    --intro-motion-duration: 1200ms;
+    --intro-opacity-duration: 1200ms;
+    --about-motion-duration: 1200ms;
     --about-panel-width: 574px;
     --about-intro-shift-x: 390px;
     --about-work-shift-x: 394px;
     --about-toggle-shift-x: -117px;
-    --intro-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --intro-motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
     --font-intro: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-case: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-meta: "Acumin Pro SemiCondensed", "Arial Narrow", Arial, sans-serif;
@@ -132,6 +132,27 @@
 
 #aboutToggleButton {
   transform: translate3d(0, 0, 0);
+  transition:
+    transform var(--about-motion-duration) var(--intro-motion-ease),
+    opacity var(--intro-opacity-duration) var(--intro-motion-ease);
+}
+
+.intro-menu-btn {
+  transition: opacity var(--intro-opacity-duration) var(--intro-motion-ease);
+}
+
+#aboutPage[data-case-active="true"] .intro-menu-btn {
+  opacity: 0.5;
+}
+
+#aboutPage[data-case-active="true"] .intro-menu-btn:hover,
+#aboutPage[data-case-active="true"] .intro-menu-btn:focus-visible {
+  opacity: 1;
+}
+
+#aboutToggleButton [data-about-label-closed],
+#aboutToggleButton [data-about-label-open] {
+  transition: opacity var(--intro-opacity-duration) var(--intro-motion-ease);
 }
 
 #introMotionGroup {
@@ -141,6 +162,7 @@
 #selectedWorkMotionGroup {
   transform: translate3d(0, 0, 0);
   opacity: 1;
+  overflow: hidden;
 }
 
 #aboutPage[data-about-open="true"] #aboutPanel {
@@ -151,10 +173,27 @@
 #aboutStage,
 #zoneIntro,
 #introMotionGroup,
-#selectedWorkMotionGroup,
 #aboutPanel,
 #aboutPanelInner {
   overflow: visible;
+}
+
+#selectedWorkList {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(179, 189, 210, 0.15) transparent;
+}
+
+#selectedWorkList::-webkit-scrollbar {
+  width: 4px;
+}
+
+#selectedWorkList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#selectedWorkList::-webkit-scrollbar-thumb {
+  background: rgba(179, 189, 210, 0.15);
+  border-radius: 2px;
 }
 
 #aboutPage[data-about-open="true"] #aboutToggleButton {
@@ -167,10 +206,6 @@
 
 #aboutPage[data-about-open="true"] #selectedWorkMotionGroup {
   transform: translate3d(var(--about-work-shift-x), 0, 0);
-  opacity: 0.3;
-}
-
-#aboutPage[data-about-open="true"] #selectedWorkMotionGroup .intro-chrome {
   opacity: 1;
 }
 
@@ -180,6 +215,7 @@
 
 .portfolio-preview {
   transform: translate3d(1941px, 0, 0);
+  overflow: hidden;
 }
 
 #aboutPage[data-preview="hover"] .portfolio-preview {
@@ -200,6 +236,17 @@
 
 #aboutPage[data-preview="open"] #closeCaseButton {
   opacity: 1;
+  pointer-events: auto;
+}
+
+/* zoneIntro spans the full stage above zoneCasePreview (z-20 vs z-10); pass wheel/scroll through empty areas */
+#aboutPage[data-preview="open"] #zoneIntro {
+  pointer-events: none;
+}
+
+#aboutPage[data-preview="open"] #aboutToggleButton,
+#aboutPage[data-preview="open"] #introMenuLinks,
+#aboutPage[data-preview="open"] #selectedWorkMotionGroup {
   pointer-events: auto;
 }
 
@@ -231,21 +278,12 @@
   transform: translate3d(125px, 0, 0);
 }
 
-#aboutPage[data-about-open="true"][data-case-active="true"] #aboutToggleButton {
-  transform: translate3d(var(--about-toggle-shift-x), 0, 0);
-}
-
 #aboutPage[data-case-active="true"] .intro-chrome {
   opacity: 0.3;
 }
 
 #aboutPage[data-case-active="true"] #selectedWorkMotionGroup {
   opacity: 1;
-}
-
-#aboutPage[data-about-open="true"][data-case-active="true"] #selectedWorkMotionGroup {
-  transform: translate3d(var(--about-work-shift-x), 0, 0);
-  opacity: 0.3;
 }
 
 @media (max-width: 1280px) {
