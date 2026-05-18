@@ -3,6 +3,7 @@ import "./style.css";
 const STAGE_WIDTH = 1920;
 const STAGE_HEIGHT = 1080;
 const INTRO_MOTION_DURATION_MS = 950;
+const ABOUT_MOTION_DURATION_MS = 850;
 const INTRO_MOTION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
 const EMERGENCY_CASE_ID = "emergency-redesign";
 const SLTP_CASE_ID = "stop-loss-take-profit";
@@ -14,10 +15,13 @@ const zoneIntro = document.querySelector("#zoneIntro");
 const introIcon = document.querySelector("#introIcon");
 const introMeta = document.querySelector("#introMeta");
 const introStatement = document.querySelector("#introStatement");
-const introMenu = document.querySelector("#introMenu");
 const introPortrait = document.querySelector("#introPortrait");
 const introContacts = document.querySelector("#introContacts");
-const introWorkGroup = document.querySelector("#introWorkGroup");
+const selectedWorkMotionGroup = document.querySelector("#selectedWorkMotionGroup");
+const aboutPanel = document.querySelector("#aboutPanel");
+const aboutToggleButton = document.querySelector("#aboutToggleButton");
+const aboutLabelClosed = document.querySelector("[data-about-label-closed]");
+const aboutLabelOpen = document.querySelector("[data-about-label-open]");
 const selectedWorkLabel = document.querySelector("#selectedWorkLabel");
 const selectedWorkList = document.querySelector("#selectedWorkList");
 const zoneCasePreview = document.querySelector("#zoneCasePreview");
@@ -231,11 +235,13 @@ function syncPortfolioAttributes() {
   aboutPage.dataset.hoveredCase = hoveredCaseId ?? "";
   aboutPage.dataset.caseActive = isCaseActiveMode() ? "true" : "false";
   aboutPage.dataset.preview = getPreviewMode();
+  aboutPage.dataset.aboutOpen = isAboutOpen ? "true" : "false";
 }
 
 let hoveredCaseId = null;
 let activeCaseId = null;
 let viewState = "overview";
+let isAboutOpen = false;
 let closeAnimationTimer = null;
 let openAnimationTimer = null;
 let renderedCaseId = "";
@@ -1662,12 +1668,57 @@ function applyCaseItemState() {
   });
 }
 
+function syncAboutPanelUi() {
+  if (!aboutPage || !aboutToggleButton) {
+    return;
+  }
+
+  aboutToggleButton.setAttribute("aria-expanded", isAboutOpen ? "true" : "false");
+  aboutToggleButton.setAttribute(
+    "aria-label",
+    isAboutOpen ? "Close about section" : "Open about section",
+  );
+
+  if (aboutLabelClosed instanceof HTMLElement) {
+    aboutLabelClosed.classList.toggle("hidden", isAboutOpen);
+  }
+
+  if (aboutLabelOpen instanceof HTMLElement) {
+    aboutLabelOpen.classList.toggle("hidden", !isAboutOpen);
+  }
+
+  if (aboutPanel instanceof HTMLElement) {
+    aboutPanel.setAttribute("aria-hidden", isAboutOpen ? "false" : "true");
+  }
+}
+
+function closeAboutPanel() {
+  if (!isAboutOpen) {
+    return;
+  }
+
+  isAboutOpen = false;
+  syncAboutPanelUi();
+  syncPortfolioAttributes();
+}
+
+function toggleAboutPanel() {
+  if (activeCaseId !== null || viewState.startsWith("opening-")) {
+    return;
+  }
+
+  isAboutOpen = !isAboutOpen;
+  syncAboutPanelUi();
+  syncPortfolioAttributes();
+}
+
 function renderAboutState() {
   if (!aboutPage) {
     return;
   }
 
   syncPortfolioAttributes();
+  syncAboutPanelUi();
   applyCaseItemState();
   renderPreviewContent();
   applyHoverLayerState();
@@ -1686,6 +1737,7 @@ function resetToOverview() {
 
   hoveredCaseId = null;
   activeCaseId = null;
+  isAboutOpen = false;
   viewState = "overview";
 
   renderAboutState();
@@ -1759,7 +1811,8 @@ function attachCaseEvents() {
     caseButton.addEventListener("mouseenter", () => {
       if (
         viewState === "closing" ||
-        viewState.startsWith("opening-")
+        viewState.startsWith("opening-") ||
+        isAboutOpen
       ) {
         return;
       }
@@ -1776,7 +1829,8 @@ function attachCaseEvents() {
     caseButton.addEventListener("focus", () => {
       if (
         viewState === "closing" ||
-        viewState.startsWith("opening-")
+        viewState.startsWith("opening-") ||
+        isAboutOpen
       ) {
         return;
       }
@@ -1808,6 +1862,8 @@ function attachCaseEvents() {
         closeAnimationTimer = null;
       }
 
+      closeAboutPanel();
+
       activeCaseId = caseId;
       hoveredCaseId = caseId;
       viewState = openingState;
@@ -1832,14 +1888,18 @@ function attachCaseEvents() {
   });
 }
 
-introWorkGroup?.addEventListener("mouseleave", () => {
-  if (activeCaseId !== null) {
+selectedWorkMotionGroup?.addEventListener("mouseleave", () => {
+  if (activeCaseId !== null || isAboutOpen) {
     return;
   }
 
   hoveredCaseId = null;
   viewState = "overview";
   renderAboutState();
+});
+
+aboutToggleButton?.addEventListener("click", () => {
+  toggleAboutPanel();
 });
 
 closeCaseButton?.addEventListener("click", () => {
@@ -1849,6 +1909,12 @@ closeCaseButton?.addEventListener("click", () => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && imageLightboxOpen) {
     closeImageLightbox();
+    return;
+  }
+
+  if (event.key === "Escape" && isAboutOpen) {
+    closeAboutPanel();
+    renderAboutState();
     return;
   }
 

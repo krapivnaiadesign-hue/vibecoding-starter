@@ -13,23 +13,67 @@
         data-active-case=""
         data-case-active="false"
         data-preview="overview"
+        data-about-open="false"
         class="portfolio relative h-[min(100svh,calc(100vw*9/16))] w-[min(100vw,calc(100svh*16/9))] overflow-hidden rounded-[10px] bg-black text-[#b3bdd2]"
       >
         <div
           id="aboutStage"
-          class="absolute left-0 top-0 h-[1080px] w-[1920px] origin-top-left"
+          class="absolute left-0 top-0 h-[1080px] w-[1920px] origin-top-left overflow-visible"
         >
+          <div
+            id="aboutPanel"
+            class="about-panel-motion pointer-events-none absolute left-0 top-[229px] z-[15] h-[851px] w-[574px] overflow-visible"
+            aria-hidden="true"
+          >
+            <div
+              id="aboutPanelInner"
+              class="absolute left-0 top-0 w-[574px] px-[32px] pt-[28px] text-[20px] leading-[24px] tracking-[0.2px] text-[rgba(183,191,207,0.8)] [font-family:var(--font-intro)]"
+            >
+              <p class="m-0 mb-[24px]">Привет!</p>
+              <p class="m-0 mb-[24px]">
+                Меня зовут Полина - продуктовый и интерфейсный дизайнер.
+                Я смотрю на дизайн как на
+                <span class="font-bold italic text-[#b7bfcf]">построение среды</span>,
+                где человек понимает, действует и движется через форму, пространство, время и отношения между объектами.
+              </p>
+              <p class="m-0 mb-[24px]">
+                Сейчас много исследую архитектурную и инженерную стороны дизайна в менторских группах: ищу разные призмы, через которые можно находить новые модели взаимодействия в интерфейсах.
+              </p>
+              <p class="m-0 mb-[24px]">
+                Я активно использую автоматизацию и ai, освобождая больше пространства для мышления, исследования и работы с тем, где действительно важны вкус и креатив.
+                <span class="text-[rgba(183,191,207,0.6)]">Кстати, этот сайт я тоже сама завайбкодила.</span>
+              </p>
+              <p class="m-0 font-bold italic text-[#b7bfcf]">
+                Помимо работы, я круглый год путешествую, занимаюсь верховой ездой и мечтаю завести собаку :)
+              </p>
+            </div>
+          </div>
+
           <section
             id="zoneIntro"
-            class="absolute left-0 top-0 z-[20] h-[1080px] w-[1174px] overflow-hidden"
+            class="absolute left-0 top-0 z-[20] h-[1080px] w-[1920px] overflow-visible"
           >
             <img
               id="introIcon"
               src="/assets/about/top-icon.svg"
               alt=""
-              class="intro-chrome intro-motion pointer-events-none absolute left-[29px] top-[202px] z-[10] h-[26px] w-[26px] [mix-blend-mode:difference]"
+              class="intro-chrome intro-motion pointer-events-none absolute left-[29px] top-[202px] z-[25] h-[26px] w-[26px] [mix-blend-mode:difference]"
             />
 
+            <button
+              id="aboutToggleButton"
+              type="button"
+              class="about-toggle-motion absolute left-[194px] top-[201px] z-[40] flex h-[28px] cursor-pointer items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] whitespace-nowrap text-[#b3bdd2] [font-family:var(--font-intro)]"
+              aria-expanded="false"
+              aria-label="Open about section"
+            >
+              <span data-about-label-closed class="font-normal italic">About me +</span>
+              <span data-about-label-open class="hidden">
+                <span class="font-bold italic text-[#b3bdd2]">Close</span><span class="font-normal italic text-[rgba(183,191,207,0.6)]"> (about me)</span>
+              </span>
+            </button>
+
+            <div id="introMotionGroup" class="absolute inset-0 z-[20] overflow-visible pointer-events-none">
             <div
               id="introMetaGroup"
               class="intro-chrome intro-motion absolute left-[545px] top-[36px] z-[20]"
@@ -49,44 +93,14 @@
               </div>
             </div>
 
-            <div id="introHeroGroup" class="absolute inset-0 z-[20] pointer-events-none">
-              <p
+            <p
                 id="introStatement"
                 class="intro-chrome intro-motion pointer-events-none absolute left-[194px] top-[104px] z-[30] m-0 h-[84px] w-[659px] text-[18px] leading-[21px] font-bold italic tracking-[0.18px] text-[#b7bfcf] [font-family:var(--font-intro)] [mix-blend-mode:difference] [text-indent:277px]"
               >
                 Я вижу продукт как систему — с логикой, архитектурой, сценариями и ограничениями. Умею быстро разбирать хаос, находить конфликты в опыте и превращать их в ясные интерфейсные решения.
               </p>
 
-              <nav
-                id="introMenu"
-                class="intro-chrome intro-motion pointer-events-auto absolute left-[194px] top-[201px] z-[30] flex w-[277px] items-center justify-between"
-                aria-label="About navigation"
-              >
-                <button
-                  type="button"
-                  class="flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] [font-family:var(--font-intro)]"
-                >
-                  About Me +
-                </button>
-                <a
-                  href="https://drive.google.com/file/d/1SOZPXmtESknNsEzRW3fIAldHYCJ7GArl/view?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
-                >
-                  CV
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/polina-krapivnaia-3346a5343/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[17px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
-                >
-                  LinkedIn
-                </a>
-              </nav>
-
-              <div
+            <div
                 id="introPortrait"
                 class="intro-chrome intro-motion pointer-events-none absolute left-[549px] top-[146px] z-[20] h-[211px] w-[201px] overflow-hidden"
               >
@@ -96,7 +110,6 @@
                   class="block h-full w-full object-cover grayscale brightness-[0.75] contrast-[1.05]"
                 />
               </div>
-            </div>
 
             <div
               id="introFooterGroup"
@@ -117,9 +130,33 @@
               </div>
             </div>
 
+            <nav
+              id="introMenuLinks"
+              class="intro-chrome intro-motion pointer-events-auto absolute left-[325.5px] top-[201px] z-[30] flex items-center gap-[42.5px]"
+              aria-label="Portfolio navigation"
+            >
+              <a
+                href="https://drive.google.com/file/d/1SOZPXmtESknNsEzRW3fIAldHYCJ7GArl/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex h-[28px] items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
+              >
+                CV
+              </a>
+              <a
+                href="https://www.linkedin.com/in/polina-krapivnaia-3346a5343/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex h-[28px] items-center justify-center bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] font-normal italic whitespace-nowrap text-[#b3bdd2] no-underline [font-family:var(--font-intro)]"
+              >
+                LinkedIn
+              </a>
+            </nav>
+            </div>
+
             <div
-              id="introWorkGroup"
-              class="intro-motion absolute left-[545px] top-[436px] z-[20] flex h-[406px] w-[614px] items-start"
+              id="selectedWorkMotionGroup"
+              class="intro-motion absolute left-[545px] top-[436px] z-[20] flex h-[406px] w-[614px] items-start overflow-visible"
             >
               <p
                 id="selectedWorkLabel"

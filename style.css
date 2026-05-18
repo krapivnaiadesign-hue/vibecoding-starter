@@ -10,6 +10,11 @@
     color-scheme: dark;
     --intro-motion-duration: 950ms;
     --intro-opacity-duration: 700ms;
+    --about-motion-duration: 850ms;
+    --about-panel-width: 574px;
+    --about-intro-shift-x: 390px;
+    --about-work-shift-x: 394px;
+    --about-toggle-shift-x: -117px;
     --intro-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
     --font-intro: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-case: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -111,6 +116,64 @@
   will-change: transform, opacity;
 }
 
+.about-panel-motion,
+.about-toggle-motion,
+#introMotionGroup,
+#selectedWorkMotionGroup {
+  transition:
+    transform var(--about-motion-duration) var(--intro-motion-ease),
+    opacity var(--about-motion-duration) var(--intro-motion-ease);
+  will-change: transform, opacity;
+}
+
+#aboutPanel {
+  transform: translate3d(calc(-100% - 80px), 0, 0);
+}
+
+#aboutToggleButton {
+  transform: translate3d(0, 0, 0);
+}
+
+#introMotionGroup {
+  transform: translate3d(0, 0, 0);
+}
+
+#selectedWorkMotionGroup {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+#aboutPage[data-about-open="true"] #aboutPanel {
+  transform: translate3d(0, 0, 0);
+  pointer-events: auto;
+}
+
+#aboutStage,
+#zoneIntro,
+#introMotionGroup,
+#selectedWorkMotionGroup,
+#aboutPanel,
+#aboutPanelInner {
+  overflow: visible;
+}
+
+#aboutPage[data-about-open="true"] #aboutToggleButton {
+  transform: translate3d(var(--about-toggle-shift-x), 0, 0);
+}
+
+#aboutPage[data-about-open="true"] #introMotionGroup {
+  transform: translate3d(var(--about-intro-shift-x), 0, 0);
+}
+
+#aboutPage[data-about-open="true"] #selectedWorkMotionGroup {
+  transform: translate3d(var(--about-work-shift-x), 0, 0);
+  opacity: 0.3;
+}
+
+#aboutPage[data-about-open="true"] #selectedWorkMotionGroup .intro-chrome {
+  opacity: 1;
+}
+
 #introIcon {
   transform: translate3d(0, 0, 0);
 }
@@ -148,7 +211,7 @@
   transform: translate3d(-457px, 0, 0);
 }
 
-#aboutPage[data-case-active="true"] #introWorkGroup {
+#aboutPage[data-case-active="true"] #selectedWorkMotionGroup {
   transform: translate3d(-457px, 0, 0);
 }
 
@@ -160,14 +223,36 @@
   transform: translate3d(-460px, 0, 0);
 }
 
-#aboutPage[data-case-active="true"] #introMenu {
+#aboutPage[data-case-active="true"] #introMenuLinks {
   transform: translate3d(125px, 0, 0);
+}
+
+#aboutPage[data-case-active="true"] #aboutToggleButton {
+  transform: translate3d(125px, 0, 0);
+}
+
+#aboutPage[data-about-open="true"][data-case-active="true"] #aboutToggleButton {
+  transform: translate3d(var(--about-toggle-shift-x), 0, 0);
 }
 
 #aboutPage[data-case-active="true"] .intro-chrome {
   opacity: 0.3;
 }
 
-#aboutPage[data-case-active="true"] #introWorkGroup {
+#aboutPage[data-case-active="true"] #selectedWorkMotionGroup {
   opacity: 1;
+}
+
+#aboutPage[data-about-open="true"][data-case-active="true"] #selectedWorkMotionGroup {
+  transform: translate3d(var(--about-work-shift-x), 0, 0);
+  opacity: 0.3;
+}
+
+@media (max-width: 1280px) {
+  :root {
+    --about-intro-shift-x: min(390px, 28vw);
+    --about-work-shift-x: min(394px, 28.5vw);
+    --about-toggle-shift-x: min(-117px, -8.5vw);
+    --about-panel-width: min(574px, 42vw);
+  }
 }
