@@ -63,7 +63,7 @@
             <button
               id="aboutToggleButton"
               type="button"
-              class="about-toggle-motion intro-menu-btn absolute left-[194px] top-[201px] z-[40] flex h-[28px] w-[125px] cursor-pointer items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] text-[#b3bdd2] [font-family:var(--font-intro)]"
+              class="about-toggle-motion intro-menu-btn absolute left-[194px] top-[201px] z-[40] flex h-[28px] w-[89px] cursor-pointer items-center justify-center border-0 bg-[rgba(179,189,210,0.1)] px-[8px] py-[4px] text-[14px] leading-[20px] text-[#b3bdd2] [font-family:var(--font-intro)]"
               aria-expanded="false"
               aria-label="Open about section"
             >
@@ -164,7 +164,7 @@
 
             <div
               id="selectedWorkMotionGroup"
-              class="intro-motion pointer-events-auto absolute left-[545px] top-[436px] z-[20] flex h-[406px] w-[614px] items-start overflow-hidden"
+              class="intro-motion pointer-events-auto absolute left-[545px] top-[436px] z-[20] flex h-[406px] w-[614px] items-start overflow-visible"
             >
               <p
                 id="selectedWorkLabel"
@@ -174,7 +174,7 @@
               </p>
               <div
                 id="selectedWorkList"
-                class="ml-[56px] flex h-[406px] min-h-0 w-[448px] flex-col gap-[40px] overflow-y-auto overscroll-contain"
+                class="ml-[56px] flex w-[448px] shrink-0 flex-col gap-[40px]"
               ></div>
             </div>
           </section>

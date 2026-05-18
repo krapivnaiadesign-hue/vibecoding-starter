@@ -131,10 +131,12 @@
 }
 
 #aboutToggleButton {
+  width: 89px;
   transform: translate3d(0, 0, 0);
   transition:
     transform var(--about-motion-duration) var(--intro-motion-ease),
-    opacity var(--intro-opacity-duration) var(--intro-motion-ease);
+    opacity var(--intro-opacity-duration) var(--intro-motion-ease),
+    width var(--about-motion-duration) var(--intro-motion-ease);
 }
 
 .intro-menu-btn {
@@ -162,7 +164,6 @@
 #selectedWorkMotionGroup {
   transform: translate3d(0, 0, 0);
   opacity: 1;
-  overflow: hidden;
 }
 
 #aboutPage[data-about-open="true"] #aboutPanel {
@@ -178,25 +179,8 @@
   overflow: visible;
 }
 
-#selectedWorkList {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(179, 189, 210, 0.15) transparent;
-}
-
-#selectedWorkList::-webkit-scrollbar {
-  width: 4px;
-}
-
-#selectedWorkList::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-#selectedWorkList::-webkit-scrollbar-thumb {
-  background: rgba(179, 189, 210, 0.15);
-  border-radius: 2px;
-}
-
 #aboutPage[data-about-open="true"] #aboutToggleButton {
+  width: 125px;
   transform: translate3d(var(--about-toggle-shift-x), 0, 0);
 }
 
