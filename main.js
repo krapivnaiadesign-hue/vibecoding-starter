@@ -232,8 +232,22 @@ function isCaseActiveMode() {
   return Boolean(activeCaseId) && viewState !== "closing";
 }
 
+function clearPreviewHoverViewState() {
+  if (
+    viewState === "hover-emergency" ||
+    viewState === "hover-sltp" ||
+    viewState === "hover-kelpie"
+  ) {
+    viewState = "overview";
+  }
+}
+
 function getPreviewMode() {
   if (viewState === "closing") {
+    return "overview";
+  }
+
+  if (isAboutOpenMode()) {
     return "overview";
   }
 
@@ -1766,6 +1780,11 @@ function toggleAboutPanel() {
   }
 
   isAboutOpen = !isAboutOpen;
+
+  if (isAboutOpen) {
+    clearPreviewHoverViewState();
+  }
+
   resetCaseOpacityForAboutTransition();
   syncAboutPanelUi();
   syncPortfolioAttributes();
@@ -1990,7 +2009,11 @@ function attachCaseEvents() {
       }
 
       hoveredCaseId = caseId;
-      viewState = hoverState;
+
+      if (!isAboutOpen) {
+        viewState = hoverState;
+      }
+
       renderAboutState();
     });
 
@@ -2004,7 +2027,11 @@ function attachCaseEvents() {
       }
 
       hoveredCaseId = caseId;
-      viewState = hoverState;
+
+      if (!isAboutOpen) {
+        viewState = hoverState;
+      }
+
       renderAboutState();
     });
 
@@ -2060,7 +2087,11 @@ selectedWorkMotionGroup?.addEventListener("mouseleave", () => {
   }
 
   hoveredCaseId = null;
-  viewState = "overview";
+
+  if (!isAboutOpen) {
+    viewState = "overview";
+  }
+
   renderAboutState();
 });
 
