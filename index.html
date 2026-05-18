@@ -6,7 +6,83 @@
     <title>ABOUT | Polina Krapivnaia</title>
   </head>
   <body class="m-0 min-h-screen overflow-hidden bg-black antialiased">
-    <div class="flex h-svh w-screen items-center justify-center overflow-hidden bg-black">
+    <main
+      id="mobileFallback"
+      class="fixed inset-0 z-[500] flex h-svh w-full flex-col overflow-hidden bg-black text-[#8d97ab] md:hidden [font-family:var(--font-intro)]"
+      aria-label="Mobile portfolio"
+    >
+      <div class="pointer-events-none absolute left-0 top-0 h-[min(50.75svh,473px)] w-full overflow-hidden">
+        <img
+          src="/assets/about/mobile-background.png"
+          alt=""
+          class="block h-full w-full scale-y-[-1] object-cover opacity-50 grayscale"
+        />
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="absolute inset-0 bg-[rgba(217,217,217,0.01)] backdrop-blur-[3px]"></div>
+      </div>
+
+      <div class="relative z-[10] flex shrink-0 flex-col gap-[12px] px-[24px] pt-[32px] text-[14px] leading-[20px]">
+        <div class="flex items-center justify-between gap-[12px]">
+          <span class="font-bold tracking-[0.14px]">Product designer:</span>
+          <span class="font-normal italic">Krapivnaia Polina</span>
+        </div>
+        <div class="flex items-center justify-between gap-[12px]">
+          <span class="font-bold tracking-[0.14px]">Experience:</span>
+          <span class="font-normal italic">4+ years · Fintech, AI SaaS</span>
+        </div>
+      </div>
+
+      <div class="relative z-[10] flex min-h-0 flex-1 flex-col justify-center px-[24px]">
+        <nav class="flex w-full items-center justify-between" aria-label="Contact links">
+          <a
+            href="https://t.me/krapivapolinnaia"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center bg-[rgba(179,189,210,0.05)] px-[12px] py-[2px] text-[14px] leading-[20px] font-normal italic tracking-[-0.14px] text-[#b3bdd2] no-underline [font-family:var(--font-menu)]"
+          >
+            Telegram
+          </a>
+          <a
+            href="https://drive.google.com/file/d/1SOZPXmtESknNsEzRW3fIAldHYCJ7GArl/view"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center bg-[rgba(179,189,210,0.05)] px-[12px] py-[2px] text-[14px] leading-[20px] font-normal italic tracking-[-0.14px] text-[#b3bdd2] no-underline [font-family:var(--font-menu)]"
+          >
+            CV
+          </a>
+          <a
+            href="https://www.linkedin.com/in/polina-krapivnaia-3346a5343/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center bg-[rgba(179,189,210,0.05)] px-[12px] py-[2px] text-[14px] leading-[20px] font-normal italic tracking-[-0.14px] text-[#b3bdd2] no-underline [font-family:var(--font-menu)]"
+          >
+            LinkedIn
+          </a>
+        </nav>
+      </div>
+
+      <div class="relative z-[10] flex shrink-0 flex-col gap-[12px] px-[24px] pb-[24px]">
+        <p class="m-0 text-[12px] leading-[20px] font-bold italic tracking-[0.36px] text-[rgba(141,151,171,0.5)] uppercase">
+          Selected Work
+        </p>
+        <p class="m-0 max-w-[302px] text-[15px] leading-[20px] font-bold tracking-[0.15px] text-[#8d97ab]">
+          Для просмотра кейсов, пожалуйста, откройте сайт на компьютере
+        </p>
+      </div>
+
+      <div class="relative z-[10] flex shrink-0 flex-col gap-[12px] px-[24px] pb-[32px] text-[14px] leading-[20px]">
+        <div class="flex items-center justify-between gap-[12px]">
+          <span class="font-bold tracking-[0.14px]">Mail:</span>
+          <span class="font-normal italic">&lt; krapivnaiadesign@gmail.com &gt;</span>
+        </div>
+        <div class="flex items-center justify-between gap-[12px]">
+          <span class="font-bold tracking-[0.14px]">Location:</span>
+          <span class="font-normal italic">Serbia, Belgrade / Europe</span>
+        </div>
+      </div>
+    </main>
+
+    <div id="desktopShell" class="hidden h-svh w-screen items-center justify-center overflow-hidden bg-black md:flex">
       <main
         id="aboutPage"
         data-state="overview"
@@ -213,7 +289,7 @@
 
     <div
       id="imageLightbox"
-      class="fixed inset-0 z-[200] flex items-center justify-center bg-black/92 p-[24px] opacity-0 pointer-events-none transition-opacity duration-200 ease-out"
+      class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/92 p-[24px] opacity-0 pointer-events-none transition-opacity duration-200 ease-out md:flex"
       role="dialog"
       aria-modal="true"
       aria-hidden="true"
@@ -242,7 +318,7 @@
 
     <p
       id="caseCursorLabel"
-      class="pointer-events-none fixed left-0 top-0 z-[300] hidden m-0 -translate-y-1/2 text-[14px] leading-[20px] font-normal italic lowercase text-[#b7bfcf] [font-family:var(--font-intro)] [mix-blend-mode:difference]"
+      class="pointer-events-none fixed left-0 top-0 z-[300] m-0 hidden -translate-y-1/2 text-[14px] leading-[20px] font-normal italic lowercase text-[#b7bfcf] [font-family:var(--font-intro)] [mix-blend-mode:difference] md:block"
       aria-hidden="true"
     >
       click

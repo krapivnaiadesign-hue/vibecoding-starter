@@ -2,6 +2,11 @@ import "./style.css";
 
 const STAGE_WIDTH = 1920;
 const STAGE_HEIGHT = 1080;
+const MOBILE_MEDIA_QUERY = window.matchMedia("(max-width: 767px)");
+
+function isMobileViewport() {
+  return MOBILE_MEDIA_QUERY.matches;
+}
 const INTRO_MOTION_DURATION_MS = 1200;
 const ABOUT_MOTION_DURATION_MS = 1200;
 const INTRO_MOTION_EASING = "cubic-bezier(0.16, 1, 0.3, 1)";
@@ -293,7 +298,7 @@ let openAnimationTimer = null;
 let renderedCaseId = "";
 
 function updateStageScale() {
-  if (!aboutPage || !aboutStage) {
+  if (isMobileViewport() || !aboutPage || !aboutStage) {
     return;
   }
 
@@ -2137,13 +2142,46 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-window.addEventListener("resize", updateStageScale);
-window.addEventListener("orientationchange", updateStageScale);
+let desktopAppInitialized = false;
 
-renderSelectedWorkList();
-initializeAnimatedElements();
-initImageLightbox();
-attachCaseCursorEvents();
-attachCaseEvents();
-updateStageScale();
-renderAboutState();
+function initDesktopApp() {
+  renderSelectedWorkList();
+  initializeAnimatedElements();
+  initImageLightbox();
+  attachCaseCursorEvents();
+  attachCaseEvents();
+  updateStageScale();
+  renderAboutState();
+  desktopAppInitialized = true;
+}
+
+function ensureDesktopApp() {
+  if (desktopAppInitialized || isMobileViewport()) {
+    return;
+  }
+
+  initDesktopApp();
+}
+
+window.addEventListener("resize", () => {
+  if (!isMobileViewport()) {
+    updateStageScale();
+  }
+});
+window.addEventListener("orientationchange", () => {
+  if (!isMobileViewport()) {
+    updateStageScale();
+  }
+});
+
+MOBILE_MEDIA_QUERY.addEventListener("change", (event) => {
+  if (event.matches) {
+    return;
+  }
+
+  ensureDesktopApp();
+  updateStageScale();
+  renderAboutState();
+});
+
+ensureDesktopApp();
