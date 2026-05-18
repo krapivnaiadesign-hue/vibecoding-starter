@@ -25,6 +25,7 @@ const casePreviewInner = document.querySelector("#casePreviewInner");
 const closeCaseButton = document.querySelector("#closeCaseButton");
 const imageLightbox = document.querySelector("#imageLightbox");
 const imageLightboxImg = document.querySelector("#imageLightboxImg");
+const imageLightboxVideo = document.querySelector("#imageLightboxVideo");
 const imageLightboxClose = document.querySelector("#imageLightboxClose");
 
 const LIGHTBOX_EXCLUDED_ANCESTOR_IDS = new Set([
@@ -34,6 +35,7 @@ const LIGHTBOX_EXCLUDED_ANCESTOR_IDS = new Set([
 ]);
 
 let imageLightboxOpen = false;
+let imageLightboxMode = "image";
 
 const CASE_INSET_PX = 46;
 
@@ -351,17 +353,48 @@ function isZoomableImage(img) {
   return true;
 }
 
+function showImageLightboxMedia() {
+  if (!imageLightbox || !imageLightboxImg || !imageLightboxVideo) {
+    return;
+  }
+
+  const isVideo = imageLightboxMode === "video";
+  imageLightboxImg.classList.toggle("hidden", isVideo);
+  imageLightboxVideo.classList.toggle("hidden", !isVideo);
+  imageLightbox.setAttribute(
+    "aria-label",
+    isVideo ? "Просмотр видео" : "Просмотр изображения",
+  );
+}
+
 function openImageLightbox(img) {
   if (!imageLightbox || !imageLightboxImg) {
     return;
   }
 
+  imageLightboxMode = "image";
   imageLightboxImg.src = img.currentSrc || img.src;
   imageLightboxImg.alt = img.alt || "";
+  showImageLightboxMedia();
   imageLightbox.classList.remove("opacity-0", "pointer-events-none");
   imageLightbox.classList.add("opacity-100", "pointer-events-auto");
   imageLightbox.setAttribute("aria-hidden", "false");
   imageLightboxOpen = true;
+}
+
+function openVideoLightbox(src) {
+  if (!imageLightbox || !imageLightboxVideo || !src) {
+    return;
+  }
+
+  imageLightboxMode = "video";
+  imageLightboxVideo.src = src;
+  showImageLightboxMedia();
+  imageLightbox.classList.remove("opacity-0", "pointer-events-none");
+  imageLightbox.classList.add("opacity-100", "pointer-events-auto");
+  imageLightbox.setAttribute("aria-hidden", "false");
+  imageLightboxOpen = true;
+  imageLightboxVideo.play().catch(() => {});
 }
 
 function closeImageLightbox() {
@@ -374,11 +407,37 @@ function closeImageLightbox() {
   imageLightbox.setAttribute("aria-hidden", "true");
   imageLightboxImg.removeAttribute("src");
   imageLightboxImg.alt = "";
+
+  if (imageLightboxVideo) {
+    imageLightboxVideo.pause();
+    imageLightboxVideo.removeAttribute("src");
+  }
+
+  imageLightboxMode = "image";
+  showImageLightboxMedia();
   imageLightboxOpen = false;
 }
 
 function handleImageLightboxClick(event) {
+  const videoTrigger = event.target.closest("[data-video-lightbox]");
+
+  if (videoTrigger) {
+    const src =
+      videoTrigger.dataset.videoLightbox ||
+      videoTrigger.querySelector("video")?.currentSrc ||
+      videoTrigger.querySelector("video")?.src;
+
+    if (src) {
+      event.preventDefault();
+      event.stopPropagation();
+      openVideoLightbox(src);
+    }
+
+    return;
+  }
+
   const img = event.target.closest("img");
+
   if (!img || !isZoomableImage(img)) {
     return;
   }
@@ -389,7 +448,7 @@ function handleImageLightboxClick(event) {
 }
 
 function initImageLightbox() {
-  if (!imageLightbox || !imageLightboxImg) {
+  if (!imageLightbox || !imageLightboxImg || !imageLightboxVideo) {
     return;
   }
 
@@ -398,6 +457,12 @@ function initImageLightbox() {
   document.addEventListener(
     "mouseover",
     (event) => {
+      const videoTrigger = event.target.closest("[data-video-lightbox]");
+      if (videoTrigger) {
+        videoTrigger.style.cursor = "zoom-in";
+        return;
+      }
+
       const img = event.target.closest("img");
       if (img && isZoomableImage(img)) {
         img.style.cursor = "zoom-in";
@@ -1450,9 +1515,21 @@ function generateKelpieLongread() {
               </div>
             </div>
           </div>
-          <div class="w-[1088px] max-w-full h-[775px] shrink-0 overflow-hidden rounded-[24px] shadow-[0px_4px_27.5px_19px_rgba(0,0,0,0.25)]">
-            <img src="/assets/cases/kelpie/longread/delivery_img.png" alt="" class="w-full h-full object-contain block bg-black" />
-          </div>
+          <button
+            type="button"
+            data-video-lightbox="/assets/cases/kelpie/longread/Final.mov"
+            aria-label="Увеличить видео Final"
+            class="relative w-[1088px] max-w-full h-[775px] shrink-0 cursor-zoom-in overflow-hidden rounded-[24px] border-0 bg-black p-0 shadow-[0px_4px_27.5px_19px_rgba(0,0,0,0.25)]"
+          >
+            <video
+              src="/assets/cases/kelpie/longread/Final.mov"
+              autoplay
+              loop
+              muted
+              playsinline
+              class="pointer-events-none block size-full bg-black object-contain"
+            ></video>
+          </button>
         </div>
 
       </div>
