@@ -1876,6 +1876,50 @@ function handleClose() {
   }, INTRO_MOTION_DURATION_MS);
 }
 
+function canCloseCaseFromIntroClick() {
+  return (
+    viewState === "case-open-emergency" ||
+    viewState === "opening-emergency" ||
+    viewState === "case-open-sltp" ||
+    viewState === "opening-sltp" ||
+    viewState === "case-open-kelpie" ||
+    viewState === "opening-kelpie"
+  );
+}
+
+function isIntroCloseExcludedTarget(target) {
+  if (!(target instanceof Element)) {
+    return true;
+  }
+
+  return Boolean(
+    target.closest("#aboutToggleButton") ||
+    target.closest("#introMenuLinks") ||
+    target.closest("#selectedWorkMotionGroup") ||
+    target.closest("[data-case-id]") ||
+    target.closest("a") ||
+    target.closest("button"),
+  );
+}
+
+function handleIntroCloseClick(event) {
+  if (imageLightboxOpen) {
+    return;
+  }
+
+  if (!canCloseCaseFromIntroClick()) {
+    return;
+  }
+
+  if (isIntroCloseExcludedTarget(event.target)) {
+    return;
+  }
+
+  event.preventDefault();
+  event.stopPropagation();
+  handleClose();
+}
+
 function getHoverStateForCase(caseId) {
   if (caseId === EMERGENCY_CASE_ID) return "hover-emergency";
   if (caseId === SLTP_CASE_ID) return "hover-sltp";
@@ -2014,6 +2058,8 @@ aboutToggleButton?.addEventListener("click", () => {
 closeCaseButton?.addEventListener("click", () => {
   handleClose();
 });
+
+zoneIntro?.addEventListener("click", handleIntroCloseClick);
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && imageLightboxOpen) {

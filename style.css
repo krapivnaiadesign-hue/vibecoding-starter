@@ -234,6 +234,11 @@
   pointer-events: auto;
 }
 
+#aboutPage[data-preview="open"] #introStatement,
+#aboutPage[data-preview="open"] #introPortrait {
+  pointer-events: auto;
+}
+
 #aboutPage[data-case-active="true"] #introMetaGroup {
   transform: translate3d(-457px, 0, 0);
 }
