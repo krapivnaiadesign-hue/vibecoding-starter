@@ -693,8 +693,8 @@ function generateEmergencyLongread() {
               </div>
             </div>
             <div class="flex w-full items-center justify-center px-[192px] py-[32px]">
-              <div class="relative h-[600px] w-[1039px] max-w-full shrink-0">
-                <img src="/assets/cases/emergency-redesign/process_img.png" alt="Decision space" class="block size-full object-contain" />
+              <div class="relative h-[780px] w-[1351px] shrink-0">
+                <img src="/assets/cases/emergency-redesign/processf_img.png" alt="Decision space" class="block size-full object-contain" />
               </div>
             </div>
           </div>
