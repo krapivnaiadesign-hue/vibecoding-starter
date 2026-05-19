@@ -340,13 +340,13 @@ function renderSelectedWorkList() {
                     type="button"
                     data-case-id="${currentCase.id}"
                     aria-label="${currentCase.id === KELPIE_CASE_ID ? "Open AI-Platform Launch case" : currentCase.title}"
-                    class="intro-case-motion flex w-[448px] cursor-pointer appearance-none flex-col border-0 bg-transparent p-0 pl-[46px] text-left [font-family:var(--font-intro)]"
+                    class="intro-case-motion case-cursor-zone flex w-[448px] appearance-none flex-col border-0 bg-transparent p-0 pl-[46px] text-left [font-family:var(--font-intro)]"
                   >
                     <div class="flex w-[402px] flex-col gap-[7px]">
                       <div class="flex w-full items-center gap-[9px]">
                         <span
                           data-case-title
-                          class="case-click-cursor min-w-0 flex-1 text-[15px] leading-[20px] font-medium text-[#b7bfcf]"
+                          class="min-w-0 flex-1 text-[15px] leading-[20px] font-medium text-[#b7bfcf]"
                         >
                           ${currentCase.title}
                         </span>
@@ -360,7 +360,7 @@ function renderSelectedWorkList() {
                       </div>
                       <p
                         data-case-description
-                        class="case-click-cursor m-0 w-full text-[15px] leading-[20px] font-normal text-[rgba(183,191,207,0.6)]"
+                        class="m-0 w-full text-[15px] leading-[20px] font-normal text-[rgba(183,191,207,0.6)]"
                       >
                         ${currentCase.description}
                       </p>
@@ -1716,7 +1716,6 @@ function applyCaseItemState() {
       plus.textContent = isActive ? "−" : "+";
     }
 
-    caseButton.classList.add("cursor-pointer");
   });
 }
 
