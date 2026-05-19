@@ -1,1 +1,1 @@
-# product-portfolio-rus
+# vibecoding-starter
