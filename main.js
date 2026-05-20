@@ -1,4 +1,5 @@
 import "./style.css";
+import { inject } from "@vercel/analytics";
 
 const STAGE_WIDTH = 1920;
 const STAGE_HEIGHT = 1080;
@@ -2131,3 +2132,6 @@ MOBILE_MEDIA_QUERY.addEventListener("change", (event) => {
 });
 
 ensureDesktopApp();
+
+// Initialize Vercel Analytics
+inject();
