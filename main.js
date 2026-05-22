@@ -1,4 +1,10 @@
 import "./style.css";
+import posthog from "posthog-js";
+
+posthog.init(import.meta.env.VITE_PUBLIC_POSTHOG_KEY, {
+  api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
+  defaults: "2025-05-24",
+});
 
 const STAGE_WIDTH = 1920;
 const STAGE_HEIGHT = 1080;
@@ -445,6 +451,7 @@ function openImageLightbox(img) {
   imageLightbox.classList.add("opacity-100", "pointer-events-auto");
   imageLightbox.setAttribute("aria-hidden", "false");
   imageLightboxOpen = true;
+  posthog.capture("lightbox_opened", { media_type: "image" });
 }
 
 function openVideoLightbox(src) {
@@ -459,6 +466,7 @@ function openVideoLightbox(src) {
   imageLightbox.classList.add("opacity-100", "pointer-events-auto");
   imageLightbox.setAttribute("aria-hidden", "false");
   imageLightboxOpen = true;
+  posthog.capture("lightbox_opened", { media_type: "video" });
   imageLightboxVideo.play().catch(() => {});
 }
 
@@ -1763,6 +1771,7 @@ function closeAboutPanel() {
   }
 
   isAboutOpen = false;
+  posthog.capture("about_closed");
   resetCaseOpacityForAboutTransition();
   syncAboutPanelUi();
   syncPortfolioAttributes();
@@ -1777,6 +1786,7 @@ function toggleAboutPanel() {
   isAboutOpen = !isAboutOpen;
 
   if (isAboutOpen) {
+    posthog.capture("about_opened");
     clearPreviewHoverViewState();
   }
 
@@ -1806,6 +1816,7 @@ function openAboutFromCase() {
   hoveredCaseId = null;
   viewState = "overview";
   isAboutOpen = true;
+  posthog.capture("about_opened");
 
   resetCaseOpacityForAboutTransition();
   renderAboutState();
@@ -1862,6 +1873,8 @@ function handleClose() {
   if (closeAnimationTimer) {
     clearTimeout(closeAnimationTimer);
   }
+
+  posthog.capture("case_closed", { case_id: activeCaseId });
 
   viewState = "closing";
   renderAboutState();
@@ -2011,6 +2024,8 @@ function attachCaseEvents() {
       hoveredCaseId = caseId;
       viewState = openingState;
 
+      posthog.capture("case_opened", { case_id: caseId });
+
       renderPreviewContent();
 
       requestAnimationFrame(() => {
@@ -2131,3 +2146,15 @@ MOBILE_MEDIA_QUERY.addEventListener("change", (event) => {
 });
 
 ensureDesktopApp();
+
+// Track CV and LinkedIn link clicks on both mobile and desktop
+document.querySelectorAll('a[href*="drive.google.com"]').forEach((el) => {
+  el.addEventListener("click", () => {
+    posthog.capture("cv_clicked");
+  });
+});
+document.querySelectorAll('a[href*="linkedin.com"]').forEach((el) => {
+  el.addEventListener("click", () => {
+    posthog.capture("linkedin_clicked");
+  });
+});
